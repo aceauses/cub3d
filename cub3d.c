@@ -6,11 +6,22 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/01/30 21:34:45 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:28:49 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(void)
+#include "includes/cub3d.h"
+
+int main(int argc, char **argv)
 {
+	if (argc != 2)
+	{
+		printf("Error\nWrong number of arguments\n");
+		return (0);
+	}
+	if (map_validation(argv[1]))
+	{
+		// Do mlx stuff
+	}
 	return (0);
 }
