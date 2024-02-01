@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/01/31 16:49:50 by aceauses         ###   ########.fr        #
+#    Updated: 2024/02/01 11:50:13 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 NAME = cub3d
 LIBFT = libft/libft.a
-MLX = $(MLX_FOLDER)build/libmlx42.a
+MLX = MLX42/build/libmlx42.a
 GNL = GNL/gnl
 MLXFLAGS = -framework OpenGL -framework AppKit
 OBJS_DIR = obj/
