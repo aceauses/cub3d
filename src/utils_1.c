@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/02 17:34:46 by aceauses         ###   ########.fr       */
+/*   Created: 2024/02/02 17:26:56 by aceauses          #+#    #+#             */
+/*   Updated: 2024/02/02 17:34:49 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../includes/cub3d.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include "get_next_line.h"
-# include "../libft/libft.h"
-# include "../MLX42/include/MLX42/MLX42.h"
+char *join_double_free(char *buffer, char *buff)
+{
+	char *temp;
 
-int		map_validation(char *argv);
-char	*join_double_free(char *buffer, char *buff);
-void	free_double_pointer(char **pointer);
-#endif
+	temp = ft_strjoin_gnl(buffer, buff);
+	free(buffer);
+	free(buff);
+	return (temp);
+}
+
+void	free_double_pointer(char **pointer)
+{
+	int		i;
+
+	i = 0;
+	while (pointer && pointer[i])
+		free(pointer[i++]);
+	free(pointer);
+}

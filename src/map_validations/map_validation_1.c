@@ -3,17 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/01 13:04:20 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/02 17:35:12 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-/*Handle Tabs. If 1 Tab in inside the map it will be replace with 8 Spaces it should be 4*/
-static char **read_map(char *argv)
+static char*	handle_tabs(char *line)
+{
+	char	*new;
+	int		i;
+	int		spaces;
+
+	i = -1;
+	new = NULL;
+	while (line[++i] != '\0' && line[i] == '\t')
+		;
+	new = ft_calloc(i * 4, sizeof(char *));
+	if (!new)
+		return (NULL);
+	spaces = 0;
+	while (spaces < i * 4)
+		new[spaces++] = ' ';
+	new = join_double_free(new, ft_strtrim(line, "\t"));
+	return (free(line), new);
+}
+
+static char	**read_map(char *argv)
 {
 	char **map;
 	char *array;
@@ -30,7 +49,8 @@ static char **read_map(char *argv)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		// if (!check_single_line(line))
+		if (*line == '\t')
+			line = handle_tabs(line);
 		array = free_join(array, line);
 		free(line); 
 		line = get_next_line(fd);
@@ -38,10 +58,10 @@ static char **read_map(char *argv)
 			break ;
 	}
 	map = ft_split(array, '\n');
-	return (map);
+	return (free(array), map);
 }
 
-static int check_extension(char *argv)
+static int	check_extension(char *argv)
 {
 	int i;
 
@@ -65,5 +85,6 @@ int	map_validation(char *argv)
 	map = read_map(argv);
 	for (int i = 0; map[i] != NULL; i++)
 		printf("%s\n", map[i]);
+	free_double_pointer(map);
 	return 0;
 }

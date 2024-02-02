@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+         #
+#    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/02/01 11:50:13 by aceauses         ###   ########.fr        #
+#    Updated: 2024/02/02 17:36:26 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ RESET	= \x1b[0m
 SRC = cub3d.c
 SRC_OBS = $(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
-UTILS = src/map_validations/map_validation_1.c
+UTILS = utils_1.c \
+		src/map_validations/map_validation_1.c
 UTILS_OBS = $(addprefix $(OBJS_DIR), $(notdir $(UTILS:.c=.o)))
 
 all: $(NAME)
@@ -57,10 +58,18 @@ $(OBJS_DIR)%.o: src/map_validations/%.c
 	@echo "$(CYAN)[CUB3D] $(GREEN)Compiling: $(RESET)$(notdir $<)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+$(OBJS_DIR)%.o: src/%.c
+	@mkdir -p $(OBJS_DIR)
+	@echo "$(CYAN)[CUB3D] $(GREEN)Compiling: $(RESET)$(notdir $<)"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
 $(NAME): $(MLX) $(UTILS_OBS) $(SRC_OBS) $(LIBFT) $(GNL)
 	@$(CC) $(CFLAGS) $(SRC_OBS) $(UTILS_OBS) $(MLX) $(LIBFT) $(GNL) $(MLXFLAGS) -o $(NAME)
 	@echo "$(CYAN)[CUB3D] $(GREEN)Cub3D Compiled$(RESET)"
 
+NoMlx: $(UTILS_OBS) $(SRC_OBS) $(LIBFT) $(GNL)
+	@$(CC) $(CFLAGS) $(SRC_OBS) $(UTILS_OBS) $(LIBFT) $(GNL) -o $(NAME)
+	@echo "$(CYAN)[CUB3D] $(GREEN)Cub3D Compiled$(RESET)"
 
 clean:
 	@rm -rf $(OBJS_DIR)
