@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/02 17:34:46 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/03 18:18:33 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@
 int		map_validation(char *argv);
 char	*join_double_free(char *buffer, char *buff);
 void	free_double_pointer(char **pointer);
+int		check_map_values(char **map);
 #endif
