@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map_values.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 18:09:41 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/03 21:43:19 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/04 02:49:29 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
+/*Need fix, NO,SO,WE,EA should be in a random orientation*/
 static int	check_textures(char **map)
 {
 	int		i;
