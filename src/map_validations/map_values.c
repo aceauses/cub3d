@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_values.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 18:09:41 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/04 02:49:29 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/04 20:01:35 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,28 @@ static int	check_textures(char **map)
 {
 	int		i;
 	char **split;
+	int		check;
 
-	i = 0;
-	while (i < 4)
+	i = -1;
+	check = 0;
+	while (++i < 4 && map[i] != NULL)
 	{
 		split = ft_split(map[i], ' ');
-		if ((ft_strcmp(split[0], "NO") && i == 0)
-			|| (ft_strcmp(split[0], "SO") && i == 1)
-			|| (ft_strcmp(split[0], "WE") && i == 2)
-			|| (ft_strcmp(split[0], "EA") && i == 3))
+		if ((!ft_strcmp(split[0], "NO")
+			|| !ft_strcmp(split[0], "SO")
+			|| !ft_strcmp(split[0], "WE")
+			|| !ft_strcmp(split[0], "EA")))
+		{
+			if (open(split[1], O_RDONLY) == -1)
+				return (free_double_pointer(split), 0);
+			free_double_pointer(split);
+			check++;
+		}
+		else
 			return (free_double_pointer(split), 0);
-		if (open(split[1], O_RDONLY) == -1)
-			return (free_double_pointer(split), 0);
-		free_double_pointer(split);
-		i++;
 	}
+	if (check != 4)
+		return (free_double_pointer(split), 0);
 	return (1);
 }
 
@@ -109,6 +116,8 @@ static int	check_rgb_c(char **map)
 
 int	check_map_values(char **map)
 {
+	if (!map || !map[0])
+		return (0);
 	if (!check_textures(map))
 		return (0);
 	if (!check_rgb_f(map) || !check_rgb_c(map))

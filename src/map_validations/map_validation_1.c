@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/03 19:06:21 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/04 22:12:21 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int	map_validation(char *argv)
 	if (!check_extension(argv))
 		return (0);
 	map = read_map(argv);
-	if (!check_map_values(map))
+	if (!check_map_values(map) || !check_walls(map))
 		return (free_double_pointer(map), 0);
-	for (int i = 0; map[i] != NULL; i++)
-		printf("%s\n", map[i]);
+	// for (int i = 0; map[i] != NULL; i++)
+	// 	printf("%s\n", map[i]);
 	free_double_pointer(map);
 	return 0;
 }
