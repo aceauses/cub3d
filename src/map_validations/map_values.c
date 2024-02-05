@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 18:09:41 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/05 18:36:26 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/05 20:23:32 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ static int	check_rgb_f(char **map)
 		if (!is_digit(values[x])
 			|| ft_atoi(values[x]) > 255 || ft_atoi(values[x]) < 0)
 			return (map_errors(RGB_ERROR_2)
-				,free_double_pointer(values), free_double_pointer(split), 0);
+				, free_double_pointer(values), free_double_pointer(split), 0);
 	if (x != 3)
 		return (map_errors(RGB_ERROR)
-		,free_double_pointer(values), free_double_pointer(split), 0);
+			, free_double_pointer(values), free_double_pointer(split), 0);
 	return (free_double_pointer(values), free_double_pointer(split), 1);
 }
 
@@ -117,7 +117,7 @@ static int	check_rgb_c(char **map)
 			return (free_double_pointer(values), free_double_pointer(split), 0);
 	if (x != 3)
 		return (map_errors(RGB_ERROR)
-		,free_double_pointer(values), free_double_pointer(split), 0);
+			, free_double_pointer(values), free_double_pointer(split), 0);
 	return (free_double_pointer(values), free_double_pointer(split), 1);
 }
 

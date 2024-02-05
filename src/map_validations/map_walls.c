@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:00:02 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/05 15:35:24 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/05 20:23:49 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,4 @@ int	check_walls(char **map)
 	// find_first_wall(map, &x, &y);
 	// fill(map, y, x);
 	return (1);
-}	
+}
