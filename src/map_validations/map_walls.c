@@ -6,13 +6,13 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:00:02 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/04 22:12:07 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:35:24 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void	find_first_wall(char **map, int *x, int *y)
+static int	find_first_wall(char **map, int *x, int *y)
 {
 	int	y_m;
 	int	x_m;
@@ -28,16 +28,17 @@ static void	find_first_wall(char **map, int *x, int *y)
 				y_m++;
 				continue;
 			}
-		while (map[y_m][x_m] == ' ')
+		while (map[y_m][x_m] == ' ' || (map[y_m][x_m] != '1' && map[y_m][x_m] != '\0'))
 			x_m++;
 		if (map[y_m][x_m] == '1')
 		{
 			*x = x_m;
 			*y = y_m;
-			return;
+			return (1);
 		}
 		y_m++;
 	}
+	return (0);
 }
 
 /*Function to copy a double pointer and return a new double pointer*/
@@ -66,7 +67,9 @@ void	fill(char **matrix, int y, int x)
 	if (y < 0 || x < 0 || matrix[y] == NULL || x >= (int)ft_strlen(matrix[y]))
 		return ;
 	if (matrix[y][x] == '\0' || matrix[y][x] == ' '
-		|| matrix[y][x] == '0' || matrix[y][x] == '|' || matrix[y][x] == ',')
+		|| matrix[y][x] == '0' || matrix[y][x] == '|' || matrix[y][x] == ','
+		|| matrix[y][x] == 'W' || matrix[y][x] == 'N' || matrix[y][x] == 'S'
+		|| matrix[y][x] == 'E')
 		return ;
 	matrix[y][x] = '|';
 	fill(matrix, y, x + 1);
@@ -82,8 +85,12 @@ int	check_walls(char **map)
 
 	x = 0;
 	y = 0;
-	find_first_wall(map, &x, &y);
-	// printf("%d %d, %c\n", y, x, map[y][x]);
-	fill(map, y, x);
+	while (find_first_wall(map, &x, &y) == 1)
+	{
+		printf("%d %d, %c\n", y, x, map[y][x]);
+		fill(map, y, x);
+	}
+	// find_first_wall(map, &x, &y);
+	// fill(map, y, x);
 	return (1);
 }	
