@@ -6,7 +6,7 @@
 #    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/02/05 16:55:11 by aceauses         ###   ########.fr        #
+#    Updated: 2024/02/06 16:34:02 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ UTILS = utils_1.c \
 		src/map_validations/map_validation_1.c \
 		src/map_validations/map_values.c \
 		src/map_validations/map_walls.c \
+		src/map_validations/map_values_utils.c \
 		src/map_validations/map_errors.c
 UTILS_OBS = $(addprefix $(OBJS_DIR), $(notdir $(UTILS:.c=.o)))
 

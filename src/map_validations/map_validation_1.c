@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/05 18:11:24 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:13:13 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static int	check_extension(char *argv)
 {
 	char	*tmp;
 
+	if (argv == NULL)
+		return (0);
 	tmp = ft_strchr(argv, '.');
 	if (ft_strncmp(tmp, ".cub", 5) != 0 && ft_strlen(tmp) != 4)
 		return (0);
@@ -80,8 +82,8 @@ int	map_validation(char *argv)
 	map = read_map(argv);
 	if (!check_map_values(map) || !check_walls(map))
 		return (free_double_pointer(map), 0);
-	for (int i = 0; map[i] != NULL; i++)
-		printf("%s\n", map[i]);
+	// for (int i = 0; map[i] != NULL; i++)
+	// 	printf("%s\n", map[i]);
 	free_double_pointer(map);
 	return 0;
 }

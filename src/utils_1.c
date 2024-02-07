@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 17:26:56 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/02 17:34:49 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/07 10:52:49 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,14 @@ void	free_double_pointer(char **pointer)
 	while (pointer && pointer[i])
 		free(pointer[i++]);
 	free(pointer);
+}
+
+int		array_length(char **pointer)
+{
+	int		i;
+
+	i = 0;
+	while (pointer && pointer[i])
+		i++;
+	return (i);
 }
