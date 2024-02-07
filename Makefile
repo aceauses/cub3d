@@ -6,7 +6,7 @@
 #    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/02/02 17:36:26 by aceauses         ###   ########.fr        #
+#    Updated: 2024/02/06 16:34:02 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,11 +33,14 @@ SRC = cub3d.c
 SRC_OBS = $(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
 UTILS = utils_1.c \
-		src/map_validations/map_validation_1.c
+		src/map_validations/map_validation_1.c \
+		src/map_validations/map_values.c \
+		src/map_validations/map_walls.c \
+		src/map_validations/map_values_utils.c \
+		src/map_validations/map_errors.c
 UTILS_OBS = $(addprefix $(OBJS_DIR), $(notdir $(UTILS:.c=.o)))
 
 all: $(NAME)
-
 
 $(MLX):
 	@git submodule update --init --recursive

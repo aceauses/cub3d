@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/02 17:35:12 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:13:13 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,13 @@ static char	**read_map(char *argv)
 
 static int	check_extension(char *argv)
 {
-	int i;
+	char	*tmp;
 
-	i = 0;
-	while (argv[i] != '\0')
-		i++;
-	if (argv[i - 1] != 'b' || argv[i - 2] != 'u' || argv[i - 3] != 'c' || argv[i - 4] != '.')
-	{
-		printf("Error\nInvalid file extension\n");
+	if (argv == NULL)
 		return (0);
-	}
+	tmp = ft_strchr(argv, '.');
+	if (ft_strncmp(tmp, ".cub", 5) != 0 && ft_strlen(tmp) != 4)
+		return (0);
 	return (1);
 }
 
@@ -83,8 +80,10 @@ int	map_validation(char *argv)
 	if (!check_extension(argv))
 		return (0);
 	map = read_map(argv);
-	for (int i = 0; map[i] != NULL; i++)
-		printf("%s\n", map[i]);
+	if (!check_map_values(map) || !check_walls(map))
+		return (free_double_pointer(map), 0);
+	// for (int i = 0; map[i] != NULL; i++)
+	// 	printf("%s\n", map[i]);
 	free_double_pointer(map);
 	return 0;
 }
