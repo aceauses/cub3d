@@ -1,10 +1,23 @@
 SO ./maps/bad_maps/map1.cubb
+
+
+
+       
 NO ./maps/bad_maps/map1.cubb
+
+
+	
+
+
+
+
+
+
 WE ./maps/bad_maps/map1.cubb
 EA ./maps/bad_maps/map1.cubb
 
-F 220,100,0
-C 252,30,0
+F 20,1,1
+C 252,30,10
 		1111111111111111111111111
 		1000000000110000000000001
 		1011000001110000000000001
