@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 17:26:56 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/02 17:34:49 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:23:19 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,16 @@ void	free_double_pointer(char **pointer)
 	while (pointer && pointer[i])
 		free(pointer[i++]);
 	free(pointer);
+}
+
+void	ft_free(t_game *game)
+{
+	if (game)
+	{
+		if (game->mlx)
+			free(game->mlx);
+		if (game->win)
+			free(game->win);
+		free(game);
+	}
 }

@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/07 15:17:03 by rmitache         ###   ########.fr       */
+/*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
+/*   Updated: 2024/02/07 16:40:01 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "cub3d.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <math.h>
-# include "get_next_line.h"
-# include "../libft/libft.h"
-# include "../MLX42/include/MLX42/MLX42.h"
+bool	init_data()
+{
+	t_game		*game;
+	t_player	*player;
+	
 
-int		map_validation(char *argv);
-char	*join_double_free(char *buffer, char *buff);
-void	free_double_pointer(char **pointer);
-#endif
+	game = ft_calloc(1, sizeof(t_game));
+	if (!game)
+	{
+		return (false);
+	}
+	player = ft_calloc(1, sizeof(t_player));
+	if (!player)
+	{
+		return (free(game), false);
+	}
+	
+	
+	return (true);
+}
