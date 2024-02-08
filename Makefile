@@ -6,7 +6,7 @@
 #    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/02/06 16:34:02 by aceauses         ###   ########.fr        #
+#    Updated: 2024/02/08 16:16:41 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ BLUE    := \033[34;1m
 MAGENTA := \033[35;1m
 CYAN    := \033[36;1m
 WHITE   := \033[37;1m
-RESET	= \x1b[0m
+RESET = \033[;0m
 
 SRC = cub3d.c
 SRC_OBS = $(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
