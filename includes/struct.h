@@ -6,63 +6,66 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/07 16:36:21 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/08 10:18:33 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
-#include "cub3d.h"
+# include "./cub3d.h"
+
 
 # define PI 3.1415926535
 
 typedef struct	s_game
 {
 	void				*mlx;
+	size_t				height; // NOT in Pixels
+	size_t				width; // NOT in Pixels
 	void				*win;
 	char				**map;
 	struct s_player		*player;
-	struct s_img		*img;
+	struct s_image		*image;
 	struct s_ray		*ray;
 	struct s_texture	*texture;
-}					t_game;
+}						t_game;
 
 typedef struct	s_player
 {
-	float		x;
-	float		y;
-	float		delta_x;
-	float		delta_y;
-	float		angle;
-}				t_player;
+	int			x;
+	int			y;
+	double			delta_x;
+	double			delta_y;
+	double			angle;
+}					t_player;
 
 typedef struct	s_ray
 {
-	float		ray_angle;
-	float		wall_hit_x;
-	float		wall_hit_y;
-	float		x_offset;
-	float		y_offset;
+	double		ray_angle;
+	double		wall_hit_x;
+	double		wall_hit_y;
+	double		x_offset;
+	double		y_offset;
 }				t_ray;
 
-typedef struct	s_img
+typedef struct	s_image
 {
-	void			*img;
+	void			*image;
 	struct s_game	*game;
 	char			*path;
 	int				width;
 	int				height;
-}				t_img;
+}				t_image;
 
 typedef struct	s_texture
 {
-	struct s_img	*no;
-	struct s_img	*so;
-	struct s_img	*we;
-	struct s_img	*ea;
-	struct s_img	*flor;
-	struct s_img	*ceiling;
+	struct s_image	*no;
+	struct s_image	*so;
+	struct s_image	*we;
+	struct s_image	*ea;
+	struct s_image	*flor;
+	struct s_image	*ceiling;
 }				t_texture;
 
 typedef struct	s_color

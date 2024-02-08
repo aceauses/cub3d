@@ -6,7 +6,7 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/08 20:33:42 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:27:20 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,14 @@ int		check_walls(char **map);
 void	map_errors(char *error);
 int		should_check_path(char **split, char *buffer, int *check);
 int		clean_compare(char *s1, char *set, size_t n);
+char    *handle_tabs(char *line);
+
+bool	init_data(char *argv);
+size_t	calculate_height(char *argv);
+bool allocate_memory(t_game **game, t_player **player);
+size_t	calculate_height(char *argv);
+size_t	calculate_width(char *argv);
+char	**get_map_only(char *argv);
+int		find_player_y(char **map);
+int	find_player_x(char **map);
 #endif
