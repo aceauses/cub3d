@@ -6,13 +6,13 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/07 15:13:13 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/08 21:24:55 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static char*	handle_tabs(char *line)
+char*	handle_tabs(char *line)
 {
 	char	*new;
 	int		i;
@@ -34,10 +34,10 @@ static char*	handle_tabs(char *line)
 
 static char	**read_map(char *argv)
 {
-	char **map;
-	char *array;
-	char *line;
-	int fd;
+	char	**map;
+	char	*array;
+	char	*line;
+	int		fd;
 
 	fd = open(argv, O_RDONLY);
 	if (fd < 0)
@@ -52,13 +52,11 @@ static char	**read_map(char *argv)
 		if (*line == '\t')
 			line = handle_tabs(line);
 		array = free_join(array, line);
-		free(line); 
+		free(line);
 		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
 	}
 	map = ft_split(array, '\n');
-	return (free(array), map);
+	return (free(array), close(fd), map);
 }
 
 static int	check_extension(char *argv)
