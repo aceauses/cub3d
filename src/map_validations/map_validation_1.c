@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/08 21:24:55 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/09 15:34:18 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ int	map_validation(char *argv)
 	// for (int i = 0; map[i] != NULL; i++)
 	// 	printf("%s\n", map[i]);
 	free_double_pointer(map);
-	return 0;
+	return (1);
 }
