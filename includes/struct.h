@@ -29,6 +29,7 @@ typedef struct	s_game
 	struct s_image		*image;
 	struct s_ray		*ray;
 	struct s_texture	*texture;
+	struct s_color		*color;
 }						t_game;
 
 typedef struct	s_player
@@ -49,23 +50,15 @@ typedef struct	s_ray
 	double		y_offset;
 }				t_ray;
 
-typedef struct	s_image
-{
-	void			*image;
-	struct s_game	*game;
-	char			*path;
-	int				width;
-	int				height;
-}				t_image;
-
 typedef struct	s_texture
 {
-	struct s_image	*no;
-	struct s_image	*so;
-	struct s_image	*we;
-	struct s_image	*ea;
-	struct s_image	*flor;
-	struct s_image	*ceiling;
+	mlx_image_t		*image;
+	mlx_texture_t	*no;
+	mlx_texture_t	*so;
+	mlx_texture_t	*we;
+	mlx_texture_t	*ea;
+	struct s_color	*flor;
+	struct s_color	*ceiling;
 }				t_texture;
 
 typedef struct	s_color

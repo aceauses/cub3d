@@ -6,7 +6,7 @@
 #    By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/02/07 17:46:18 by rmitache         ###   ########.fr        #
+#    Updated: 2024/02/09 10:45:18 by rmitache         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = cub3d
 LIBFT = libft/libft.a
 MLX = MLX42/build/libmlx42.a
 GNL = GNL/gnl
-MLXFLAGS = -framework OpenGL -framework AppKit
+MLXFLAGS = -framework OpenGL -framework AppKit -L/usr/local/lib -lglfw
 OBJS_DIR = obj/
 
 BOLD    := \033[1m./SRC/

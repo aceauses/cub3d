@@ -20,6 +20,20 @@
  * @param argv Path to the file
  * @return size_t The height of the map
  */
+
+int open_fd(char *argv)
+{
+	int fd;
+
+	fd = open(argv, O_RDONLY);
+	if (fd < 0)
+	{
+		perror(argv);
+		exit (1);
+	}
+	return (fd);
+}
+
 size_t	calculate_height(char *argv)
 {
 	int		fd;
@@ -28,12 +42,7 @@ size_t	calculate_height(char *argv)
 	char	*line;
 
 	height = 0;
-	fd = open(argv, O_RDONLY);
-	if (fd < 0)
-	{
-		perror(argv);
-		exit (1);
-	}
+	fd = open_fd(argv);
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
@@ -65,12 +74,7 @@ size_t	calculate_width(char *argv)
 	size_t	width;
 	char	*line;
 
-	fd = open(argv, O_RDONLY);
-	if (fd < 0)
-	{
-		perror(argv);
-		exit (1);
-	}
+	fd = open_fd(argv);
 	width = 0;
 	line = get_next_line(fd);
 	while (line != NULL)
