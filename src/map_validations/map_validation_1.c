@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/09 17:09:34 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/09 20:54:38 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	check_extension(char *argv)
 	if (tmp == NULL)
 		return (0);
 	if (ft_strncmp(tmp, ".cub", 5) != 0 && ft_strlen(tmp) != 4)
-		return (0);
+		return (map_errors("Invalid file extension"), 0);
 	return (1);
 }
 
