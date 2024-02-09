@@ -1,0 +1,27 @@
+name: C Workflow
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker
+        run: ./configure.sh
+
+      - name: Build project
+        run: make
+      - name: Run tests
+        run: ./cub3d maps/main1.cub
+
+    #   - name: Run tests
+    #     run: |
+    #       cd build
+    #       ctest
