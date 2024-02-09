@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	}
 	if (!ft_strcmp(argv[2], "-l"))
 		atexit(check_leaks);
-	if (map_validation(argv[1]))
+	if (map_validation(argv[1]) == 0)
 	{
 		if (init_data(argv[1]) == false)
 			return (1);
