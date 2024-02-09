@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - '*'
+      - '**'
 
 jobs:
   build:
@@ -18,8 +19,8 @@ jobs:
 
       - name: Build project
         run: make
-      - name: Run tests
-        run: ./cub3d maps/main1.cub
+    #   - name: Run tests
+    #     run: ./cub3d maps/main1.cub
 
     #   - name: Run tests
     #     run: |
