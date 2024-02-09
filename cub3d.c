@@ -6,10 +6,10 @@
 /*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/09 15:14:27 by aceauses         ###   ########.fr       */
-/*   Updated: 2024/02/09 13:47:36 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/09 21:17:45 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "includes/cub3d.h"
 
