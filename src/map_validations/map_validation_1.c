@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3d.h"
 
-char*	handle_tabs(char *line)
+char    *handle_tabs(char *line)
 {
 	char	*new;
 	int		i;
