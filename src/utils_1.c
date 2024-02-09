@@ -31,3 +31,13 @@ void	free_double_pointer(char **pointer)
 		free(pointer[i++]);
 	free(pointer);
 }
+
+int		array_length(char **pointer)
+{
+	int		i;
+
+	i = 0;
+	while (pointer && pointer[i])
+		i++;
+	return (i);
+}

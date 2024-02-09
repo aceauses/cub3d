@@ -6,7 +6,7 @@
 #    By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/02/09 10:45:18 by rmitache         ###   ########.fr        #
+#    Updated: 2024/02/08 16:16:41 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,17 +27,20 @@ BLUE    := \033[34;1m
 MAGENTA := \033[35;1m
 CYAN    := \033[36;1m
 WHITE   := \033[37;1m
-RESET	= \x1b[0m
+RESET = \033[;0m
 
 SRC = cub3d.c init.c init_utils.c
 SRC_OBS = $(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
 UTILS = utils_1.c \
-		src/map_validations/map_validation_1.c
+		src/map_validations/map_validation_1.c \
+		src/map_validations/map_values.c \
+		src/map_validations/map_walls.c \
+		src/map_validations/map_values_utils.c \
+		src/map_validations/map_errors.c
 UTILS_OBS = $(addprefix $(OBJS_DIR), $(notdir $(UTILS:.c=.o)))
 
 all: $(NAME)
-
 
 $(MLX):
 	@git submodule update --init --recursive
