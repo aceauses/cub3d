@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/08 10:30:01 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/09 13:47:36 by aceauses         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
@@ -26,7 +27,7 @@ int main(int argc, char **argv)
 	}
 	if (!ft_strcmp(argv[2], "-l"))
 		atexit(check_leaks);
-	if (map_validation(argv[1]) == 0)
+	if (map_validation(argv[1]))
 	{
 		if (init_data(argv[1]) == false)
 			return (1);
