@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/02/02 17:36:26 by aceauses         ###   ########.fr        #
+#    Updated: 2024/02/09 10:45:18 by rmitache         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME = cub3d
 LIBFT = libft/libft.a
 MLX = MLX42/build/libmlx42.a
 GNL = GNL/gnl
-MLXFLAGS = -framework OpenGL -framework AppKit
+MLXFLAGS = -framework OpenGL -framework AppKit -L/usr/local/lib -lglfw
 OBJS_DIR = obj/
 
 BOLD    := \033[1m./SRC/
@@ -29,7 +29,7 @@ CYAN    := \033[36;1m
 WHITE   := \033[37;1m
 RESET	= \x1b[0m
 
-SRC = cub3d.c
+SRC = cub3d.c init.c init_utils.c
 SRC_OBS = $(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
 UTILS = utils_1.c \

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/02 17:35:12 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:23:44 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static char*	handle_tabs(char *line)
+char    *handle_tabs(char *line)
 {
 	char	*new;
 	int		i;
@@ -52,13 +52,13 @@ static char	**read_map(char *argv)
 		if (*line == '\t')
 			line = handle_tabs(line);
 		array = free_join(array, line);
-		free(line); 
+		free(line);
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
 	}
 	map = ft_split(array, '\n');
-	return (free(array), map);
+	return (free(array), close(fd), map);
 }
 
 static int	check_extension(char *argv)
