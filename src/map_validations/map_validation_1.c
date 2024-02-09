@@ -7,12 +7,13 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
 /*   Updated: 2024/02/09 15:34:18 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/09 13:43:42 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-char*	handle_tabs(char *line)
+char    *handle_tabs(char *line)
 {
 	char	*new;
 	int		i;

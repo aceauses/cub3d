@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/08 20:33:42 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:27:20 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
+# include <math.h>
+# include "struct.h"
 
 # define PATH_ERROR "Invalid path in the map file"
 # define RGB_ERROR "Please enter RGB values in the format: R, G, B"
@@ -32,9 +33,18 @@ int	map_validation(char *argv);
 
 char	*join_double_free(char *buffer, char *buff);
 void	free_double_pointer(char **pointer);
+char    *handle_tabs(char *line);
+
+bool	init_data(char *argv);
+size_t	calculate_height(char *argv);
+bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
+size_t	calculate_height(char *argv);
+size_t	calculate_width(char *argv);
+char	**get_map_only(char *argv);
+int		find_player_y(char **map);
+int	find_player_x(char **map);
 int		array_length(char **pointer);
 char	*handle_tabs(char *line);
-
 int		check_map_values(char **map);
 int		check_walls(char **map);
 void	map_errors(char *error);

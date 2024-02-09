@@ -4,6 +4,7 @@
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+         #
+#    By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
 #    Updated: 2024/02/09 15:03:04 by aceauses         ###   ########.fr        #
@@ -34,7 +35,7 @@ CYAN    := \033[36;1m
 WHITE   := \033[37;1m
 RESET = \033[;0m
 
-SRC = cub3d.c
+SRC = cub3d.c init.c init_utils.c
 SRC_OBS = $(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
 UTILS = utils_1.c \
