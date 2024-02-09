@@ -6,6 +6,7 @@
 /*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
+/*   Updated: 2024/02/09 15:14:27 by aceauses         ###   ########.fr       */
 /*   Updated: 2024/02/09 13:47:36 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -32,6 +33,10 @@ int main(int argc, char **argv)
 		if (init_data(argv[1]) == false)
 			return (1);
 		// Do mlx stuff
+	}
+	else
+	{
+		return (1);
 	}
 	// system("leaks cub3d");
 	return (0);
