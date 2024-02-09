@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/09 15:34:18 by aceauses         ###   ########.fr       */
-/*   Updated: 2024/02/09 13:43:42 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:09:34 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/cub3d.h"
 
@@ -67,6 +67,8 @@ static int	check_extension(char *argv)
 	if (argv == NULL)
 		return (0);
 	tmp = ft_strchr(argv, '.');
+	if (tmp == NULL)
+		return (0);
 	if (ft_strncmp(tmp, ".cub", 5) != 0 && ft_strlen(tmp) != 4)
 		return (0);
 	return (1);
