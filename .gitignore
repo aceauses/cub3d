@@ -6,3 +6,4 @@ obj
 *.o
 gnl
 cub3d
+.DS_Store

@@ -30,7 +30,7 @@ char    *handle_tabs(char *line);
 
 bool	init_data(char *argv);
 size_t	calculate_height(char *argv);
-bool allocate_memory(t_game **game, t_player **player);
+bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
 size_t	calculate_height(char *argv);
 size_t	calculate_width(char *argv);
 char	**get_map_only(char *argv);
