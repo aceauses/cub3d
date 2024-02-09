@@ -4,12 +4,12 @@
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+         #
-#    By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/02/09 15:03:04 by aceauses         ###   ########.fr        #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2024/02/09 16:07:57 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
@@ -19,9 +19,9 @@ MLX = MLX42/build/libmlx42.a
 GNL = GNL/gnl
 #if ubuntu
 ifeq ($(shell uname), Linux)
-	MLXFLAGS = -lGL
+	MLXFLAGS = -lGL -lglfw
 else
-	MLXFLAGS = -framework OpenGL -framework AppKit
+	MLXFLAGS = -framework OpenGL -framework AppKit -lglfw
 endif
 OBJS_DIR = obj/
 
