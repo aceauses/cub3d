@@ -21,7 +21,7 @@ jobs:
         run: make
 
       - name: Bad Maps Tests
-        run: ./test.sh
+        run: ./testers.sh
 
     #   - name: Run tests
     #     run: |
