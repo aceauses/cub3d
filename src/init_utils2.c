@@ -49,7 +49,7 @@ void	get_window_size(char *argv, size_t	*height, size_t	*width)
 	close(fd);
 }
 
-void	get_player_position(char	***map, int *x, int *y)
+void	get_player_position(char	***map, double *x, double *y)
 {
 	int		i;
 	int		j;

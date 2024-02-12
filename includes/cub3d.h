@@ -60,5 +60,5 @@ int open_fd(char *argv);
 
 void	get_colors(char *argv, char ***floor_colors, char ***ceiling_colors);
 void	get_window_size(char *argv, size_t	*height, size_t	*width);
-void	get_player_position(char	***map, int *x, int *y);
+void	get_player_position(char	***map, double *x, double *y);
 #endif

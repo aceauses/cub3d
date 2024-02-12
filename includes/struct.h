@@ -40,8 +40,8 @@ typedef struct	s_game
 
 typedef struct	s_player
 {
-	int					x;
-	int					y;
+	double					x;
+	double					y;
 	double				delta_x;
 	double				delta_y;
 	double				angle;
@@ -58,7 +58,10 @@ typedef struct	s_ray
 
 typedef struct	s_texture
 {
-	mlx_image_t			*image;
+	mlx_image_t			*no_image;
+	mlx_image_t			*so_image;
+	mlx_image_t			*we_image;
+	mlx_image_t			*ea_image;
 	mlx_texture_t		*no;
 	mlx_texture_t		*so;
 	mlx_texture_t		*we;

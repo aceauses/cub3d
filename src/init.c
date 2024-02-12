@@ -68,8 +68,8 @@ static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ra
 	get_colors(argv, &game->floor_colors, &game->ceiling_colors);	// HOW TF DO COLORS EVEN WORK? BRUH
 																	// MAYBE JUST PIXELPUT EVERYTHING AND HOPE FOR THE BEST?
 	get_player_position(&game->map, &game->player->x, &game->player->y);
-	game->player->delta_x = 0;
-	game->player->delta_y = 0;
+	game->player->delta_x = cos(game->player->angle) * 5;
+	game->player->delta_y = sin(game->player->angle) * 5;
 	game->player->angle = 0;
 	// game->ray = ray;
 	game->ray->ray_angle = 0;
@@ -95,6 +95,10 @@ bool	load_images(t_game *game)
 	game->texture->so = mlx_load_png(game->texture->so_path);
 	game->texture->we = mlx_load_png(game->texture->we_path);
 	game->texture->ea = mlx_load_png(game->texture->ea_path);
+	game->texture->no_image = mlx_texture_to_image(game->mlx, game->texture->no);
+	game->texture->so_image = mlx_texture_to_image(game->mlx, game->texture->so);
+	game->texture->we_image = mlx_texture_to_image(game->mlx, game->texture->we);
+	game->texture->ea_image = mlx_texture_to_image(game->mlx, game->texture->ea);
 
 	if (!game->texture->no || !game->texture->so || !game->texture->we
 			|| !game->texture->ea)
@@ -102,6 +106,54 @@ bool	load_images(t_game *game)
 	return (true);
 }
 
+
+void controls(mlx_key_data_t keydata, void* param)
+{
+	t_game	*game;
+
+	game = param;
+
+	// TO TEST IF IT WORKS, MOVE 1.5 UNITS IN THE DIRECTION OF THE PLAYER THEN ONE AXIS WON"t MOVE
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		mlx_close_window(game->mlx);
+
+	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
+	{
+		game->player->x += game->player->delta_x * 5;
+		game->player->y += game->player->delta_y * 5;
+		printf("X: %f Y: %f\n", game->player->x, game->player->y);
+		mlx_image_to_window(game->mlx, game->texture->no_image, game->player->x, game->player->y);
+	}
+	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
+	{
+		game->player->x -= game->player->delta_x * 5;
+		game->player->y -= game->player->delta_y * 5;
+		printf("X: %f Y: %f\n", game->player->x, game->player->y);
+		mlx_image_to_window(game->mlx, game->texture->no_image, game->player->x, game->player->y);
+
+	}
+	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
+	{
+		game->player->angle -= 0.1;
+		if (game->player->angle < 0)
+			game->player->angle = PI * 2;
+		game->player->delta_x = cos(game->player->angle) * 5;
+		game->player->delta_y = sin(game->player->angle) * 5;
+		printf("Angle: %f\n", game->player->angle);
+		mlx_image_to_window(game->mlx, game->texture->no_image, game->player->x, game->player->y);
+
+	}
+	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+	{
+		game->player->angle += 0.1;
+		if (game->player->angle > PI * 2)
+			game->player->angle -= PI * 2;
+		game->player->delta_x = cos(game->player->angle) * 5;
+		game->player->delta_y = sin(game->player->angle) * 5;
+		printf("Angle: %f\n", game->player->angle);
+	}
+	mlx_image_to_window(game->mlx, game->texture->no_image, game->player->x, game->player->y);
+}
 
 bool init_data(char *argv)
 {
@@ -114,15 +166,16 @@ bool init_data(char *argv)
 	player = NULL;
 	ray = NULL;
 	texture = NULL;
-	if (allocate_memory(&game, &player, &ray, &texture) == false ||
-		init_structure(argv, game, player, ray) == false)
+	if (!allocate_memory(&game, &player, &ray, &texture)
+			|| !init_structure(argv, game, player, ray))
 		return (false);
 	game->mlx = mlx_init(game->width * SIZE, game->height * SIZE, "Deez Nuts", false);
 	if (load_images(game) == false)
 		return (false);
 
 	// TEMPORARY TO RUN THE GAME SIR
+	mlx_key_hook(game->mlx, controls, game);
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);
-	return true;
+	return (true);
 }
