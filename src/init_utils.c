@@ -100,11 +100,10 @@ char	*ft_start_dup_end(size_t start, char *line, size_t end)
 	return (str);
 }
 
-
 void	assign_path_to_texture(char *argv, t_game *game)
 {
 	int		fd;
-	int		l;
+	int		end;
 	char	*line;
 
 	fd = open_fd(argv);
@@ -113,13 +112,13 @@ void	assign_path_to_texture(char *argv, t_game *game)
 	{
 		end = ft_strlen(line) - 1;
 		if (line[0] == 'S')
-			game->texture->so_path = ft_strdup_from_until(3, line, end);
+			game->texture->so_path = ft_start_dup_end(3, line, end);
 		if (line[0] == 'N')
-			game->texture->no_path = ft_strdup_from_until(3, line, end;
+			game->texture->no_path = ft_start_dup_end(3, line, end);
 		if (line[0] == 'W')
-			game->texture->we_path = ft_strdup_from_until(3, line, end);
+			game->texture->we_path = ft_start_dup_end(3, line, end);
 		if (line[0] == 'E')
-			game->texture->ea_path = ft_strdup_from_until(3, line, end);
+			game->texture->ea_path = ft_start_dup_end(3, line, end);
 		free(line);
 		line = get_next_line(fd);
 	}
