@@ -6,7 +6,7 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/12 13:35:20 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:48:20 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **
  * @param player Player structure
  * @param ray Ray structure
  * @return true If the initialization was successful
- * @return false If the initialization was not successful
+ * @return false If the initialization was not successfuls
  */
 static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ray)
 {
