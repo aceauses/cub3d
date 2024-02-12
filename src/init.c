@@ -6,7 +6,7 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/12 10:21:11 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/12 12:08:11 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,11 @@
 #include <stdio.h>
 
 /**
- * @brief Temporary function to print the map
- *
- * @param game The game structure
- */
-// static void print_map(t_game *game)
-// {
-// 	for (size_t i = 0; i < game->height; i++)
-// 	{
-// 		printf("%s", game->map[i]);
-// 	}
-// }
-
-/**
  * @brief This will allocate memory for the game and player structure
  *
  * @param game The game structure
- * @param player  The player structure
+ * @param player The player structure
+ * @param texture The texture structure
  * @return true If the memory was allocated successfully
  * @return false If the memory was not allocated successfully
  */
@@ -54,9 +42,11 @@ bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **
 		return (free(*game), free(*player), free(*ray), false);
 
 	(*game)->texture = *texture;
-
+	(*game)->player = *player;
+	(*game)->ray = *ray;
 	return true;
 }
+
 
 /**
  * @brief Initialize all structures and variables to default values
@@ -64,98 +54,24 @@ bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **
  * @param argv Path to the file
  * @param game Game structure
  * @param player Player structure
+ * @param ray Ray structure
  * @return true If the initialization was successful
  * @return false If the initialization was not successful
  */
-
-
-void	get_colors(char *argv, char ***floor_colors, char ***ceiling_colors)
-{
-	int		fd;
-	char	*line;
-
-	fd = open_fd(argv);
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		if (line[0] == 'F' && line[1] == ' ')
-			*floor_colors = ft_split(line + 2, ',');
-		else if (line[0] == 'C' && line[1] == ' ')
-			*ceiling_colors = ft_split(line + 2, ',');
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
-	close(fd);
-}
-
-void	get_window_size(char *argv, size_t	*height, size_t	*width)
-{
-	int		fd;
-	char	*line;
-	int		i;
-
-	fd = open_fd(argv);
-	line = get_next_line(fd);
-	*height = 0;
-	*width = 0;
-	while (line != NULL)
-	{
-		i = 0;
-		while (line[i] == ' ' || line[i] == '\t')
-			i++;
-		if (line[i] == '1' || line[i] == '0')
-		{
-			*height += 1;
-			if (ft_strlen(line) > *width)
-				*width = ft_strlen(line);
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
-	close(fd);
-}
-
-void	get_player_position(char	***map, int *x, int *y)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	*x = 0;
-	*y = 0;
-	while ((*map)[i] != NULL)
-	{
-		j = 0;
-		while ((*map)[i][j] != '\0')
-		{
-			if ((*map)[i][j] == 'N' || (*map)[i][j] == 'S' ||
-					(*map)[i][j] == 'E' || (*map)[i][j] == 'W')
-			{
-				*x = i;
-				*y = j;
-				return ;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
 static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ray)
 {
+	(void)player;
+	(void)ray;
 	get_window_size(argv, &game->height, &game->width);
 	game->map = get_map_only(argv, game);
 	game->map_textures = get_map_textures(argv, game);
 	get_colors(argv, &game->floor_colors, &game->ceiling_colors);	// HOW TF DO COLORS EVEN WORK? BRUH
 																	// MAYBE JUST PIXELPUT EVERYTHING AND HOPE FOR THE BEST?
-	game->player = player;
 	get_player_position(&game->map, &game->player->x, &game->player->y);
 	game->player->delta_x = 0;
 	game->player->delta_y = 0;
 	game->player->angle = 0;
-	game->ray = ray;
+	// game->ray = ray;
 	game->ray->ray_angle = 0;
 	game->ray->wall_hit_x = 0;
 	game->ray->wall_hit_y = 0;
@@ -167,7 +83,7 @@ static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ra
 
 /**
  * @brief This function will load the images, convert them to images and display them.
- * Will also assign game->texture to the texture structure
+ *
  *
  * @param game The game structure
  * @return true If the images were loaded successfully
@@ -199,14 +115,7 @@ bool	load_images(t_game *game)
 	return (true);
 }
 
-/**
- * @brief Allocate memory for the game and player structure and initialize the
- * game structure
- *
- * @param argv Path to the file
- * @return true If the memory was allocated successfully
- * @return false If the memory was not allocated successfully
- */
+
 bool init_data(char *argv)
 {
 	t_game *game;

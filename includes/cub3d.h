@@ -6,7 +6,7 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/10 15:09:57 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/12 12:00:26 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,8 @@ char	**get_map_textures(char *argv, t_game *game);
 
 int get_rgba(int r, int g, int b, int a);
 int open_fd(char *argv);
+
+void	get_colors(char *argv, char ***floor_colors, char ***ceiling_colors);
+void	get_window_size(char *argv, size_t	*height, size_t	*width);
+void	get_player_position(char	***map, int *x, int *y);
 #endif
