@@ -6,7 +6,7 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/10 16:38:02 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/12 12:47:28 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct	s_game
 	size_t				width; // NOT in Pixels
 	void				*win;
 	char				**map;
-	char				**map_textures;
 	char				**floor_colors;
 	char				**ceiling_colors;
 	t_color				floor;

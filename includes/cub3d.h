@@ -6,7 +6,7 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/12 12:00:26 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/12 12:49:07 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char    *handle_tabs(char *line);
 bool	init_data(char *argv);
 size_t	calculate_height(char *argv);
 bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
-char	**get_map_textures(char *argv, t_game *game);
+void	assign_path_to_texture(char *argv, t_game *game);
 
 int get_rgba(int r, int g, int b, int a);
 int open_fd(char *argv);

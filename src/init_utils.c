@@ -6,7 +6,7 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:57:15 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/10 15:04:19 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:29:25 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,46 +72,58 @@ int open_fd(char *argv)
 	return (map);
 }
 
-char	**get_map_textures(char *argv, t_game *game)
+/**
+ * @brief This will duplicate a string from start until end and return a new char pointer
+ * map.
+ *
+ *
+ * @param start From where to stat the duplication
+ * @param line Which string to duplicate
+ * @param end Until where to duplicate
+ * @return char *new_str;
+ */
+char	*ft_start_dup_end(size_t start, char *line, size_t end)
+{
+	char	*str;
+	size_t	i;
+
+	i = 0;
+	str = ft_calloc(end - start + 1, sizeof(char));
+	if (!str)
+		return (NULL);
+	while (start < end)
+	{
+		str[i] = line[start];
+		i++;
+		start++;
+	}
+	return (str);
+}
+
+
+void	assign_path_to_texture(char *argv, t_game *game)
 {
 	int		fd;
-	size_t	i;
-	char	**map;
+	int		l;
 	char	*line;
 
 	fd = open_fd(argv);
-	map = ft_calloc(game->height + 1, sizeof(char *));
-	if (!map)
-		return (NULL);
-	i = 0;
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
+		end = ft_strlen(line) - 1;
 		if (line[0] == 'S')
-		{
-			map[i++] = ft_strdup(line);
-			game->texture->so_path = ft_strdup(line + 3);
-		}
+			game->texture->so_path = ft_strdup_from_until(3, line, end);
 		if (line[0] == 'N')
-		{
-			map[i++] = ft_strdup(line);
-			game->texture->no_path = ft_strdup(line + 3);
-		}
+			game->texture->no_path = ft_strdup_from_until(3, line, end;
 		if (line[0] == 'W')
-		{
-			map[i++] = ft_strdup(line);
-			game->texture->we_path = ft_strdup(line + 3);
-		}
+			game->texture->we_path = ft_strdup_from_until(3, line, end);
 		if (line[0] == 'E')
-		{
-			map[i++] = ft_strdup(line);
-			game->texture->ea_path = ft_strdup(line + 3);
-		}
+			game->texture->ea_path = ft_strdup_from_until(3, line, end);
+		free(line);
 		line = get_next_line(fd);
 	}
-	map[i] = NULL;
 	free(line);
 	close(fd);
-	return (game->map);
 }
 

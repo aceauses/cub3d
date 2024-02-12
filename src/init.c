@@ -6,7 +6,7 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/12 12:08:11 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/12 13:35:20 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ra
 	(void)ray;
 	get_window_size(argv, &game->height, &game->width);
 	game->map = get_map_only(argv, game);
-	game->map_textures = get_map_textures(argv, game);
+	assign_path_to_texture(argv, game);
 	get_colors(argv, &game->floor_colors, &game->ceiling_colors);	// HOW TF DO COLORS EVEN WORK? BRUH
 																	// MAYBE JUST PIXELPUT EVERYTHING AND HOPE FOR THE BEST?
 	get_player_position(&game->map, &game->player->x, &game->player->y);
@@ -82,8 +82,8 @@ static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ra
 }
 
 /**
- * @brief This function will load the images, convert them to images and display them.
- *
+ * @brief This function will load the images using mlx_load_png and save them
+ * into the correct texture property of game->texture for later use.
  *
  * @param game The game structure
  * @return true If the images were loaded successfully
@@ -91,27 +91,14 @@ static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ra
  */
 bool	load_images(t_game *game)
 {
-	if (ft_strcmp(game->texture->no_path, "./sprites/no.png") != 0)
-	{
-		game->texture->no = mlx_load_png("./sprites/no.png");
-		game->texture->image = mlx_texture_to_image(game->mlx, game->texture->no);
-		
-	}
-	if (ft_strcmp(game->texture->so_path, "./sprites/so.png") != 0)
-	{
-		game->texture->so = mlx_load_png("./sprites/so.png");
-		game->texture->image = mlx_texture_to_image(game->mlx, game->texture->so);
-	}
-	if (ft_strcmp(game->texture->we_path, "./sprites/we.png") != 0)
-	{
-		game->texture->we = mlx_load_png("./sprites/we.png");
-		game->texture->image = mlx_texture_to_image(game->mlx, game->texture->we);
-	}
-	if (ft_strcmp(game->texture->ea_path, "./sprites/ea.png") != 0)
-	{
-		game->texture->ea = mlx_load_png("./sprites/ea.png");
-		game->texture->image = mlx_texture_to_image(game->mlx, game->texture->ea);
-	}
+	game->texture->no = mlx_load_png(game->texture->no_path);
+	game->texture->so = mlx_load_png(game->texture->so_path);
+	game->texture->we = mlx_load_png(game->texture->we_path);
+	game->texture->ea = mlx_load_png(game->texture->ea_path);
+
+	if (!game->texture->no || !game->texture->so || !game->texture->we
+			|| !game->texture->ea)
+		return (false);
 	return (true);
 }
 
@@ -133,7 +120,7 @@ bool init_data(char *argv)
 	game->mlx = mlx_init(game->width * SIZE, game->height * SIZE, "Deez Nuts", false);
 	if (load_images(game) == false)
 		return (false);
-	
+
 	// TEMPORARY TO RUN THE GAME SIR
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);
