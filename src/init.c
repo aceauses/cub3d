@@ -6,11 +6,12 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/08 10:57:56 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/12 10:21:11 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include "../includes/struct.h"
 #include <stdio.h>
 
 /**
@@ -52,6 +53,8 @@ bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **
 	if (!(*texture))
 		return (free(*game), free(*player), free(*ray), false);
 
+	(*game)->texture = *texture;
+
 	return true;
 }
 
@@ -64,16 +67,91 @@ bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **
  * @return true If the initialization was successful
  * @return false If the initialization was not successful
  */
+
+
+void	get_colors(char *argv, char ***floor_colors, char ***ceiling_colors)
+{
+	int		fd;
+	char	*line;
+
+	fd = open_fd(argv);
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		if (line[0] == 'F' && line[1] == ' ')
+			*floor_colors = ft_split(line + 2, ',');
+		else if (line[0] == 'C' && line[1] == ' ')
+			*ceiling_colors = ft_split(line + 2, ',');
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
+	close(fd);
+}
+
+void	get_window_size(char *argv, size_t	*height, size_t	*width)
+{
+	int		fd;
+	char	*line;
+	int		i;
+
+	fd = open_fd(argv);
+	line = get_next_line(fd);
+	*height = 0;
+	*width = 0;
+	while (line != NULL)
+	{
+		i = 0;
+		while (line[i] == ' ' || line[i] == '\t')
+			i++;
+		if (line[i] == '1' || line[i] == '0')
+		{
+			*height += 1;
+			if (ft_strlen(line) > *width)
+				*width = ft_strlen(line);
+		}
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
+	close(fd);
+}
+
+void	get_player_position(char	***map, int *x, int *y)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	*x = 0;
+	*y = 0;
+	while ((*map)[i] != NULL)
+	{
+		j = 0;
+		while ((*map)[i][j] != '\0')
+		{
+			if ((*map)[i][j] == 'N' || (*map)[i][j] == 'S' ||
+					(*map)[i][j] == 'E' || (*map)[i][j] == 'W')
+			{
+				*x = i;
+				*y = j;
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ray)
 {
-
-	game->height = calculate_height(argv);
-	game->width = calculate_width(argv);
-	game->map = get_map_only(argv);
-	// print_map(game);
+	get_window_size(argv, &game->height, &game->width);
+	game->map = get_map_only(argv, game);
+	game->map_textures = get_map_textures(argv, game);
+	get_colors(argv, &game->floor_colors, &game->ceiling_colors);	// HOW TF DO COLORS EVEN WORK? BRUH
+																	// MAYBE JUST PIXELPUT EVERYTHING AND HOPE FOR THE BEST?
 	game->player = player;
-	game->player->y = find_player_y(game->map);
-	game->player->x = find_player_x(game->map);
+	get_player_position(&game->map, &game->player->x, &game->player->y);
 	game->player->delta_x = 0;
 	game->player->delta_y = 0;
 	game->player->angle = 0;
@@ -93,33 +171,31 @@ static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ra
  *
  * @param game The game structure
  * @return true If the images were loaded successfully
- * @return false If the mem
+ * @return false If the mem images were not loaded successfully
  */
-bool	load_images(t_game *game, t_texture *texture)
+bool	load_images(t_game *game)
 {
-	game->texture = texture;
-
-	texture->no = mlx_load_png("sprites/no.png");
-	texture->image = mlx_texture_to_image(game->mlx, texture->no);
-	mlx_delete_texture(texture->no);
-	// put_image(game);
-
-	texture->so = mlx_load_png("sprites/so.png");
-	texture->image = mlx_texture_to_image(game->mlx, texture->so);
-	mlx_delete_texture(texture->so);
-	// put_image(game);
-
-	texture->we = mlx_load_png("sprites/we.png");
-	texture->image = mlx_texture_to_image(game->mlx, texture->we);
-	mlx_delete_texture(texture->we);
-	// put_image(game);
-
-
-	texture->ea = mlx_load_png("sprites/ea.png");
-	texture->image = mlx_texture_to_image(game->mlx, texture->ea);
-	mlx_delete_texture(texture->ea);
-	// put_image(game);
-
+	if (ft_strcmp(game->texture->no_path, "./sprites/no.png") != 0)
+	{
+		game->texture->no = mlx_load_png("./sprites/no.png");
+		game->texture->image = mlx_texture_to_image(game->mlx, game->texture->no);
+		
+	}
+	if (ft_strcmp(game->texture->so_path, "./sprites/so.png") != 0)
+	{
+		game->texture->so = mlx_load_png("./sprites/so.png");
+		game->texture->image = mlx_texture_to_image(game->mlx, game->texture->so);
+	}
+	if (ft_strcmp(game->texture->we_path, "./sprites/we.png") != 0)
+	{
+		game->texture->we = mlx_load_png("./sprites/we.png");
+		game->texture->image = mlx_texture_to_image(game->mlx, game->texture->we);
+	}
+	if (ft_strcmp(game->texture->ea_path, "./sprites/ea.png") != 0)
+	{
+		game->texture->ea = mlx_load_png("./sprites/ea.png");
+		game->texture->image = mlx_texture_to_image(game->mlx, game->texture->ea);
+	}
 	return (true);
 }
 
@@ -145,10 +221,10 @@ bool init_data(char *argv)
 	if (allocate_memory(&game, &player, &ray, &texture) == false ||
 		init_structure(argv, game, player, ray) == false)
 		return (false);
-	game->mlx = mlx_init(game->width * 64, game->height * 64, "Deez Nuts", false);
-	if (load_images(game, texture) == false)
+	game->mlx = mlx_init(game->width * SIZE, game->height * SIZE, "Deez Nuts", false);
+	if (load_images(game) == false)
 		return (false);
-
+	
 	// TEMPORARY TO RUN THE GAME SIR
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);

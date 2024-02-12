@@ -1,11 +1,10 @@
-SO ./maps/bad_maps/map1.cubb
-NO ./maps/bad_maps/map1.cubb
+SO ./sprites/so.png
+NO ./sprites/no.png
+WE ./sprites/we.png
+EA ./sprites/ea.png
 
-WE ./maps/bad_maps/map1.cubb
-EA ./maps/bad_maps/map1.cubb
-
-F 20,1,1
-C 252,30,10
+C 161,133,148
+F 255,255,255
 		11111       1111111111111
 		10001        111100000001
 		10101111 111    100000001

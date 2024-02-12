@@ -6,7 +6,7 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/08 09:27:20 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/10 15:09:57 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <stdlib.h>
 # include <math.h>
 # include "struct.h"
+
+# define SIZE 64
 
 # define PATH_ERROR "Invalid path in the map file"
 # define RGB_ERROR "Please enter RGB values in the format: R, G, B"
@@ -37,12 +39,8 @@ char    *handle_tabs(char *line);
 
 bool	init_data(char *argv);
 size_t	calculate_height(char *argv);
-bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
-size_t	calculate_height(char *argv);
-size_t	calculate_width(char *argv);
-char	**get_map_only(char *argv);
-int		find_player_y(char **map);
-int	find_player_x(char **map);
+bool	allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
+ char	**get_map_only(char *argv, t_game *game);
 int		array_length(char **pointer);
 char	*handle_tabs(char *line);
 int		check_map_values(char **map);
@@ -55,9 +53,8 @@ char    *handle_tabs(char *line);
 bool	init_data(char *argv);
 size_t	calculate_height(char *argv);
 bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
-size_t	calculate_height(char *argv);
-size_t	calculate_width(char *argv);
-char	**get_map_only(char *argv);
-int		find_player_y(char **map);
-int	find_player_x(char **map);
+char	**get_map_textures(char *argv, t_game *game);
+
+int get_rgba(int r, int g, int b, int a);
+int open_fd(char *argv);
 #endif
