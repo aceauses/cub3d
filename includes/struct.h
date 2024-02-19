@@ -17,6 +17,7 @@
 
 
 # define PI 3.1415926535
+# define FOV_ANGLE 60*(PI/180)
 
 typedef uint32_t	t_color;
 
@@ -36,12 +37,13 @@ typedef struct	s_game
 	struct s_image		*image;
 	struct s_ray		*ray;
 	struct s_texture	*texture;
+	mlx_image_t			*tmp_ray_image;
 }						t_game;
 
 typedef struct	s_player
 {
-	double					x;
-	double					y;
+	double				x;
+	double				y;
 	double				delta_x;
 	double				delta_y;
 	double				angle;
@@ -49,11 +51,17 @@ typedef struct	s_player
 
 typedef struct	s_ray
 {
-	double				ray_angle;
-	double				wall_hit_x;
-	double				wall_hit_y;
+	double				angle;
+	int					x;
+	int					y;
 	double				x_offset;
 	double				y_offset;
+	int					dof;
+	int					map_x;
+	int					map_y;
+	int					map_p;
+	double				distH;
+	double				distV;
 }						t_ray;
 
 typedef struct	s_texture
@@ -62,10 +70,12 @@ typedef struct	s_texture
 	mlx_image_t			*so_image;
 	mlx_image_t			*we_image;
 	mlx_image_t			*ea_image;
+	mlx_image_t			*ray_image;
 	mlx_texture_t		*no;
 	mlx_texture_t		*so;
 	mlx_texture_t		*we;
 	mlx_texture_t		*ea;
+	mlx_texture_t		*ray;
 	char				*no_path;
 	char				*so_path;
 	char				*we_path;

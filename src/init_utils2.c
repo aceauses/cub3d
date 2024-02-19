@@ -49,7 +49,19 @@ void	get_window_size(char *argv, size_t	*height, size_t	*width)
 	close(fd);
 }
 
-void	get_player_position(char	***map, double *x, double *y)
+void	set_angle_from_char(char c, t_player *player)
+{
+	if (c == 'N')
+		player->angle = degToRad(270);
+	if (c == 'E')
+		player->angle = degToRad(0);
+	if (c == 'S')
+		player->angle = degToRad(90);
+	if (c == 'W')
+		player->angle = degToRad(180);
+}
+
+void	get_player_position(char ***map, double *x, double *y, t_player *player)
 {
 	int		i;
 	int		j;
@@ -65,8 +77,9 @@ void	get_player_position(char	***map, double *x, double *y)
 			if ((*map)[i][j] == 'N' || (*map)[i][j] == 'S' ||
 					(*map)[i][j] == 'E' || (*map)[i][j] == 'W')
 			{
-				*x = i;
-				*y = j;
+				*y = i * 64.0;
+				*x = j * 64.0;
+				set_angle_from_char((*map)[i][j], player);
 				return ;
 			}
 			j++;

@@ -35,7 +35,7 @@ CYAN    := \033[36;1m
 WHITE   := \033[37;1m
 RESET = \033[;0m
 
-SRC = cub3d.c init.c init_utils.c init_utils2.c colors.c
+SRC = cub3d.c init.c init_utils.c init_utils2.c colors.c controls.c
 SRC_OBS = $(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
 UTILS = utils_1.c \

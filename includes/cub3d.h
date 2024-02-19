@@ -35,12 +35,12 @@ int	map_validation(char *argv);
 
 char	*join_double_free(char *buffer, char *buff);
 void	free_double_pointer(char **pointer);
-char    *handle_tabs(char *line);
+char	*handle_tabs(char *line);
 
 bool	init_data(char *argv);
 size_t	calculate_height(char *argv);
 bool	allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
- char	**get_map_only(char *argv, t_game *game);
+char	**get_map_only(char *argv, t_game *game);
 int		array_length(char **pointer);
 char	*handle_tabs(char *line);
 int		check_map_values(char **map);
@@ -52,13 +52,27 @@ char    *handle_tabs(char *line);
 
 bool	init_data(char *argv);
 size_t	calculate_height(char *argv);
-bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
+bool 	allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
 void	assign_path_to_texture(char *argv, t_game *game);
 
-int get_rgba(int r, int g, int b, int a);
-int open_fd(char *argv);
+int		get_rgba(int r, int g, int b, int a);
+int		open_fd(char *argv);
 
 void	get_colors(char *argv, char ***floor_colors, char ***ceiling_colors);
 void	get_window_size(char *argv, size_t	*height, size_t	*width);
-void	get_player_position(char	***map, double *x, double *y);
+void	get_player_position(char	***map, double *x, double *y, t_player *player);
+
+// ray
+void	check_vertical(t_game *game);
+void	check_horizontal(t_game *game);
+void	esc_free(t_game *game);
+double	degToRad(int a);
+
+// controls.c
+void	controls(void* param);
+void	move_player(t_game *game, char button);
+void	rotate_player(t_game *game, char button);
+void	CalculateRays(t_game *game);
+
+
 #endif
