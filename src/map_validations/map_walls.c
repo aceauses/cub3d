@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:00:02 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/08 22:08:54 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:39:06 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,6 @@ char	**copy_map(char **matrix, int y)
 	return (copied);
 }
 
-/*Using flood fill to find the path of the player*/
-// void	fill(char **matrix, int y, int x)
-// {
-// 	if (y < 0 || x < 0 || matrix[y] == NULL || x >= (int)ft_strlen(matrix[y]))
-// 		return ;
-// 	if (matrix[y][x] == '\0' || matrix[y][x] == ' '
-// 		|| matrix[y][x] == '0' || matrix[y][x] == '|' || matrix[y][x] == ','
-// 		|| matrix[y][x] == 'W' || matrix[y][x] == 'N' || matrix[y][x] == 'S'
-// 		|| matrix[y][x] == 'E')
-// 		return ;
-// 	matrix[y][x] = '|';
-// 	fill(matrix, y, x + 1);
-// 	fill(matrix, y, x - 1);
-// 	fill(matrix, y + 1, x);
-// 	fill(matrix, y - 1, x);
-// }
-
 void	fill(char **matrix, int y, int x, int *good)
 {
 	if (y < 0 || x < 0 || matrix[y] == NULL || x >= (int)ft_strlen(matrix[y]))
@@ -119,9 +102,10 @@ int	check_horizontal_walls(char **map)
 {
 	int	x;
 	int	y;
-	int bad = 0;
+	int bad;
 
 	y = 0;
+	bad = 0;
 	if (map[y] != NULL)
 	{
 		x = skip_first_spaces(map[y]);
@@ -143,6 +127,52 @@ int	check_horizontal_walls(char **map)
 	return (1);
 }
 
+int	check_inside_map(char **map)
+{
+	int	y;
+	int	x;
+	int bad;
+
+	y = 1;
+	bad = 0;
+	while (map[y] != NULL)
+	{
+		x = skip_first_spaces(map[y]);
+		while (map[y][x] != '\0')
+		{
+			if (map[y][x] == ' ')
+				fill(map, y, x, &bad);
+			while (map[y][x] != '\0' && map[y][x] == '|')
+				x++;
+			x++;
+		}
+		y++;
+	}
+	if (bad > 0)
+		return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
+	return (1);
+}
+
+int	check_map_walls(char **map)
+{
+	int	y;
+	int	x;
+	int bad;
+
+	y = 1;
+	bad = 0;
+	while (map[y] != NULL)
+	{
+		x = skip_first_spaces(map[y]);
+		if (map[y][x] != '1' || map[y][ft_strlen(map[y]) - 1] != '1')
+			return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
+		y++;
+	}
+	if (bad > 0)
+		return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
+	return (1);
+}
+
 int	check_walls(char **map)
 {
 	int		x;
@@ -153,8 +183,11 @@ int	check_walls(char **map)
 	if (!find_first_wall(map, &x, &y))
 		return (0);
 	char **map_copy = copy_map(map, y);
-	if (!check_horizontal_walls(map_copy))
+	if (!check_horizontal_walls(map_copy) || !check_inside_map(map_copy)
+		|| !check_map_walls(map_copy))
 		return (0);
+	for (int i = 0; map_copy[i] != NULL; i++)
+		printf("%s\n", map_copy[i]);
 	free_double_pointer(map_copy);
 	return 1;
 }

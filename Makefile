@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+         #
+#    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/02/09 16:07:57 by aceauses         ###   ########.fr        #
+#    Updated: 2024/02/19 17:51:12 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = cub3d
 LIBFT = libft/libft.a
 MLX = MLX42/build/libmlx42.a
+MLXDIR = $(dir $(MLX))
+MLXLIB = $(basename $(notdir $(MLX)))
 GNL = GNL/gnl
 #if ubuntu
 ifeq ($(shell uname), Linux)
@@ -35,7 +37,7 @@ CYAN    := \033[36;1m
 WHITE   := \033[37;1m
 RESET = \033[;0m
 
-SRC = cub3d.c init.c init_utils.c
+SRC = cub3d.c# init.c init_utils.c
 SRC_OBS = $(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
 UTILS = utils_1.c \
@@ -73,7 +75,7 @@ $(OBJS_DIR)%.o: src/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(MLX) $(UTILS_OBS) $(SRC_OBS) $(LIBFT) $(GNL)
-	@$(CC) $(CFLAGS) $(SRC_OBS) $(UTILS_OBS) $(MLX) $(LIBFT) $(GNL) $(MLXFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(MLX) $(MLXFLAGS) $(SRC_OBS) $(UTILS_OBS) $(LIBFT) $(GNL) -o $(NAME)
 	@echo "$(CYAN)[CUB3D] $(GREEN)Cub3D Compiled$(RESET)"
 
 NoMlx: $(UTILS_OBS) $(SRC_OBS) $(LIBFT) $(GNL)
@@ -87,6 +89,8 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
+	@cd MLX42 && rm -rf build
+	@echo "$(CYAN)[MLX42] $(RED)Library Cleaned$(RESET)"
 	@make -C libft fclean
 	@make -C GNL fclean
 

@@ -20,10 +20,8 @@ jobs:
       - name: Build project
         run: make
 
+      - name: Re-Build project with NoMlx
+        run: make fclean NoMlx
+
       - name: Bad Maps Tests
         run: ./testers.sh
-
-    #   - name: Run tests
-    #     run: |
-    #       cd build
-    #       ctest

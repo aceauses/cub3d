@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/09 21:17:45 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/18 10:11:10 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int main(int argc, char **argv)
 		atexit(check_leaks);
 	if (map_validation(argv[1]))
 	{
-		if (init_data(argv[1]) == false)
-			return (1);
+		// if (init_data(argv[1]) == false)
+		// 	return (1);
 		// Do mlx stuff
 	}
 	else
