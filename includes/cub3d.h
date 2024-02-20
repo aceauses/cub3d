@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/08 09:27:20 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:26:46 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,18 @@
 # define INVALID_MAP "Invalid map"
 
 int	map_validation(char *argv);
+char	**read_map(char *argv);
+int		find_first_character(char **map, int *x, int *y, int C);
+char	**copy_map(char **matrix, int y);
 
 char	*join_double_free(char *buffer, char *buff);
 void	free_double_pointer(char **pointer);
 char    *handle_tabs(char *line);
 
-bool	init_data(char *argv);
-size_t	calculate_height(char *argv);
-bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
-size_t	calculate_height(char *argv);
-size_t	calculate_width(char *argv);
-char	**get_map_only(char *argv);
-int		find_player_y(char **map);
-int	find_player_x(char **map);
+t_game	*init_data(char *argv);
+bool allocate_memory(t_player **player, t_ray **ray, t_texture **texture);
+size_t	calculate_height(char **map);
+size_t	calculate_width(char **map);
 int		array_length(char **pointer);
 char	*handle_tabs(char *line);
 int		check_map_values(char **map);

@@ -6,13 +6,13 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:00:02 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/19 17:39:06 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:01:00 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int	find_first_wall(char **map, int *x, int *y)
+int	find_first_character(char **map, int *x, int *y, int C)
 {
 	int	y_m;
 	int	x_m;
@@ -22,7 +22,7 @@ static int	find_first_wall(char **map, int *x, int *y)
 	{
 		x_m = 0;
 		while (map[y_m][x_m] == ' '
-			&& (map[y_m][x_m] != '1' && map[y_m][x_m] != '\0'))
+			&& (map[y_m][x_m] != C && map[y_m][x_m] != '\0'))
 			x_m++;
 		if (!ft_strncmp(map[y_m], "SO", 2) || !ft_strncmp(map[y_m], "NO", 2)
 			|| !ft_strncmp(map[y_m], "WE", 2) || !ft_strncmp(map[y_m], "EA", 2)
@@ -31,11 +31,10 @@ static int	find_first_wall(char **map, int *x, int *y)
 				y_m++;
 				continue;
 			}
-		if (map[y_m][x_m] == '1')
+		while (map[y_m][x_m] != '\0' && map[y_m][x_m] != ' ')
 		{
-			*x = x_m;
-			*y = y_m;
-			return (1);
+			if (map[y_m][x_m++] == C)
+				return (*x = x_m, *y = y_m, 1);
 		}
 		y_m++;
 	}
@@ -180,14 +179,12 @@ int	check_walls(char **map)
 
 	x = 0;
 	y = 0;
-	if (!find_first_wall(map, &x, &y))
+	if (!find_first_character(map, &x, &y, '1'))
 		return (0);
 	char **map_copy = copy_map(map, y);
 	if (!check_horizontal_walls(map_copy) || !check_inside_map(map_copy)
 		|| !check_map_walls(map_copy))
 		return (0);
-	for (int i = 0; map_copy[i] != NULL; i++)
-		printf("%s\n", map_copy[i]);
 	free_double_pointer(map_copy);
-	return 1;
+	return (1);
 }

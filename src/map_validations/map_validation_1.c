@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/09 20:54:38 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:08:47 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char    *handle_tabs(char *line)
 	return (free(line), new);
 }
 
-static char	**read_map(char *argv)
+char	**read_map(char *argv)
 {
 	char	**map;
 	char	*array;
@@ -76,15 +76,13 @@ static int	check_extension(char *argv)
 
 int	map_validation(char *argv)
 {
-	char **map;
+	char	**cube;
 
 	if (!check_extension(argv))
 		return (0);
-	map = read_map(argv);
-	if (!check_map_values(map) || !check_walls(map))
-		return (free_double_pointer(map), 0);
-	// for (int i = 0; map[i] != NULL; i++)
-	// 	printf("%s\n", map[i]);
-	free_double_pointer(map);
+	cube = read_map(argv);
+	if (!check_map_values(cube) || !check_walls(cube))
+		return (free_double_pointer(cube), 0);
+	free_double_pointer(cube);
 	return (1);
 }

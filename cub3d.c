@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/18 10:11:10 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:40:10 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,36 @@ void	check_leaks()
 
 int main(int argc, char **argv)
 {
-	(void)argc;
+	t_game *game;
+
+	game = NULL;
 	if (argc != 2)
 	{
 		printf("Error\nWrong number of arguments\n");
 		return (0);
 	}
-	if (!ft_strcmp(argv[2], "-l"))
-		atexit(check_leaks);
 	if (map_validation(argv[1]))
 	{
-		// if (init_data(argv[1]) == false)
-		// 	return (1);
+		game = init_data(argv[1]);
+		if (!game)
+			return (1);
 		// Do mlx stuff
+		for (size_t i = 0; game->map[i]; i++)
+		{
+			printf("%s\n", game->map[i]);
+		}
+		printf("playe x: %d\n", game->player->x);
+		printf("playe y: %d\n", game->player->y);
+		printf("map width: %zu\n", game->m_width);
+		printf("map height: %zu\n", game->m_height);
+		free_double_pointer(game->map);
+		free_double_pointer(game->cub_file);
+		free(game->player);
+		free(game->ray);
+		free(game->texture);
+		free(game);
 	}
 	else
-	{
 		return (1);
-	}
-	// system("leaks cub3d");
 	return (0);
 }

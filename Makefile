@@ -6,7 +6,7 @@
 #    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/02/19 17:51:12 by aceauses         ###   ########.fr        #
+#    Updated: 2024/02/20 16:54:55 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ CYAN    := \033[36;1m
 WHITE   := \033[37;1m
 RESET = \033[;0m
 
-SRC = cub3d.c# init.c init_utils.c
+SRC = cub3d.c init.c init_utils.c
 SRC_OBS = $(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
 UTILS = utils_1.c \

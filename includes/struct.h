@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/08 10:18:33 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:33:45 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@
 
 
 # define PI 3.1415926535
+# define HEIGHT 700
+# define WIDTH 600
 
 typedef struct	s_game
 {
 	void				*mlx;
-	size_t				height; // NOT in Pixels
-	size_t				width; // NOT in Pixels
-	void				*win;
+	size_t				m_height; // NOT in Pixels
+	size_t				m_width; // NOT in Pixels
+	char				**cub_file;
 	char				**map;
 	struct s_player		*player;
 	struct s_image		*image;
@@ -52,6 +54,7 @@ typedef struct	s_ray
 
 typedef struct	s_texture
 {
+	char			**path;
 	mlx_image_t		*image;
 	mlx_texture_t	*no;
 	mlx_texture_t	*so;

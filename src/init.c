@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/08 10:57:56 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:40:16 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,20 @@
  * @return true If the memory was allocated successfully
  * @return false If the memory was not allocated successfully
  */
-bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture)
+bool allocate_memory(t_player **player, t_ray **ray, t_texture **texture)
 {
-	*game = malloc(sizeof(t_game));
-	if (!(*game))
-		return false;
-
 	*player = malloc(sizeof(t_player));
 	if (!(*player))
-		return (free(*game), false);
+		return (false);
+	ft_memset(*player, 0, sizeof(t_player));
 
 	*ray = malloc(sizeof(t_ray));
 	if (!(*ray))
-		return (free(*game), free(*player), false);
+		return (free(*player), false);
 
 	*texture = malloc(sizeof(t_texture));
 	if (!(*texture))
-		return (free(*game), free(*player), free(*ray), false);
+		return (free(*player), free(*ray), false);
 
 	return true;
 }
@@ -64,27 +61,28 @@ bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **
  * @return true If the initialization was successful
  * @return false If the initialization was not successful
  */
-static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ray)
+static t_game *init_structure(char *argv, t_player *player
+	, t_ray *ray, t_texture *texture)
 {
+	t_game *game;
 
-	game->height = calculate_height(argv);
-	game->width = calculate_width(argv);
-	game->map = get_map_only(argv);
-	// print_map(game);
+	int x = 0;
+	int y = 0;
+	game = malloc(sizeof(t_game));
+	if (!game)
+		return (free(player), free(ray), free(texture), NULL);
+	ft_memset(game, 0, sizeof(t_game));
+	game->cub_file = read_map(argv);
+	if (!find_first_character(game->cub_file, &x, &y, '1'))
+		return (0);
+	game->map = copy_map(game->cub_file, y);
+	game->m_height = calculate_height(game->map);
+	game->m_width = calculate_width(game->map);
 	game->player = player;
-	game->player->y = find_player_y(game->map);
-	game->player->x = find_player_x(game->map);
-	game->player->delta_x = 0;
-	game->player->delta_y = 0;
-	game->player->angle = 0;
+	find_first_character(game->map, &game->player->x, &game->player->y, 'N');
+	game->texture = texture;
 	game->ray = ray;
-	game->ray->ray_angle = 0;
-	game->ray->wall_hit_x = 0;
-	game->ray->wall_hit_y = 0;
-	game->ray->x_offset = 0;
-	game->ray->y_offset = 0;
-	// STILL IN PROGRESS!
-	return (true);
+	return (game);
 }
 
 /**
@@ -95,33 +93,33 @@ static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ra
  * @return true If the images were loaded successfully
  * @return false If the mem
  */
-bool	load_images(t_game *game, t_texture *texture)
-{
-	game->texture = texture;
+// bool	load_images(t_game *game, t_texture *texture)
+// {
+// 	game->texture = texture;
 
-	texture->no = mlx_load_png("sprites/no.png");
-	texture->image = mlx_texture_to_image(game->mlx, texture->no);
-	mlx_delete_texture(texture->no);
-	// put_image(game);
+// 	texture->no = mlx_load_png("sprites/no.png");
+// 	texture->image = mlx_texture_to_image(game->mlx, texture->no);
+// 	mlx_delete_texture(texture->no);
+// 	// put_image(game);
 
-	texture->so = mlx_load_png("sprites/so.png");
-	texture->image = mlx_texture_to_image(game->mlx, texture->so);
-	mlx_delete_texture(texture->so);
-	// put_image(game);
+// 	texture->so = mlx_load_png("sprites/so.png");
+// 	texture->image = mlx_texture_to_image(game->mlx, texture->so);
+// 	mlx_delete_texture(texture->so);
+// 	// put_image(game);
 
-	texture->we = mlx_load_png("sprites/we.png");
-	texture->image = mlx_texture_to_image(game->mlx, texture->we);
-	mlx_delete_texture(texture->we);
-	// put_image(game);
+// 	texture->we = mlx_load_png("sprites/we.png");
+// 	texture->image = mlx_texture_to_image(game->mlx, texture->we);
+// 	mlx_delete_texture(texture->we);
+// 	// put_image(game);
 
 
-	texture->ea = mlx_load_png("sprites/ea.png");
-	texture->image = mlx_texture_to_image(game->mlx, texture->ea);
-	mlx_delete_texture(texture->ea);
-	// put_image(game);
+// 	texture->ea = mlx_load_png("sprites/ea.png");
+// 	texture->image = mlx_texture_to_image(game->mlx, texture->ea);
+// 	mlx_delete_texture(texture->ea);
+// 	// put_image(game);
 
-	return (true);
-}
+// 	return (true);
+// }
 
 /**
  * @brief Allocate memory for the game and player structure and initialize the
@@ -131,26 +129,19 @@ bool	load_images(t_game *game, t_texture *texture)
  * @return true If the memory was allocated successfully
  * @return false If the memory was not allocated successfully
  */
-bool init_data(char *argv)
+t_game *init_data(char *argv)
 {
 	t_game *game;
 	t_ray *ray;
 	t_player *player;
 	t_texture *texture;
 
-	game = NULL;
 	player = NULL;
 	ray = NULL;
+	game = NULL;
 	texture = NULL;
-	if (allocate_memory(&game, &player, &ray, &texture) == false ||
-		init_structure(argv, game, player, ray) == false)
-		return (false);
-	game->mlx = mlx_init(game->width * 64, game->height * 64, "Deez Nuts", false);
-	if (load_images(game, texture) == false)
-		return (false);
-
-	// TEMPORARY TO RUN THE GAME SIR
-	mlx_loop(game->mlx);
-	mlx_terminate(game->mlx);
-	return true;
+	if (allocate_memory(&player, &ray, &texture) == false)
+		return (NULL);
+	game = init_structure(argv, player, ray, texture);
+	return (game);
 }
