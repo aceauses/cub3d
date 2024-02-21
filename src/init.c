@@ -23,28 +23,25 @@
  * @return true If the memory was allocated successfully
  * @return false If the memory was not allocated successfully
  */
-bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture)
+bool	allocate_memory(t_game **game, t_player **player,
+	t_ray **ray, t_texture **texture)
 {
 	*game = malloc(sizeof(t_game));
 	if (!(*game))
-		return false;
-
+		return (false);
 	*player = malloc(sizeof(t_player));
 	if (!(*player))
 		return (free(*game), false);
-
 	*ray = malloc(sizeof(t_ray));
 	if (!(*ray))
 		return (free(*game), free(*player), false);
-
 	*texture = malloc(sizeof(t_texture));
 	if (!(*texture))
 		return (free(*game), free(*player), free(*ray), false);
-
 	(*game)->texture = *texture;
 	(*game)->player = *player;
 	(*game)->ray = *ray;
-	return true;
+	return (true);
 }
 
 
@@ -58,16 +55,16 @@ bool allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **
  * @return true If the initialization was successful
  * @return false If the initialization was not successfuls
  */
-static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ray)
+static bool	init_structure(char *argv, t_game *game,
+	t_player *player, t_ray *ray)
 {
 	(void)player;
 	(void)ray;
 	get_window_size(argv, &game->height, &game->width);
 	game->map = get_map_only(argv, game);
 	assign_path_to_texture(argv, game);
-	get_colors(argv, &game->floor_colors, &game->ceiling_colors);	// HOW TF DO COLORS EVEN WORK? BRUH
-																	// MAYBE JUST PIXELPUT EVERYTHING AND HOPE FOR THE BEST?
-	get_player_position(&game->map, &game->player->x, &game->player->y, game->player);
+	get_colors(argv, &game->floor_colors, &game->ceiling_colors);
+	get_p_pos(&game->map, &game->player->x, &game->player->y, game->player);
 	game->player->delta_x = cos(game->player->angle) * 5;
 	game->player->delta_y = sin(game->player->angle) * 5;
 	game->ray = ray;
@@ -79,7 +76,6 @@ static bool init_structure(char *argv, t_game *game, t_player *player, t_ray *ra
 	game->ray->y = 0;
 	game->ray->x_offset = 0;
 	game->ray->y_offset = 0;
-	// STILL IN PROGRESS!
 	return (true);
 }
 
@@ -103,7 +99,7 @@ bool	load_images(t_game *game)
 	game->texture->ea_image = mlx_texture_to_image(game->mlx, game->texture->ea);
 
 
-	game->texture->ray_image = mlx_new_image(game->mlx, 20, 5);
+	game->texture->ray_image = mlx_new_image(game->mlx, 20, 20);
 	memset(game->texture->ray_image->pixels, 255, game->texture->ray_image->width * game->texture->ray_image->height * sizeof(int32_t));
 
 	mlx_image_to_window(game->mlx, game->texture->ray_image, game->player->x, game->player->y);
@@ -112,111 +108,102 @@ bool	load_images(t_game *game)
 
 double	FixAng(double a)
 {
-	if (a > 359)
-		a-=360;
+	if (a > 0)
+		a -= 360;
 	if (a < 0)
-		a+=360;
+		a += 360;
 	if (a < 0)
 		a = 0;
-	return a;
+	return (a);
 }
 
-void	check_vertical(t_game *game)
+double	get_distance(t_game *game)
 {
-	game->ray->angle = FixAng((-game->player->angle) * 60);
-	for (int r = 0; r < 60; r++)
+	double	ft_cos;
+	double	ft_sin;
+
+	ft_cos = cos(degToRad(game->ray->angle)) * (game->ray->x - game->player->x);
+	ft_sin = sin(degToRad(game->ray->angle)) * (game->ray->y - game->player->y);
+	return (ft_cos - ft_sin);
+}
+
+void	check_if_wall(t_game *game, char check_for)
+{
+	while (game->ray->dof < 8)
 	{
-		printf("player angle is +: %f %f\n", FixAng((-game->player->angle) * 60), game->player->angle);
-		double Tan = tan(degToRad(game->ray->angle));
-		game->ray->dof = 0;
-		if (cos(degToRad(game->ray->angle)) > 0.001) // looking up
+		game->ray->map_x = (int)game->ray->x >> 6;
+		game->ray->map_y = (int)game->ray->y >> 6;
+		game->ray->map_p = game->ray->map_y * game->width + game->ray->map_x;
+		if (game->ray->map_x < 0 || game->ray->map_x >= (int)game->width
+			|| game->ray->map_y < 0 || game->ray->map_y >= (int)game->height)
+			break ;
+		if (game->ray->map_p > 0 && game->ray->map_p < (int)game->width
+			* (int)game->height
+			&& game->map[game->ray->map_y][game->ray->map_x] == '1')
 		{
-			game->ray->x = (((int)game->player->x >> 6) << 6) + 64;
-			game->ray->y = (game->player->x - game->ray->x) * Tan + game->player->y;
-			game->ray->x_offset = 64;
-			game->ray->y_offset = -game->ray->x_offset * Tan;
-		}
-		else if (cos(degToRad(game->ray->angle)) < -0.001) // looking down
-		{
-			game->ray->x = (((int)game->player->x >> 6) << 6) - 0.0001;
-			game->ray->y = (game->player->x - game->ray->x) * Tan + game->player->y;
-			game->ray->x_offset = -64;
-			game->ray->y_offset = -game->ray->x_offset * Tan;
+			game->ray->dof = 8;
+			if (check_for == 'V')
+				game->ray->distV = get_distance(game);
+			else if (check_for == 'H')
+				game->ray->distH = get_distance(game);
 		}
 		else
 		{
-			game->ray->x = game->player->x;
-			game->ray->y = game->player->y;
-			game->ray->dof = 8;
+			game->ray->x += game->ray->x_offset;
+			game->ray->y += game->ray->y_offset;
+			game->ray->dof++;
 		}
-		while (game->ray->dof < 8)
-		{
-			game->ray->map_x = (int)game->ray->x >> 6;
-			game->ray->map_y = (int)game->ray->y >> 6;
-			game->ray->map_p = game->ray->map_y * game->width + game->ray->map_x;
-			if (game->ray->map_x < 0 || game->ray->map_x >= (int)game->width || game->ray->map_y < 0 || game->ray->map_y >= (int)game->height)
-				break;
-			if(game->ray->map_p > 0 && game->ray->map_p < (int)game->width * (int)game->height && game->map[game->ray->map_y][game->ray->map_x] == '1')
-			{
-				game->ray->dof=8;
-				game->ray->distV=cos(degToRad(game->ray->angle))*(game->ray->x-game->player->x)-sin(degToRad(game->ray->angle))*(game->ray->y-game->player->y);
-				game->tmp_ray_image->instances[r].x = game->ray->x;
-				game->tmp_ray_image->instances[r].y = game->ray->y;
-				printf("V ray nr %d hit at: %d, %d\n", r, game->ray->x / 64, game->ray->y / 64);
-			}
-			else
-			{
-				game->ray->x += game->ray->x_offset;
-				game->ray->y += game->ray->y_offset;
-				game->ray->dof++;
-			}
-		}
-		game->ray->dof = 0;
-		Tan = 1.0 / Tan;
-		if (sin(degToRad(game->ray->angle)) > 0.001) // looking left
-		{
-			game->ray->y = (((int)game->player->y >> 6) << 6) - 0.0001;
-			game->ray->x = (game->player->y - game->ray->y) * Tan + game->player->x;
-			game->ray->y_offset = -64;
-			game->ray->x_offset = -game->ray->y_offset * Tan;
-		}
-		else if (sin(degToRad(game->ray->angle)) < -0.001) // looking right
-		{
-			game->ray->y = (((int)game->player->y >> 6) << 6) + 64;
-			game->ray->x = (game->player->y-game->ray->y) * Tan + game->player->x;
-			game->ray->y_offset = 64;
-			game->ray->x_offset = -game->ray->y_offset * Tan;
-		}
-		else
-		{
-			game->ray->x = game->player->x;
-			game->ray->y = game->player->y;
-			game->ray->dof = 8;
-		}
-		while (game->ray->dof < 8)
-		{
-			game->ray->map_x = (int)game->ray->x >> 6;
-			game->ray->map_y = (int)game->ray->y >> 6;
-			game->ray->map_p = game->ray->map_y * game->width + game->ray->map_x;
-			if (game->ray->map_x < 0 || game->ray->map_x >= (int)game->width || game->ray->map_y < 0 || game->ray->map_y >= (int)game->height)
-				break;
-			if (game->ray->map_p > 0 && game->ray->map_p < (int)game->width * (int)game->height && game->map[game->ray->map_y][game->ray->map_x] == '1')
-			{
-				game->ray->distH = cos(degToRad(game->ray->angle)) * (game->ray->x - game->player->x) - sin(degToRad(game->ray->angle)) * (game->ray->y - game->player->y);
-				printf("H ray nr %d hit at: %d, %d\n", r, game->ray->x / 64, game->ray->y / 64);
-				game->tmp_ray_image->instances[r].x = game->ray->x;
-				game->tmp_ray_image->instances[r].y = game->ray->y;
-				game->ray->dof = 8;
-			}
-			else
-			{
-				game->ray->x += game->ray->x_offset;
-				game->ray->y += game->ray->y_offset;
-				game->ray->dof++;
-			}
-		}
-		game->ray->angle = FixAng(game->ray->angle + 1);
 	}
+}
+
+void	check_horizontal(t_game *game, double ft_tan)
+{
+	if (cos(degToRad(game->ray->angle)) > 0.001)
+	{
+		game->ray->x = (((int)game->player->x >> 6) << 6) + 64;
+		game->ray->y = (game->player->x - game->ray->x) * ft_tan + game->player->y;
+		game->ray->x_offset = 64;
+		game->ray->y_offset = -game->ray->x_offset * ft_tan;
+	}
+	else if (cos(degToRad(game->ray->angle)) < -0.001)
+	{
+		game->ray->x = (((int)game->player->x >> 6) << 6) - 0.0001;
+		game->ray->y = (game->player->x - game->ray->x) * ft_tan + game->player->y;
+		game->ray->x_offset = -64;
+		game->ray->y_offset = -game->ray->x_offset * ft_tan;
+	}
+	else
+	{
+		game->ray->x = game->player->x;
+		game->ray->y = game->player->y;
+		game->ray->dof = 8;
+	}
+	check_if_wall(game, 'V');
+}
+
+void	check_vertical(t_game *game, double ft_tan)
+{
+	if (sin(degToRad(game->ray->angle)) > 0.001)
+	{
+		game->ray->y = (((int)game->player->y >> 6) << 6) - 0.0001;
+		game->ray->x = (game->player->y - game->ray->y) * ft_tan + game->player->x;
+		game->ray->y_offset = -64;
+		game->ray->x_offset = -game->ray->y_offset * ft_tan;
+	}
+	else if (sin(degToRad(game->ray->angle)) < -0.001)
+	{
+		game->ray->y = (((int)game->player->y >> 6) << 6) + 64;
+		game->ray->x = (game->player->y-game->ray->y) * ft_tan + game->player->x;
+		game->ray->y_offset = 64;
+		game->ray->x_offset = -game->ray->y_offset * ft_tan;
+	}
+	else
+	{
+		game->ray->x = game->player->x;
+		game->ray->y = game->player->y;
+		game->ray->dof = 8;
+	}
+	check_if_wall(game, 'H');
 }
 
 void	esc_free(t_game *game)
@@ -252,7 +239,7 @@ void DrawWalls(t_game *game)
 	}
 }
 
-bool init_data(char *argv)
+bool	init_data(char *argv)
 {
 	t_game		*game;
 	t_ray		*ray;
@@ -275,9 +262,7 @@ bool init_data(char *argv)
 	mlx_texture_t *sa = mlx_load_png("sprites/ea.png");
 	game->tmp_ray_image = mlx_texture_to_image(game->mlx, sa);
 	for (int i = 0; i < 60; i++)
-	{
 		mlx_image_to_window(game->mlx, game->tmp_ray_image, i, i);
-	}
 
 	mlx_loop_hook(game->mlx, controls, game);
 	mlx_loop(game->mlx);

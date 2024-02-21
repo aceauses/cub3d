@@ -61,7 +61,7 @@ void	set_angle_from_char(char c, t_player *player)
 		player->angle = degToRad(180);
 }
 
-void	get_player_position(char ***map, double *x, double *y, t_player *player)
+void	get_p_pos(char ***map, double *x, double *y, t_player *player)
 {
 	int		i;
 	int		j;

@@ -17,7 +17,6 @@
 
 
 # define PI 3.1415926535
-# define FOV_ANGLE 60*(PI/180)
 
 typedef uint32_t	t_color;
 
@@ -56,8 +55,8 @@ typedef struct	s_ray
 	int					y;
 	double				x_offset;
 	double				y_offset;
-	int					dof;
 	int					map_x;
+	int					dof;
 	int					map_y;
 	int					map_p;
 	double				distH;

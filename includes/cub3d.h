@@ -60,13 +60,14 @@ int		open_fd(char *argv);
 
 void	get_colors(char *argv, char ***floor_colors, char ***ceiling_colors);
 void	get_window_size(char *argv, size_t	*height, size_t	*width);
-void	get_player_position(char	***map, double *x, double *y, t_player *player);
+void	get_p_pos(char	***map, double *x, double *y, t_player *player);
 
 // ray
-void	check_vertical(t_game *game);
-void	check_horizontal(t_game *game);
+void	check_vertical(t_game *game, double ft_tan);
+void	check_horizontal(t_game *game, double ft_tan);
 void	esc_free(t_game *game);
 double	degToRad(int a);
+double	FixAng(double a);
 
 // controls.c
 void	controls(void* param);

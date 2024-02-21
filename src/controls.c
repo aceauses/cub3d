@@ -3,12 +3,52 @@
 
 double degToRad(int a) { return a*M_PI/180.0;}
 
+void	which_check_hit_wall(t_game *game, int r, double tmp_x, double tmp_y)
+{
+	if (game->ray->distH < game->ray->distV)
+	{
+		game->tmp_ray_image->instances[r].x = game->ray->x;
+		game->tmp_ray_image->instances[r].y = game->ray->y;
+		printf("distH[%d]: %f\n", r, game->ray->distH);
+	}
+	else
+	{
+		game->tmp_ray_image->instances[r].x = tmp_x;
+		game->tmp_ray_image->instances[r].y = tmp_y;
+		printf("distV[%d]: %f\n", r, game->ray->distV);
+	}
+}
+
+void	convert_to_3d(t_game *game, int r)
+{
+	// if distH is big, then the wall is far away so less pixels to output
+	(void)game;
+	(void)r;
+}
+
 void	CalculateRays(t_game *game)
 {
-	check_vertical(game);
-	// check_horizontal(game);
+	int		r;
+	double	ft_tan;
+	double	tmp_y;
+	double	tmp_x;
 
-	// translate_to_3d(game);
+	r = -1;
+	game->ray->angle = FixAng((-game->player->angle) * 60);
+	while (++r < 60)
+	{
+		ft_tan = tan(degToRad(game->ray->angle));
+		game->ray->dof = 0;
+		check_horizontal(game, ft_tan);
+		tmp_x = game->ray->x;
+		tmp_y = game->ray->y;
+		game->ray->dof = 0;
+		ft_tan = 1.0 / ft_tan;
+		check_vertical(game, ft_tan);
+		game->ray->angle = FixAng(game->ray->angle + 1);
+		which_check_hit_wall(game, r, tmp_x, tmp_y);
+		convert_to_3d(game, r);
+	}
 }
 
 void controls(void* param)
@@ -31,8 +71,8 @@ void controls(void* param)
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		rotate_player(game, 'R');
 	CalculateRays(game);
-	game->texture->ray_image->instances[0].x = (game->player->x + game->player->delta_x * 5);
-	game->texture->ray_image->instances[0].y = (game->player->y + game->player->delta_y * 5);
+	game->texture->ray_image->instances[0].x = (game->player->x + game->player->delta_x * 2);
+	game->texture->ray_image->instances[0].y = (game->player->y + game->player->delta_y * 2);
 }
 
 void	move_player(t_game *game, char button)
