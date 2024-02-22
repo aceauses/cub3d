@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/20 18:26:46 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:02:40 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 # include "get_next_line.h"
+# include "struct.h"
 # include <fcntl.h>
+# include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <math.h>
-# include "struct.h"
 
 # define PATH_ERROR "Invalid path in the map file"
 # define RGB_ERROR "Please enter RGB values in the format: R, G, B"
@@ -29,17 +29,19 @@
 # define CANNOT_FIND_C "Cannot find the Ceiling color"
 # define INVALID_MAP "Invalid map"
 
-int	map_validation(char *argv);
+int		map_validation(char *argv);
 char	**read_map(char *argv);
 int		find_first_character(char **map, int *x, int *y, int C);
 char	**copy_map(char **matrix, int y);
 
 char	*join_double_free(char *buffer, char *buff);
 void	free_double_pointer(char **pointer);
-char    *handle_tabs(char *line);
+char	*handle_tabs(char *line);
 
 t_game	*init_data(char *argv);
-bool allocate_memory(t_player **player, t_ray **ray, t_texture **texture);
+void	free_game(t_game *game);
+void	get_colors(char *argv, t_game *game);
+bool	allocate_memory(t_player **player, t_ray **ray, t_texture **texture);
 size_t	calculate_height(char **map);
 size_t	calculate_width(char **map);
 int		array_length(char **pointer);
@@ -49,4 +51,13 @@ int		check_walls(char **map);
 void	map_errors(char *error);
 int		should_check_path(char **split, char *buffer, int *check);
 int		clean_compare(char *s1, char *set, size_t n);
+
+//mlx init
+int	init_mlx(t_game *game);
+void	init_textures(t_game *game);
+void	init_background(t_game *game);
+
+// mlx start
+void	start_game(t_game *game);
+
 #endif

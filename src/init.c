@@ -6,25 +6,12 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/20 18:40:16 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:58:11 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include <stdio.h>
-
-/**
- * @brief Temporary function to print the map
- *
- * @param game The game structure
- */
-// static void print_map(t_game *game)
-// {
-// 	for (size_t i = 0; i < game->height; i++)
-// 	{
-// 		printf("%s", game->map[i]);
-// 	}
-// }
 
 /**
  * @brief This will allocate memory for the game and player structure
@@ -34,22 +21,21 @@
  * @return true If the memory was allocated successfully
  * @return false If the memory was not allocated successfully
  */
-bool allocate_memory(t_player **player, t_ray **ray, t_texture **texture)
+bool	allocate_memory(t_player **player, t_ray **ray, t_texture **texture)
 {
 	*player = malloc(sizeof(t_player));
 	if (!(*player))
 		return (false);
 	ft_memset(*player, 0, sizeof(t_player));
-
 	*ray = malloc(sizeof(t_ray));
 	if (!(*ray))
 		return (free(*player), false);
-
+	ft_memset(*ray, 0, sizeof(t_ray));
 	*texture = malloc(sizeof(t_texture));
 	if (!(*texture))
 		return (free(*player), free(*ray), false);
-
-	return true;
+	ft_memset(*texture, 0, sizeof(t_texture));
+	return (true);
 }
 
 /**
@@ -61,65 +47,66 @@ bool allocate_memory(t_player **player, t_ray **ray, t_texture **texture)
  * @return true If the initialization was successful
  * @return false If the initialization was not successful
  */
-static t_game *init_structure(char *argv, t_player *player
-	, t_ray *ray, t_texture *texture)
+static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
+		t_texture *texture)
 {
-	t_game *game;
+	t_game	*game;
+	int		x;
+	int		y;
 
-	int x = 0;
-	int y = 0;
+	x = 0;
+	y = 0;
 	game = malloc(sizeof(t_game));
 	if (!game)
 		return (free(player), free(ray), free(texture), NULL);
 	ft_memset(game, 0, sizeof(t_game));
 	game->cub_file = read_map(argv);
-	if (!find_first_character(game->cub_file, &x, &y, '1'))
-		return (0);
+	find_first_character(game->cub_file, &x, &y, '1');
 	game->map = copy_map(game->cub_file, y);
 	game->m_height = calculate_height(game->map);
 	game->m_width = calculate_width(game->map);
+	game->distance = 0.5;
+	game->distance_jos = 1.5;
 	game->player = player;
 	find_first_character(game->map, &game->player->x, &game->player->y, 'N');
 	game->texture = texture;
+	game->texture->path = malloc(sizeof(char *) * 5);
+	if (!game->texture->path)
+		return (free(game->player), free(game->ray), free(game->texture)
+			, free(game), NULL);
 	game->ray = ray;
 	return (game);
 }
 
-/**
- * @brief This function will load the images, convert them to images and display them.
- * Will also assign game->texture to the texture structure
- *
- * @param game The game structure
- * @return true If the images were loaded successfully
- * @return false If the mem
- */
-// bool	load_images(t_game *game, t_texture *texture)
-// {
-// 	game->texture = texture;
+bool	get_texture(t_game *game)
+{
+	int		i;
+	char	**split;
 
-// 	texture->no = mlx_load_png("sprites/no.png");
-// 	texture->image = mlx_texture_to_image(game->mlx, texture->no);
-// 	mlx_delete_texture(texture->no);
-// 	// put_image(game);
+	i = 0;
+	while (game->cub_file[i] != NULL)
+	{
+		split = ft_split(game->cub_file[i], ' ');
+		if (!split)
+			return (false);
+		if (split[0] != NULL)
+		{
+			if (clean_compare(split[0], "NO", 2))
+				game->texture->path[0] = ft_strdup(split[1]);
+			else if (clean_compare(split[0], "SO", 2))
+				game->texture->path[1] = ft_strdup(split[1]);
+			else if (clean_compare(split[0], "WE", 2))
+				game->texture->path[2] = ft_strdup(split[1]);
+			else if (clean_compare(split[0], "EA", 2))
+				game->texture->path[3] = ft_strdup(split[1]);
+		}
+		free_double_pointer(split);
+		i++;
+	}
+	game->texture->path[4] = NULL;
+	return (true);
+}
 
-// 	texture->so = mlx_load_png("sprites/so.png");
-// 	texture->image = mlx_texture_to_image(game->mlx, texture->so);
-// 	mlx_delete_texture(texture->so);
-// 	// put_image(game);
-
-// 	texture->we = mlx_load_png("sprites/we.png");
-// 	texture->image = mlx_texture_to_image(game->mlx, texture->we);
-// 	mlx_delete_texture(texture->we);
-// 	// put_image(game);
-
-
-// 	texture->ea = mlx_load_png("sprites/ea.png");
-// 	texture->image = mlx_texture_to_image(game->mlx, texture->ea);
-// 	mlx_delete_texture(texture->ea);
-// 	// put_image(game);
-
-// 	return (true);
-// }
 
 /**
  * @brief Allocate memory for the game and player structure and initialize the
@@ -129,12 +116,12 @@ static t_game *init_structure(char *argv, t_player *player
  * @return true If the memory was allocated successfully
  * @return false If the memory was not allocated successfully
  */
-t_game *init_data(char *argv)
+t_game	*init_data(char *argv)
 {
-	t_game *game;
-	t_ray *ray;
-	t_player *player;
-	t_texture *texture;
+	t_game		*game;
+	t_ray		*ray;
+	t_player	*player;
+	t_texture	*texture;
 
 	player = NULL;
 	ray = NULL;
@@ -143,5 +130,10 @@ t_game *init_data(char *argv)
 	if (allocate_memory(&player, &ray, &texture) == false)
 		return (NULL);
 	game = init_structure(argv, player, ray, texture);
+	if (!game)
+		return (NULL);
+	if (get_texture(game) == false)
+		return (free_game(game), NULL);
+	get_colors(argv, game);
 	return (game);
 }

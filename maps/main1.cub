@@ -1,11 +1,11 @@
-SO ./maps/bad_maps/map1.cubb
-NO ./maps/bad_maps/map1.cubb
+SO ./maps/bad_maps/map_errors_1.cub
+NO ./maps/bad_maps/map_errors_2.cub
 
-WE ./maps/bad_maps/map1.cubb
-EA ./maps/bad_maps/map1.cubb
+WE ./maps/bad_maps/map_errors_3.cub
+EA ./maps/bad_maps/map_errors_4.cub
 
-F 20,1,1
-C 252,30,10
+F 20,43,65
+C 12,30,10
 
 
 

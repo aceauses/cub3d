@@ -6,7 +6,7 @@
 #    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/02/20 16:54:55 by aceauses         ###   ########.fr        #
+#    Updated: 2024/02/22 13:53:01 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ MLXLIB = $(basename $(notdir $(MLX)))
 GNL = GNL/gnl
 #if ubuntu
 ifeq ($(shell uname), Linux)
-	MLXFLAGS = -lGL -lglfw
+	MLXFLAGS = -ldl -lglfw -lm -pthread -I MLX42/include -lXext -lX11
 else
 	MLXFLAGS = -framework OpenGL -framework AppKit -lglfw
 endif
@@ -37,7 +37,7 @@ CYAN    := \033[36;1m
 WHITE   := \033[37;1m
 RESET = \033[;0m
 
-SRC = cub3d.c init.c init_utils.c
+SRC = cub3d.c init.c init_utils.c mlx.c mlx_init.c
 SRC_OBS = $(addprefix $(OBJS_DIR), $(notdir $(SRC:.c=.o)))
 
 UTILS = utils_1.c \
@@ -51,7 +51,7 @@ UTILS_OBS = $(addprefix $(OBJS_DIR), $(notdir $(UTILS:.c=.o)))
 all: $(NAME)
 
 $(MLX):
-	@git submodule update --init --recursive
+#	@git submodule update --init --recursive
 	@cd MLX42 && cmake -B build
 	@cd MLX42 && cmake --build build -j4
 
@@ -75,7 +75,7 @@ $(OBJS_DIR)%.o: src/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(MLX) $(UTILS_OBS) $(SRC_OBS) $(LIBFT) $(GNL)
-	@$(CC) $(CFLAGS) $(MLX) $(MLXFLAGS) $(SRC_OBS) $(UTILS_OBS) $(LIBFT) $(GNL) -o $(NAME)
+	@$(CC) $(CFLAGS) $(SRC_OBS) $(UTILS_OBS) $(MLX) $(LIBFT) $(GNL) $(MLXFLAGS) -o $(NAME)
 	@echo "$(CYAN)[CUB3D] $(GREEN)Cub3D Compiled$(RESET)"
 
 NoMlx: $(UTILS_OBS) $(SRC_OBS) $(LIBFT) $(GNL)
