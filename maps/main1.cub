@@ -5,18 +5,6 @@ EA ./sprites/ea.png
 
 C 161,133,148
 F 255,255,255
-		11111       1111111111111
-SO ./maps/bad_maps/map_errors_1.cub
-NO ./maps/bad_maps/map_errors_2.cub
-
-WE ./maps/bad_maps/map_errors_3.cub
-EA ./maps/bad_maps/map_errors_4.cub
-
-F 20,43,65
-C 12,30,10
-
-
-
 		1111111111111111111111111
 		10001        111100000001
 		10101111 111    100000001

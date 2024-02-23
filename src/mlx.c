@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:18:12 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/22 19:27:17 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:02:47 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	t_game	*game;
 
 	game = (t_game *)param;
+	CalculateRays(game);
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(game->mlx);
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
@@ -60,6 +61,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		mlx_image_to_window(game->mlx, game->texture->camera, 0, 0);
 		if (game->distance <= 0.010000)
 			return;
+		printf("game->ray->distH: %f\n", game->ray->distH);
 		game->distance -= 0.05;
 		game->distance_jos += 0.05;
 		printf("W pressed distance: %f\n", game->distance);
@@ -84,8 +86,8 @@ void	camera(void *param)
 	int pixelsPerTime = 100;
 	for (uint32_t i = 0; i < image->width; i += 100)
 	{
-		printf("game->distance: %f\n", game->distance);
-		for (uint32_t y = (image->height / 2) * game->distance; y < (image->height / 2) * game->distance_jos; ++y)
+		// printf("game->distance: %f\n", game->distance);
+		for (uint32_t y = (image->height / 2) * game->ray->distV; y < (image->height / 2) * game->ray->distH; ++y)
 		{
 			for (int p = 0; p < pixelsPerTime; ++p) {
 				uint32_t color = ft_pixel(
@@ -104,6 +106,17 @@ void	camera(void *param)
 void	start_game(t_game *game)
 {
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
+	game->texture->no_image = mlx_new_image(game->mlx, 64, 64);
+	ft_memset(game->texture->no_image->pixels, 250, 64 * 64 * sizeof(int32_t));
+	game->texture->ray_image = mlx_new_image(game->mlx, 64, 64);
+	ft_memset(game->texture->ray_image->pixels, 220, 64 * 64 * sizeof(int32_t));
+	game->texture->ea_image = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	mlx_image_to_window(game->mlx, game->texture->ea_image, 0, 0);
+	game->tmp_ray_image = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	for (int i = 0; i <= 60; i++)
+	{
+		mlx_image_to_window(game->mlx, game->tmp_ray_image, 0, 0);
+	}
 	if (!game->mlx)
 	{
 		printf("Error\nmlx_init failed\n");
@@ -123,9 +136,10 @@ void	start_game(t_game *game)
 		puts(mlx_strerror(mlx_errno));
 		return;
 	}
+	DrawWalls(game);
 	mlx_loop_hook(game->mlx, fill_background, game);
 	mlx_loop_hook(game->mlx, camera, game);
-	mlx_key_hook(game->mlx, key_hook, game);
+	mlx_loop_hook(game->mlx, controls, game);
 	mlx_loop(game->mlx);
 	mlx_terminate(game->mlx);
 }

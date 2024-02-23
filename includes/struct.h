@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/12 12:47:28 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:30:57 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 typedef struct s_game
 {
 	void				*mlx;
-	size_t m_height; // NOT in Pixels
-	size_t m_width;  // NOT in Pixels
+	size_t				height; // NOT in Pixels
+	size_t				width;  // NOT in Pixels
 	char				**cub_file;
 	char				**map;
 	double				distance;
@@ -37,8 +37,8 @@ typedef struct s_game
 
 typedef struct s_player
 {
-	double				x;
-	double				y;
+	int					x;
+	int					y;
 	double				delta_x;
 	double				delta_y;
 	double				angle;
@@ -60,8 +60,6 @@ typedef struct s_ray
 	double				ray_angle;
 	double				wall_hit_x;
 	double				wall_hit_y;
-	double				x_offset;
-	double				y_offset;
 }						t_ray;
 
 typedef struct s_texture

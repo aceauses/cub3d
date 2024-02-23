@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:57:15 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/12 13:29:25 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:14:00 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,6 @@ void	free_game(t_game *game)
 		free_double_pointer(game->map);
 	if (game->cub_file)
 		free_double_pointer(game->cub_file);
-	if (game->floor)
-		free_double_pointer(game->floor);
-	if (game->ceiling)
-		free_double_pointer(game->ceiling);
 	if (game->texture->path)
 		free_double_pointer(game->texture->path);
 	if (game->texture->floor)

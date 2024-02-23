@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/22 13:54:09 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:59:57 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 {
 	t_game	*game;
 
-	atexit(leakcheck);
+	// atexit(leakcheck);
 	game = NULL;
 	if (argc != 2)
 	{
@@ -38,8 +38,6 @@ int	main(int argc, char **argv)
 			return (1);
 		printf("playe x: %d\n", game->player->x);
 		printf("playe y: %d\n", game->player->y);
-		printf("map width: %zu\n", game->m_width);
-		printf("map height: %zu\n", game->m_height);
 		printf("floor: %d\n", game->texture->floor->red);
 		printf("ceiling: %d\n", game->texture->ceiling->red);
 		start_game(game);

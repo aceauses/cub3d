@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:00:02 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/20 18:01:00 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:29:47 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ int	find_first_character(char **map, int *x, int *y, int C)
 		while (map[y_m][x_m] != '\0' && map[y_m][x_m] != ' ')
 		{
 			if (map[y_m][x_m++] == C)
+			{
+				printf("x: %d\n", x_m);
+				printf("y: %d\n", y_m);
 				return (*x = x_m, *y = y_m, 1);
+			}
 		}
 		y_m++;
 	}

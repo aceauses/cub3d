@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/12 12:49:07 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:11:11 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int		get_rgba(int r, int g, int b, int a);
 int		open_fd(char *argv);
 
 void	get_window_size(char *argv, size_t	*height, size_t	*width);
-void	get_p_pos(char	***map, double *x, double *y, t_player *player);
-
+void	get_p_pos(char ***map, int *x, int *y, t_player *player);
+void DrawWalls(t_game *game);
 // ray
 void	check_vertical(t_game *game, double ft_tan);
 void	check_horizontal(t_game *game, double ft_tan);

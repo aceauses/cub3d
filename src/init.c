@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/12 13:48:20 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/02/23 16:06:34 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,24 +49,24 @@ bool	allocate_memory(t_player **player, t_ray **ray, t_texture **texture)
  * @return true If the images were loaded successfully
  * @return false If the mem images were not loaded successfully
  */
-bool	load_images(t_game *game)
-{
-	game->texture->no = mlx_load_png(game->texture->no_path);
-	game->texture->so = mlx_load_png(game->texture->so_path);
-	game->texture->we = mlx_load_png(game->texture->we_path);
-	game->texture->ea = mlx_load_png(game->texture->ea_path);
-	game->texture->no_image = mlx_texture_to_image(game->mlx, game->texture->no);
-	game->texture->so_image = mlx_texture_to_image(game->mlx, game->texture->so);
-	game->texture->we_image = mlx_texture_to_image(game->mlx, game->texture->we);
-	game->texture->ea_image = mlx_texture_to_image(game->mlx, game->texture->ea);
+// bool	load_images(t_game *game)
+// {
+// 	game->texture->no = mlx_load_png(game->texture->no_path);
+// 	game->texture->so = mlx_load_png(game->texture->so_path);
+// 	game->texture->we = mlx_load_png(game->texture->we_path);
+// 	game->texture->ea = mlx_load_png(game->texture->ea_path);
+// 	game->texture->no_image = mlx_texture_to_image(game->mlx, game->texture->no);
+// 	game->texture->so_image = mlx_texture_to_image(game->mlx, game->texture->so);
+// 	game->texture->we_image = mlx_texture_to_image(game->mlx, game->texture->we);
+// 	game->texture->ea_image = mlx_texture_to_image(game->mlx, game->texture->ea);
 
 
-	game->texture->ray_image = mlx_new_image(game->mlx, 20, 20);
-	memset(game->texture->ray_image->pixels, 255, game->texture->ray_image->width * game->texture->ray_image->height * sizeof(int32_t));
+// 	game->texture->ray_image = mlx_new_image(game->mlx, 20, 20);
+// 	memset(game->texture->ray_image->pixels, 255, game->texture->ray_image->width * game->texture->ray_image->height * sizeof(int32_t));
 
-	mlx_image_to_window(game->mlx, game->texture->ray_image, game->player->x, game->player->y);
-	return (true);
-}
+// 	mlx_image_to_window(game->mlx, game->texture->ray_image, game->player->x, game->player->y);
+// 	return (true);
+// }
 
 double	FixAng(double a)
 {
@@ -79,14 +79,26 @@ double	FixAng(double a)
 	return (a);
 }
 
-double	get_distance(t_game *game)
+double	get_distance_normalized(t_game *game)
 {
 	double	ft_cos;
 	double	ft_sin;
+	double	distance;
 
 	ft_cos = cos(degToRad(game->ray->angle)) * (game->ray->x - game->player->x);
 	ft_sin = sin(degToRad(game->ray->angle)) * (game->ray->y - game->player->y);
-	return (ft_cos - ft_sin);
+	distance = ft_cos - ft_sin;
+	double	min_distance = 32;
+	double	max_distance = 500;
+
+	double normalized_distance = (distance - min_distance) / (max_distance - min_distance);
+
+	if (normalized_distance < 0)
+		normalized_distance = 0;
+	else if (normalized_distance > 1)
+		normalized_distance = 1;
+
+	return (normalized_distance);
 }
 
 void	check_if_wall(t_game *game, char check_for)
@@ -105,9 +117,11 @@ void	check_if_wall(t_game *game, char check_for)
 		{
 			game->ray->dof = 8;
 			if (check_for == 'V')
-				game->ray->distV = get_distance(game);
+				game->ray->distV = get_distance_normalized(game);
 			else if (check_for == 'H')
-				game->ray->distH = get_distance(game);
+				game->ray->distH = get_distance_normalized(game);
+			printf("distV: %f\n", game->ray->distV);
+			printf("distH: %f\n", game->ray->distH);
 		}
 		else
 		{
@@ -124,6 +138,8 @@ void	check_horizontal(t_game *game, double ft_tan)
 	{
 		game->ray->x = (((int)game->player->x >> 6) << 6) + 64;
 		game->ray->y = (game->player->x - game->ray->x) * ft_tan + game->player->y;
+		printf("x s : %d\n", game->ray->x);
+		printf("y s : %d\n", game->ray->y);
 		game->ray->x_offset = 64;
 		game->ray->y_offset = -game->ray->x_offset * ft_tan;
 	}
@@ -174,8 +190,6 @@ void	esc_free(t_game *game)
 	free_double_pointer(game->map);
 	free(game->player);
 	free(game->ray);
-	free_double_pointer(game->floor_colors);
-	free_double_pointer(game->ceiling_colors);
 	free(game);
 	exit(system("leaks cub3d"));
 }
@@ -191,10 +205,13 @@ void DrawWalls(t_game *game)
 	while (game->map[i])
 	{
 		j = 0;
+		printf("map[%zu]: %s\n", i, game->map[i]);
 		while (game->map[i][j])
 		{
 			if (game->map[i][j] == '1')
 				mlx_image_to_window(game->mlx, game->texture->no_image, j * 64, i * 64);
+			if (game->map[i][j] == 'N')
+				mlx_image_to_window(game->mlx, game->texture->ray_image, j * 64, i * 64);
 			j++;
 		}
 		i++;
@@ -218,13 +235,14 @@ static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
 	game->cub_file = read_map(argv);
 	find_first_character(game->cub_file, &x, &y, '1');
 	game->map = copy_map(game->cub_file, y);
-	game->m_height = calculate_height(game->map);
-	game->m_width = calculate_width(game->map);
+	game->height = calculate_height(game->map);
+	game->width = calculate_width(game->map);
 	game->distance = 0.5;
 	game->distance_jos = 1.5;
 	game->player = player;
-	find_first_character(game->map, &game->player->x, &game->player->y, 'N');
-  game->player->delta_x = cos(game->player->angle) * 5;
+	// find_first_character(game->map, &game->player->x, &game->player->y, 'N');
+	get_p_pos(&game->map, &game->player->x, &game->player->y, game->player);
+	game->player->delta_x = cos(game->player->angle) * 5;
 	game->player->delta_y = sin(game->player->angle) * 5;
 	game->texture = texture;
 	game->texture->path = malloc(sizeof(char *) * 5);
