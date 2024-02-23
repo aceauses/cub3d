@@ -17,18 +17,18 @@
 #  define BUFFER_SIZE 52
 # endif
 
-# include	<unistd.h>
-# include	<string.h>
-# include	<stdio.h>
-# include	<fcntl.h>
-# include	<stdlib.h>
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 
-char		*get_next_line(int fd);
+char	*get_next_line(int fd);
 
-void		*ft_calloc_gnl(size_t count, size_t size);
-char		*ft_strjoin_gnl(char const *line, char const *new_line);
-size_t		ft_strlen_mod(const char *str);
-char		*ft_strchr_gnl(const char *str, int c);
-char		*free_join(char *buffer, char *buff);
+void	*ft_calloc_gnl(size_t count, size_t size);
+char	*ft_strjoin_gnl(char const *line, char const *new_line);
+size_t	ft_strlen_mod(const char *str);
+char	*ft_strchr_gnl(const char *str, int c);
+char	*free_join(char *buffer, char *buff);
 
 #endif

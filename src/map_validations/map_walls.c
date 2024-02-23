@@ -6,13 +6,13 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:00:02 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/08 22:08:54 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:01:00 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static int	find_first_wall(char **map, int *x, int *y)
+int	find_first_character(char **map, int *x, int *y, int C)
 {
 	int	y_m;
 	int	x_m;
@@ -22,7 +22,7 @@ static int	find_first_wall(char **map, int *x, int *y)
 	{
 		x_m = 0;
 		while (map[y_m][x_m] == ' '
-			&& (map[y_m][x_m] != '1' && map[y_m][x_m] != '\0'))
+			&& (map[y_m][x_m] != C && map[y_m][x_m] != '\0'))
 			x_m++;
 		if (!ft_strncmp(map[y_m], "SO", 2) || !ft_strncmp(map[y_m], "NO", 2)
 			|| !ft_strncmp(map[y_m], "WE", 2) || !ft_strncmp(map[y_m], "EA", 2)
@@ -31,11 +31,10 @@ static int	find_first_wall(char **map, int *x, int *y)
 				y_m++;
 				continue;
 			}
-		if (map[y_m][x_m] == '1')
+		while (map[y_m][x_m] != '\0' && map[y_m][x_m] != ' ')
 		{
-			*x = x_m;
-			*y = y_m;
-			return (1);
+			if (map[y_m][x_m++] == C)
+				return (*x = x_m, *y = y_m, 1);
 		}
 		y_m++;
 	}
@@ -63,23 +62,6 @@ char	**copy_map(char **matrix, int y)
 	copied[y_c] = NULL;
 	return (copied);
 }
-
-/*Using flood fill to find the path of the player*/
-// void	fill(char **matrix, int y, int x)
-// {
-// 	if (y < 0 || x < 0 || matrix[y] == NULL || x >= (int)ft_strlen(matrix[y]))
-// 		return ;
-// 	if (matrix[y][x] == '\0' || matrix[y][x] == ' '
-// 		|| matrix[y][x] == '0' || matrix[y][x] == '|' || matrix[y][x] == ','
-// 		|| matrix[y][x] == 'W' || matrix[y][x] == 'N' || matrix[y][x] == 'S'
-// 		|| matrix[y][x] == 'E')
-// 		return ;
-// 	matrix[y][x] = '|';
-// 	fill(matrix, y, x + 1);
-// 	fill(matrix, y, x - 1);
-// 	fill(matrix, y + 1, x);
-// 	fill(matrix, y - 1, x);
-// }
 
 void	fill(char **matrix, int y, int x, int *good)
 {
@@ -119,9 +101,10 @@ int	check_horizontal_walls(char **map)
 {
 	int	x;
 	int	y;
-	int bad = 0;
+	int bad;
 
 	y = 0;
+	bad = 0;
 	if (map[y] != NULL)
 	{
 		x = skip_first_spaces(map[y]);
@@ -143,6 +126,52 @@ int	check_horizontal_walls(char **map)
 	return (1);
 }
 
+int	check_inside_map(char **map)
+{
+	int	y;
+	int	x;
+	int bad;
+
+	y = 1;
+	bad = 0;
+	while (map[y] != NULL)
+	{
+		x = skip_first_spaces(map[y]);
+		while (map[y][x] != '\0')
+		{
+			if (map[y][x] == ' ')
+				fill(map, y, x, &bad);
+			while (map[y][x] != '\0' && map[y][x] == '|')
+				x++;
+			x++;
+		}
+		y++;
+	}
+	if (bad > 0)
+		return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
+	return (1);
+}
+
+int	check_map_walls(char **map)
+{
+	int	y;
+	int	x;
+	int bad;
+
+	y = 1;
+	bad = 0;
+	while (map[y] != NULL)
+	{
+		x = skip_first_spaces(map[y]);
+		if (map[y][x] != '1' || map[y][ft_strlen(map[y]) - 1] != '1')
+			return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
+		y++;
+	}
+	if (bad > 0)
+		return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
+	return (1);
+}
+
 int	check_walls(char **map)
 {
 	int		x;
@@ -150,11 +179,12 @@ int	check_walls(char **map)
 
 	x = 0;
 	y = 0;
-	if (!find_first_wall(map, &x, &y))
+	if (!find_first_character(map, &x, &y, '1'))
 		return (0);
 	char **map_copy = copy_map(map, y);
-	if (!check_horizontal_walls(map_copy))
+	if (!check_horizontal_walls(map_copy) || !check_inside_map(map_copy)
+		|| !check_map_walls(map_copy))
 		return (0);
 	free_double_pointer(map_copy);
-	return 1;
+	return (1);
 }

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
 /*   Updated: 2024/02/12 12:49:07 by rmitache         ###   ########.fr       */
@@ -16,11 +16,11 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 # include "get_next_line.h"
+# include "struct.h"
 # include <fcntl.h>
+# include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <math.h>
-# include "struct.h"
 
 # define SIZE 64
 
@@ -31,34 +31,32 @@
 # define CANNOT_FIND_C "Cannot find the Ceiling color"
 # define INVALID_MAP "Invalid map"
 
-int	map_validation(char *argv);
+int		map_validation(char *argv);
+char	**read_map(char *argv);
+int		find_first_character(char **map, int *x, int *y, int C);
+char	**copy_map(char **matrix, int y);
 
 char	*join_double_free(char *buffer, char *buff);
 void	free_double_pointer(char **pointer);
 char	*handle_tabs(char *line);
 
-bool	init_data(char *argv);
-size_t	calculate_height(char *argv);
-bool	allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
-char	**get_map_only(char *argv, t_game *game);
+t_game	*init_data(char *argv);
+void	free_game(t_game *game);
+void	get_colors(char *argv, t_game *game);
+bool	allocate_memory(t_player **player, t_ray **ray, t_texture **texture);
+size_t	calculate_height(char **map);
+size_t	calculate_width(char **map);
 int		array_length(char **pointer);
 char	*handle_tabs(char *line);
 int		check_map_values(char **map);
 int		check_walls(char **map);
 void	map_errors(char *error);
 int		should_check_path(char **split, char *buffer, int *check);
-int		clean_compare(char *s1, char *set, size_t n);
-char    *handle_tabs(char *line);
-
-bool	init_data(char *argv);
-size_t	calculate_height(char *argv);
-bool 	allocate_memory(t_game **game, t_player **player, t_ray **ray, t_texture **texture);
-void	assign_path_to_texture(char *argv, t_game *game);
+int		clean_compare(char *s1, char *set, size_t n);\
 
 int		get_rgba(int r, int g, int b, int a);
 int		open_fd(char *argv);
 
-void	get_colors(char *argv, char ***floor_colors, char ***ceiling_colors);
 void	get_window_size(char *argv, size_t	*height, size_t	*width);
 void	get_p_pos(char	***map, double *x, double *y, t_player *player);
 
@@ -75,5 +73,12 @@ void	move_player(t_game *game, char button);
 void	rotate_player(t_game *game, char button);
 void	CalculateRays(t_game *game);
 
+//mlx init
+int	init_mlx(t_game *game);
+void	init_textures(t_game *game);
+void	init_background(t_game *game);
+
+// mlx start
+void	start_game(t_game *game);
 
 #endif

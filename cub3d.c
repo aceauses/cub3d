@@ -3,41 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/09 21:17:45 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:54:09 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "includes/cub3d.h"
 
-void	check_leaks()
+void	leakcheck(void)
 {
-	system("leaks cub3d");
+	system("leaks --list cub3d");
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	(void)argc;
+	t_game	*game;
+
+	atexit(leakcheck);
+	game = NULL;
 	if (argc != 2)
 	{
 		printf("Error\nWrong number of arguments\n");
 		return (0);
 	}
-	if (!ft_strcmp(argv[2], "-l"))
-		atexit(check_leaks);
 	if (map_validation(argv[1]))
 	{
-		if (init_data(argv[1]) == false)
+		game = init_data(argv[1]);
+		if (!game)
 			return (1);
-		// Do mlx stuff
+		if (!init_mlx(game))
+			return (1);
+		printf("playe x: %d\n", game->player->x);
+		printf("playe y: %d\n", game->player->y);
+		printf("map width: %zu\n", game->m_width);
+		printf("map height: %zu\n", game->m_height);
+		printf("floor: %d\n", game->texture->floor->red);
+		printf("ceiling: %d\n", game->texture->ceiling->red);
+		start_game(game);
+		free_game(game);
 	}
 	else
-	{
 		return (1);
-	}
-	// system("leaks cub3d");
 	return (0);
 }
