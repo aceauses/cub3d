@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/23 14:59:57 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:31:45 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	main(int argc, char **argv)
 			return (1);
 		if (!init_mlx(game))
 			return (1);
-		printf("playe x: %d\n", game->player->x);
-		printf("playe y: %d\n", game->player->y);
-		printf("floor: %d\n", game->texture->floor->red);
-		printf("ceiling: %d\n", game->texture->ceiling->red);
+		// printf("playe x: %d\n", game->player->x);
+		// printf("playe y: %d\n", game->player->y);
+		// printf("floor: %d\n", game->texture->floor->red);
+		// printf("ceiling: %d\n", game->texture->ceiling->red);
 		start_game(game);
 		free_game(game);
 	}

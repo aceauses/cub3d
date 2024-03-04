@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/23 16:06:34 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:22:01 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,8 +240,8 @@ static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
 	game->distance = 0.5;
 	game->distance_jos = 1.5;
 	game->player = player;
-	// find_first_character(game->map, &game->player->x, &game->player->y, 'N');
-	get_p_pos(&game->map, &game->player->x, &game->player->y, game->player);
+	find_first_character(game->map, &game->player->x, &game->player->y, 'N');
+	// get_p_pos(&game->map, &game->player->x, &game->player->y, game->player);
 	game->player->delta_x = cos(game->player->angle) * 5;
 	game->player->delta_y = sin(game->player->angle) * 5;
 	game->texture = texture;
@@ -250,6 +250,12 @@ static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
 		return (free(game->player), free(game->ray), free(game->texture)
 			, free(game), NULL);
 	game->ray = ray;
+	game->ray->dirX = -1;
+	game->ray->dirY = 0;
+	game->ray->planeX = 0;
+	game->ray->planeY = 0.66;
+	game->ray->posX = game->player->x;
+	game->ray->posY = game->player->y;
 	return (game);
 }
 

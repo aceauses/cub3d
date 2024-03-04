@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/23 14:30:57 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:05:32 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,12 @@ typedef struct s_ray
 	int					map_p;
 	double				distH;
 	double				distV;
+	double				posX; // x and y start position Player
+	double				posY;
+	double				dirX; //initial direction vector
+	double				dirY;
+	double				planeX; //the 2d raycaster version of camera plane
+	double				planeY; 
 	double				ray_angle;
 	double				wall_hit_x;
 	double				wall_hit_y;
@@ -72,6 +78,7 @@ typedef struct s_texture
 	char				**path;
 	mlx_image_t			*background;
 	mlx_image_t			*camera;
+	mlx_image_t			*buffer_camera;
 	mlx_image_t			*image;
 	mlx_texture_t		*no;
 	mlx_texture_t		*so;

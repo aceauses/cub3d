@@ -58,8 +58,8 @@ void	get_p_pos(char ***map, int *x, int *y, t_player *player)
 			if ((*map)[i][j] == 'N' || (*map)[i][j] == 'S' ||
 					(*map)[i][j] == 'E' || (*map)[i][j] == 'W')
 			{
-				*y = i * 16;
-				*x = j * 16;
+				*y = i;
+				*x = j;
 				set_angle_from_char((*map)[i][j], player);
 				return ;
 			}

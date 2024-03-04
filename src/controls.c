@@ -82,52 +82,76 @@ void controls(void* param)
 
 	game = param;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_ESCAPE))
-		esc_free(game);
+		mlx_close_window(game->mlx);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
 	{
 		mlx_delete_image(game->mlx, game->texture->camera);
 		game->texture->camera = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 		mlx_image_to_window(game->mlx, game->texture->camera, 0, 0);
-		move_player(game, 'W');
+		if (game->map[(int)(game->ray->posX + game->ray->dirX * 0.1)][(int)game->ray->posY] == '0')
+			game->ray->posX += game->ray->dirX * 0.1;
+		if (game->map[(int)game->ray->posX][(int)(game->ray->posY + game->ray->dirY * 0.1)] == '0')
+			game->ray->posY += game->ray->dirY * 0.1;
 	}
 	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
 	{
 		mlx_delete_image(game->mlx, game->texture->camera);
 		game->texture->camera = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 		mlx_image_to_window(game->mlx, game->texture->camera, 0, 0);
-		move_player(game, 'S');
+		if (game->map[(int)(game->ray->posX - game->ray->dirX * 0.1)][(int)game->ray->posY] == '0')
+			game->ray->posX -= game->ray->dirX * 0.1;
+		if (game->map[(int)game->ray->posX][(int)(game->ray->posY - game->ray->dirY * 0.1)] == '0')
+			game->ray->posY -= game->ray->dirY * 0.1;
 	}
 	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
 	{
 		mlx_delete_image(game->mlx, game->texture->camera);
 		game->texture->camera = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 		mlx_image_to_window(game->mlx, game->texture->camera, 0, 0);
-		move_player(game, 'A');
+		if (game->map[(int)(game->ray->posX - game->ray->planeX * 0.1)][(int)game->ray->posY] == '0')
+			game->ray->posX -= game->ray->planeX * 0.1;
+		if (game->map[(int)game->ray->posX][(int)(game->ray->posY - game->ray->planeY * 0.1)] == '0')
+			game->ray->posY -= game->ray->planeY * 0.1;
 	}
 	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
 	{
 		mlx_delete_image(game->mlx, game->texture->camera);
 		game->texture->camera = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 		mlx_image_to_window(game->mlx, game->texture->camera, 0, 0);
-		move_player(game, 'D');
+		if (game->map[(int)(game->ray->posX + game->ray->planeX * 0.1)][(int)game->ray->posY] == '0')
+			game->ray->posX += game->ray->planeX * 0.1;
+		if (game->map[(int)game->ray->posX][(int)(game->ray->posY + game->ray->planeY * 0.1)] == '0')
+			game->ray->posY += game->ray->planeY * 0.1;
 	}
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
 	{
 		mlx_delete_image(game->mlx, game->texture->camera);
 		game->texture->camera = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 		mlx_image_to_window(game->mlx, game->texture->camera, 0, 0);
-		rotate_player(game, 'L');
+		double oldDirX = game->ray->dirX;
+		game->ray->dirX = game->ray->dirX * cos(0.1) - game->ray->dirY * sin(0.1);
+		game->ray->dirY = oldDirX * sin(0.1) + game->ray->dirY * cos(0.1);
+		double oldPlaneX = game->ray->planeX;
+		game->ray->planeX = game->ray->planeX * cos(0.1) - game->ray->planeY * sin(0.1);
+		game->ray->planeY = oldPlaneX * sin(0.1) + game->ray->planeY * cos(0.1);
+		// rotate_player(game, 'L');
 	}
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 	{
 		mlx_delete_image(game->mlx, game->texture->camera);
 		game->texture->camera = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 		mlx_image_to_window(game->mlx, game->texture->camera, 0, 0);
-		rotate_player(game, 'R');
+		double oldDirX = game->ray->dirX;
+		game->ray->dirX = game->ray->dirX * cos(-0.1) - game->ray->dirY * sin(-0.1);
+		game->ray->dirY = oldDirX * sin(-0.1) + game->ray->dirY * cos(-0.1);
+		double oldPlaneX = game->ray->planeX;
+		game->ray->planeX = game->ray->planeX * cos(-0.1) - game->ray->planeY * sin(-0.1);
+		game->ray->planeY = oldPlaneX * sin(-0.1) + game->ray->planeY * cos(-0.1);
+		// rotate_player(game, 'R');
 	}
-	CalculateRays(game);
-	game->texture->ray_image->instances[0].x = (game->player->x + game->player->delta_x * 2);
-	game->texture->ray_image->instances[0].y = (game->player->y + game->player->delta_y * 2);
+	// CalculateRays(game);
+	// game->texture->ray_image->instances[0].x = (game->player->x + game->player->delta_x * 2);
+	// game->texture->ray_image->instances[0].y = (game->player->y + game->player->delta_y * 2);
 }
 
 void	move_player(t_game *game, char button)
