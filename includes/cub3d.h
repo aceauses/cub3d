@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/23 15:11:11 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:42:12 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,19 @@ int		clean_compare(char *s1, char *set, size_t n);\
 int		get_rgba(int r, int g, int b, int a);
 int		open_fd(char *argv);
 
-void	get_window_size(char *argv, size_t	*height, size_t	*width);
 void	get_p_pos(char ***map, int *x, int *y, t_player *player);
 void DrawWalls(t_game *game);
 // ray
 void	check_vertical(t_game *game, double ft_tan);
 void	check_horizontal(t_game *game, double ft_tan);
 void	esc_free(t_game *game);
-double	degToRad(int a);
 double	FixAng(double a);
 
 // controls.c
 void	controls(void* param);
-void	move_player(t_game *game, char button);
-void	rotate_player(t_game *game, char button);
-void	CalculateRays(t_game *game);
 
 //mlx init
 int	init_mlx(t_game *game);
-void	init_textures(t_game *game);
-void	init_background(t_game *game);
 
 // mlx start
 void	start_game(t_game *game);

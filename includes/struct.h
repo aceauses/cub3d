@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/28 18:05:32 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:39:02 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define PI 3.1415926535
 # define HEIGHT 1080
 # define WIDTH 1920
+#define NUM_BUFFERS 2
 
 typedef struct s_game
 {
@@ -77,8 +78,8 @@ typedef struct s_texture
 	mlx_image_t			*ray_image;
 	char				**path;
 	mlx_image_t			*background;
-	mlx_image_t			*camera;
-	mlx_image_t			*buffer_camera;
+	mlx_image_t			*camera[NUM_BUFFERS];
+	int					current_buffer;
 	mlx_image_t			*image;
 	mlx_texture_t		*no;
 	mlx_texture_t		*so;

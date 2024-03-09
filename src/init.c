@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/26 19:22:01 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/09 18:42:26 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,122 +68,6 @@ bool	allocate_memory(t_player **player, t_ray **ray, t_texture **texture)
 // 	return (true);
 // }
 
-double	FixAng(double a)
-{
-	if (a > 0)
-		a -= 360;
-	if (a < 0)
-		a += 360;
-	if (a < 0)
-		a = 0;
-	return (a);
-}
-
-double	get_distance_normalized(t_game *game)
-{
-	double	ft_cos;
-	double	ft_sin;
-	double	distance;
-
-	ft_cos = cos(degToRad(game->ray->angle)) * (game->ray->x - game->player->x);
-	ft_sin = sin(degToRad(game->ray->angle)) * (game->ray->y - game->player->y);
-	distance = ft_cos - ft_sin;
-	double	min_distance = 32;
-	double	max_distance = 500;
-
-	double normalized_distance = (distance - min_distance) / (max_distance - min_distance);
-
-	if (normalized_distance < 0)
-		normalized_distance = 0;
-	else if (normalized_distance > 1)
-		normalized_distance = 1;
-
-	return (normalized_distance);
-}
-
-void	check_if_wall(t_game *game, char check_for)
-{
-	while (game->ray->dof < 8)
-	{
-		game->ray->map_x = (int)game->ray->x >> 6;
-		game->ray->map_y = (int)game->ray->y >> 6;
-		game->ray->map_p = game->ray->map_y * game->width + game->ray->map_x;
-		if (game->ray->map_x < 0 || game->ray->map_x >= (int)game->width
-			|| game->ray->map_y < 0 || game->ray->map_y >= (int)game->height)
-			break ;
-		if (game->ray->map_p > 0 && game->ray->map_p < (int)game->width
-			* (int)game->height
-			&& game->map[game->ray->map_y][game->ray->map_x] == '1')
-		{
-			game->ray->dof = 8;
-			if (check_for == 'V')
-				game->ray->distV = get_distance_normalized(game);
-			else if (check_for == 'H')
-				game->ray->distH = get_distance_normalized(game);
-			printf("distV: %f\n", game->ray->distV);
-			printf("distH: %f\n", game->ray->distH);
-		}
-		else
-		{
-			game->ray->x += game->ray->x_offset;
-			game->ray->y += game->ray->y_offset;
-			game->ray->dof++;
-		}
-	}
-}
-
-void	check_horizontal(t_game *game, double ft_tan)
-{
-	if (cos(degToRad(game->ray->angle)) > 0.001)
-	{
-		game->ray->x = (((int)game->player->x >> 6) << 6) + 64;
-		game->ray->y = (game->player->x - game->ray->x) * ft_tan + game->player->y;
-		printf("x s : %d\n", game->ray->x);
-		printf("y s : %d\n", game->ray->y);
-		game->ray->x_offset = 64;
-		game->ray->y_offset = -game->ray->x_offset * ft_tan;
-	}
-	else if (cos(degToRad(game->ray->angle)) < -0.001)
-	{
-		game->ray->x = (((int)game->player->x >> 6) << 6) - 0.0001;
-		game->ray->y = (game->player->x - game->ray->x) * ft_tan + game->player->y;
-		game->ray->x_offset = -64;
-		game->ray->y_offset = -game->ray->x_offset * ft_tan;
-	}
-	else
-	{
-		game->ray->x = game->player->x;
-		game->ray->y = game->player->y;
-		game->ray->dof = 8;
-	}
-	check_if_wall(game, 'V');
-}
-
-void	check_vertical(t_game *game, double ft_tan)
-{
-	if (sin(degToRad(game->ray->angle)) > 0.001)
-	{
-		game->ray->y = (((int)game->player->y >> 6) << 6) - 0.0001;
-		game->ray->x = (game->player->y - game->ray->y) * ft_tan + game->player->x;
-		game->ray->y_offset = -64;
-		game->ray->x_offset = -game->ray->y_offset * ft_tan;
-	}
-	else if (sin(degToRad(game->ray->angle)) < -0.001)
-	{
-		game->ray->y = (((int)game->player->y >> 6) << 6) + 64;
-		game->ray->x = (game->player->y-game->ray->y) * ft_tan + game->player->x;
-		game->ray->y_offset = 64;
-		game->ray->x_offset = -game->ray->y_offset * ft_tan;
-	}
-	else
-	{
-		game->ray->x = game->player->x;
-		game->ray->y = game->player->y;
-		game->ray->dof = 8;
-	}
-	check_if_wall(game, 'H');
-}
-
 void	esc_free(t_game *game)
 {
 	mlx_terminate(game->mlx);
@@ -240,8 +124,8 @@ static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
 	game->distance = 0.5;
 	game->distance_jos = 1.5;
 	game->player = player;
-	find_first_character(game->map, &game->player->x, &game->player->y, 'N');
-	// get_p_pos(&game->map, &game->player->x, &game->player->y, game->player);
+	// find_first_character(game->map, &game->player->x, &game->player->y, 'N');
+	get_p_pos(&game->map, &game->player->x, &game->player->y, game->player);
 	game->player->delta_x = cos(game->player->angle) * 5;
 	game->player->delta_y = sin(game->player->angle) * 5;
 	game->texture = texture;
@@ -250,7 +134,7 @@ static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
 		return (free(game->player), free(game->ray), free(game->texture)
 			, free(game), NULL);
 	game->ray = ray;
-	game->ray->dirX = -1;
+	game->ray->dirX = 1;
 	game->ray->dirY = 0;
 	game->ray->planeX = 0;
 	game->ray->planeY = 0.66;
