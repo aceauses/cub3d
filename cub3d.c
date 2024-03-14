@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/09 17:52:09 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:58:52 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	main(int argc, char **argv)
 			return (1);
 		if (!init_mlx(game))
 			return (1);
-		for (int i = 0; game->map[i]; i++)
-			printf("map[%d]: %s\n", i, game->map[i]);
+		if (!init_textures(game))
+			return (1);
 		start_game(game);
 		free_game(game);
 	}

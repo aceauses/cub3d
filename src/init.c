@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/03/09 18:42:26 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:51:13 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,39 +68,29 @@ bool	allocate_memory(t_player **player, t_ray **ray, t_texture **texture)
 // 	return (true);
 // }
 
-void	esc_free(t_game *game)
-{
-	mlx_terminate(game->mlx);
-	free_double_pointer(game->map);
-	free(game->player);
-	free(game->ray);
-	free(game);
-	exit(system("leaks cub3d"));
-}
+// void DrawWalls(t_game *game)
+// {
+// 	size_t	i;
+// 	size_t	j;
 
-void DrawWalls(t_game *game)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	if (game->map == NULL)
-		return ;
-	while (game->map[i])
-	{
-		j = 0;
-		printf("map[%zu]: %s\n", i, game->map[i]);
-		while (game->map[i][j])
-		{
-			if (game->map[i][j] == '1')
-				mlx_image_to_window(game->mlx, game->texture->no_image, j * 64, i * 64);
-			if (game->map[i][j] == 'N')
-				mlx_image_to_window(game->mlx, game->texture->ray_image, j * 64, i * 64);
-			j++;
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	if (game->map == NULL)
+// 		return ;
+// 	while (game->map[i])
+// 	{
+// 		j = 0;
+// 		printf("map[%zu]: %s\n", i, game->map[i]);
+// 		while (game->map[i][j])
+// 		{
+// 			if (game->map[i][j] == '1')
+// 				mlx_image_to_window(game->mlx, game->texture->no_image, j * 64, i * 64);
+// 			if (game->map[i][j] == 'N')
+// 				mlx_image_to_window(game->mlx, game->texture->ray_image, j * 64, i * 64);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 
 static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
@@ -121,8 +111,6 @@ static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
 	game->map = copy_map(game->cub_file, y);
 	game->height = calculate_height(game->map);
 	game->width = calculate_width(game->map);
-	game->distance = 0.5;
-	game->distance_jos = 1.5;
 	game->player = player;
 	// find_first_character(game->map, &game->player->x, &game->player->y, 'N');
 	get_p_pos(&game->map, &game->player->x, &game->player->y, game->player);
@@ -134,7 +122,7 @@ static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
 		return (free(game->player), free(game->ray), free(game->texture)
 			, free(game), NULL);
 	game->ray = ray;
-	game->ray->dirX = 1;
+	game->ray->dirX = -1;
 	game->ray->dirY = 0;
 	game->ray->planeX = 0;
 	game->ray->planeY = 0.66;

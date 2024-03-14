@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/06 14:39:02 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:43:42 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ typedef struct s_game
 	size_t				width;  // NOT in Pixels
 	char				**cub_file;
 	char				**map;
-	double				distance;
-	double				distance_jos;
 	struct s_player		*player;
 	struct s_image		*image;
 	struct s_ray		*ray;
@@ -47,40 +45,34 @@ typedef struct s_player
 
 typedef struct s_ray
 {
-	double				angle;
-	int					x;
-	int					y;
-	double				x_offset;
-	double				y_offset;
-	int					map_x;
-	int					dof;
-	int					map_y;
-	int					map_p;
-	double				distH;
-	double				distV;
 	double				posX; // x and y start position Player
 	double				posY;
 	double				dirX; //initial direction vector
 	double				dirY;
 	double				planeX; //the 2d raycaster version of camera plane
 	double				planeY; 
-	double				ray_angle;
-	double				wall_hit_x;
-	double				wall_hit_y;
+	double				rayDirX;
+	double				rayDirY;
+	double				sideDistX;
+	double				sideDistY;
+	double				deltaDistX;
+	double				deltaDistY;
+	double				perpWallDist;
+	double				cameraX;
+	int					stepX;
+	int					stepY;
 }						t_ray;
 
 typedef struct s_texture
 {
-	mlx_image_t			*no_image;
-	mlx_image_t			*so_image;
-	mlx_image_t			*we_image;
-	mlx_image_t			*ea_image;
+	mlx_image_t			**images;
 	mlx_image_t			*ray_image;
 	char				**path;
 	mlx_image_t			*background;
 	mlx_image_t			*camera[NUM_BUFFERS];
 	int					current_buffer;
 	mlx_image_t			*image;
+	mlx_texture_t		**sprite;
 	mlx_texture_t		*no;
 	mlx_texture_t		*so;
 	mlx_texture_t		*we;

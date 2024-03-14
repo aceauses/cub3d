@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/08 16:42:12 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:48:37 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	**copy_map(char **matrix, int y);
 char	*join_double_free(char *buffer, char *buff);
 void	free_double_pointer(char **pointer);
 char	*handle_tabs(char *line);
+
+int		init_textures(t_game *game);
 
 t_game	*init_data(char *argv);
 void	free_game(t_game *game);

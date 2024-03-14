@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:57:15 by rmitache          #+#    #+#             */
-/*   Updated: 2024/02/26 16:28:09 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/14 22:01:11 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ void	free_game(t_game *game)
 		free(game->texture->floor);
 	if (game->texture->ceiling)
 		free(game->texture->ceiling);
+	if (game->texture->sprite)
+		free(game->texture->sprite);
 	if (game->texture)
 		free(game->texture);
 	if (game->player)

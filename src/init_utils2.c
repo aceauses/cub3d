@@ -42,3 +42,15 @@ void	get_p_pos(char ***map, int *x, int *y, t_player *player)
 		i++;
 	}
 }
+
+int	init_textures(t_game *game)
+{
+	game->texture->sprite = malloc(sizeof(mlx_texture_t *) * 4);
+	if (!game->texture->sprite)
+		return (0);
+	game->texture->sprite[0] = mlx_load_png(game->texture->path[0]);
+	game->texture->sprite[1] = mlx_load_png(game->texture->path[1]);
+	game->texture->sprite[2] = mlx_load_png(game->texture->path[2]);
+	game->texture->sprite[3] = mlx_load_png(game->texture->path[3]);
+	return (1);
+}

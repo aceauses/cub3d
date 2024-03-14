@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:18:12 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/09 17:53:22 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:56:48 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,134 +46,163 @@ void	fill_background(void* param)
 	}
 }
 
-void	key_hook(mlx_key_data_t keydata, void *param)
-{
-	t_game	*game;
 
-	game = (t_game *)param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		mlx_close_window(game->mlx);
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+void put_pixels(t_game *game, int x, int drawStart, int drawEnd, int lineHeight, int which_side, int side, double wallX)
+{
+	// double texWidth = 64;
+    // double texHeight = 64;
+	double maxLineHeight = HEIGHT * 10; // Set a maximum line height limit
+
+    // double texPos = (drawStart - screenHeight / 2 + lineHeight / 2) / lineHeight; // Starting texture coordinate
+	double texPos = (drawStart - HEIGHT / 2 + (lineHeight > maxLineHeight ? maxLineHeight / 2 : lineHeight / 2)) / (lineHeight > maxLineHeight ? maxLineHeight : lineHeight); // Starting texture coordinate
+
+    for (int y = drawStart; y < drawEnd; y++)
+    {
+        double texY = texPos * 64; // Calculate texture Y coordinate
+        // texPos += 1.0 / lineHeight; // Increment texture coordinate for next pixel
+		texPos += 1.0 / (lineHeight > maxLineHeight ? maxLineHeight : lineHeight);
+        int texX = 1;
+        if (side == 0) // Left or right side wall
+            texX = wallX * 64;
+        else // Top or bottom side wall
+            texX = wallX * 64;
+
+        // Handle texture wrapping
+        texX = (int)texX % (int)64;
+        texY = (int)texY % (int)64;
+
+        // Get the texture color
+        int texIndex = (texY * 64 + texX) * 4;
+		int texture_color = ft_pixel(
+			game->texture->sprite[which_side]->pixels[texIndex + 0],
+			game->texture->sprite[which_side]->pixels[texIndex + 1],
+			game->texture->sprite[which_side]->pixels[texIndex + 2],
+			255);
+        mlx_put_pixel(game->texture->camera[(game->texture->current_buffer + 1) % NUM_BUFFERS], x, y, texture_color);
+    }
+}
+
+void	init_ray(t_ray *ray, int x)
+{
+	ray->cameraX = 2 * x / (double)WIDTH - 1;
+	ray->rayDirX = ray->dirX + ray->planeX * ray->cameraX;
+	ray->rayDirY = ray->dirY + ray->planeY * ray->cameraX;
+	ray->deltaDistX = sqrt(1 + (ray->rayDirY * ray->rayDirY) / (ray->rayDirX * ray->rayDirX));
+	ray->deltaDistY = sqrt(1 + (ray->rayDirX * ray->rayDirX) / (ray->rayDirY * ray->rayDirY));
+}
+
+void	calc_sidedist(t_ray *ray, int *mapX, int *mapY)
+{
+	if (ray->rayDirX < 0)
 	{
-		// mlx_delete_image(game->mlx, game->texture->camera);
-		// game->texture->camera = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-		// mlx_image_to_window(game->mlx, game->texture->camera, 0, 0);
-		if (game->distance <= 0.010000)
-			return;
-		printf("game->ray->distH: %f\n", game->ray->distH);
-		game->distance -= 0.05;
-		game->distance_jos += 0.05;
-		printf("W pressed distance: %f\n", game->distance);
+		ray->stepX = -1;
+		ray->sideDistX = (ray->posX - *mapX) * ray->deltaDistX;
 	}
-	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+	else
 	{
-		// mlx_delete_image(game->mlx, game->texture->camera);
-		// game->texture->camera = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-		// mlx_image_to_window(game->mlx, game->texture->camera, 0, 0);
-		if (game->distance >= 0.65)
-			return;
-		game->distance += 0.05;
-		game->distance_jos -= 0.05;
+		ray->stepX = 1;
+		ray->sideDistX = (*mapX + 1.0 - ray->posX) * ray->deltaDistX;
+	}
+	if (ray->rayDirY < 0)
+	{
+		ray->stepY = -1;
+		ray->sideDistY = (ray->posY - *mapY) * ray->deltaDistY;
+	}
+	else
+	{
+		ray->stepY = 1;
+		ray->sideDistY = (*mapY + 1.0 - ray->posY) * ray->deltaDistY;
 	}
 }
 
-void put_pixels(mlx_image_t *image, int x, int drawStart, int drawEnd, size_t color)
+void	refresh_camera(t_game *game)
 {
-	for (int y = drawStart; y < drawEnd; y++)
+	game->texture->current_buffer = (game->texture->current_buffer + 1) % NUM_BUFFERS;
+	mlx_delete_image(game->mlx, game->texture->camera[game->texture->current_buffer]);
+	game->texture->camera[game->texture->current_buffer] = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	mlx_image_to_window(game->mlx, game->texture->camera[game->texture->current_buffer], 0, 0);
+}
+
+int	calculate_side(t_game *game, int side)
+{
+	int	which_side;
+
+	which_side = 0;
+	if (side == 0) // FOX X-AXIS
 	{
-		// int *convert = malloc(sizeof(int) * texturee->height);
-		// for (int i = 0; i < texturee->height; i += 1)
-		// {
-			// int convert = ft_pixel(colors[y], colors[y + 1], colors[y + 2], colors[y + 3]);
-		mlx_put_pixel(image, x, y, color);
+		if (game->ray->stepX < 0) // WEST
+			which_side = 3;
+		else // EAST
+			which_side = 1;
 	}
+	else // FOR Y-AXIS
+	{
+		if (game->ray->stepY < 0) // SOUTH
+			which_side = 2;
+		else // NORTH
+			which_side = 0;
+	}
+	return (which_side);
+}
+
+int	dda(t_game *game, int *mapX, int *mapY, int *hit, int *side)
+{
+	while (*hit == 0) //DDA function
+		{
+			//jump to next map square, OR in x-direction, OR in y-direction
+			if (game->ray->sideDistX < game->ray->sideDistY)
+			{
+				game->ray->sideDistX += game->ray->deltaDistX;
+				*mapX += game->ray->stepX;
+				*side = 0;
+			}
+			else
+			{
+				game->ray->sideDistY += game->ray->deltaDistY;
+				*mapY += game->ray->stepY;
+				*side = 1;
+			}
+			if (game->map[*mapY][*mapX] == '1' && game->map[*mapY][*mapX] != '\0')
+			{
+				*hit = 1;
+				return (calculate_side(game, *side));
+			}
+		}
+	return (0);
 }
 
 void	camera(void *param)
 {
 	t_game *game = (t_game *)param;
-	game->texture->current_buffer = (game->texture->current_buffer + 1) % NUM_BUFFERS; // 2
-	mlx_delete_image(game->mlx, game->texture->camera[game->texture->current_buffer]); // 2
-	game->texture->camera[game->texture->current_buffer] = mlx_new_image(game->mlx, WIDTH, HEIGHT); // 2
-	mlx_image_to_window(game->mlx, game->texture->camera[game->texture->current_buffer], 0, 0); // 2
+	refresh_camera(game);
 	for (int x = 0; x < WIDTH; x++)
 	{
-		//calculate ray position and direction
-		double cameraX = 2 * x / (double)WIDTH - 1; //x-coordinate in camera space
-		double rayDirX = game->ray->dirX + game->ray->planeX * cameraX;
-		double rayDirY = game->ray->dirY + game->ray->planeY * cameraX;
-		printf("rayDirX: %f, rayDirY: %f\n", rayDirX, rayDirY);
-		//which box of the map we're in
+		init_ray(game->ray, x);
 		int mapX = (int)game->ray->posX;
 		int mapY = (int)game->ray->posY;
-		printf("mapX: %d, mapY: %d\n", mapX, mapY);
-		//length of ray from current position to next x or y-side
-		double sideDistX;
-		double sideDistY;
-		//length of ray from one x or y-side to next x or y-side
-		double deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
-		double deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
-		double perpWallDist;
-		//what direction to step in x or y-direction (either +1 or -1)
-		int stepX;
-		int stepY;
 		int hit = 0; //was there a wall hit?
 		int side; //was a NS or a EW wall hit?
-		//calculate step and initial sideDist
-		if (rayDirX < 0) // Another function
-		{
-			stepX = -1;
-			sideDistX = (game->ray->posX - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - game->ray->posX) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (game->ray->posY - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - game->ray->posY) * deltaDistY;
-		}
-		while (hit == 0) //DDA function
-		{
-			//jump to next map square, OR in x-direction, OR in y-direction
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			if (game->map[mapY][mapX] == '1' && game->map[mapY][mapX] != '\0')
-				hit = 1;
-		}
+		calc_sidedist(game->ray, &mapX, &mapY);
+		int which_side = dda(game, &mapX, &mapY, &hit, &side);
 		if (side == 0)
-			perpWallDist = (sideDistX - deltaDistX);
+			game->ray->perpWallDist = (game->ray->sideDistX - game->ray->deltaDistX);
 		else
-			perpWallDist = (sideDistY - deltaDistY);
-		// Correct for fish-eye effect
-		perpWallDist *= cos(atan2(rayDirY, rayDirX) - atan2(game->ray->dirY, game->ray->dirX));
-		int lineHeight = (int)(HEIGHT / perpWallDist);
+			game->ray->perpWallDist = (game->ray->sideDistY - game->ray->deltaDistY);
+		game->ray->perpWallDist *= cos(atan2(game->ray->rayDirY, game->ray->rayDirX) - atan2(game->ray->dirY, game->ray->dirX));
+		int lineHeight = (int)(HEIGHT / game->ray->perpWallDist);
 		int drawStart = -lineHeight / 2 + HEIGHT / 2;
 		if (drawStart < 0)
 			drawStart = 0;
 		int drawEnd = lineHeight / 2 + HEIGHT / 2;
 		if (drawEnd >= HEIGHT)
 			drawEnd = HEIGHT - 1;
-		size_t color = ft_pixel(255, 0, 0, 255);
-			
-		put_pixels(game->texture->camera[(game->texture->current_buffer + 1) % NUM_BUFFERS], x, drawStart, drawEnd, color);
+		double wallX; //where exactly the wall was hit
+		if(side == 0)
+			wallX = game->ray->posY + game->ray->perpWallDist * game->ray->rayDirY;
+		else
+			wallX = game->ray->posX + game->ray->perpWallDist * game->ray->rayDirX;
+		wallX -= floor((wallX));
+		put_pixels(game, x, drawStart, drawEnd, lineHeight, which_side, side, wallX);
 	}
 }
 
