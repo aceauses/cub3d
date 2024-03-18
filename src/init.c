@@ -6,13 +6,11 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/03/14 21:51:13 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:55:29 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-#include "../includes/struct.h"
-#include <stdio.h>
 
 /**
  * @brief This will allocate memory for the game and player structure
@@ -39,34 +37,6 @@ bool	allocate_memory(t_player **player, t_ray **ray, t_texture **texture)
 	ft_memset(*texture, 0, sizeof(t_texture));
 	return (true);
 }
-
-
-/**
- * @brief This function will load the images using mlx_load_png and save them
- * into the correct texture property of game->texture for later use.
- *
- * @param game The game structure
- * @return true If the images were loaded successfully
- * @return false If the mem images were not loaded successfully
- */
-// bool	load_images(t_game *game)
-// {
-// 	game->texture->no = mlx_load_png(game->texture->no_path);
-// 	game->texture->so = mlx_load_png(game->texture->so_path);
-// 	game->texture->we = mlx_load_png(game->texture->we_path);
-// 	game->texture->ea = mlx_load_png(game->texture->ea_path);
-// 	game->texture->no_image = mlx_texture_to_image(game->mlx, game->texture->no);
-// 	game->texture->so_image = mlx_texture_to_image(game->mlx, game->texture->so);
-// 	game->texture->we_image = mlx_texture_to_image(game->mlx, game->texture->we);
-// 	game->texture->ea_image = mlx_texture_to_image(game->mlx, game->texture->ea);
-
-
-// 	game->texture->ray_image = mlx_new_image(game->mlx, 20, 20);
-// 	memset(game->texture->ray_image->pixels, 255, game->texture->ray_image->width * game->texture->ray_image->height * sizeof(int32_t));
-
-// 	mlx_image_to_window(game->mlx, game->texture->ray_image, game->player->x, game->player->y);
-// 	return (true);
-// }
 
 // void DrawWalls(t_game *game)
 // {
@@ -109,8 +79,6 @@ static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
 	game->cub_file = read_map(argv);
 	find_first_character(game->cub_file, &x, &y, '1');
 	game->map = copy_map(game->cub_file, y);
-	game->height = calculate_height(game->map);
-	game->width = calculate_width(game->map);
 	game->player = player;
 	// find_first_character(game->map, &game->player->x, &game->player->y, 'N');
 	get_p_pos(&game->map, &game->player->x, &game->player->y, game->player);
@@ -123,11 +91,11 @@ static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
 			, free(game), NULL);
 	game->ray = ray;
 	game->ray->dirX = -1;
-	game->ray->dirY = 0;
+	game->ray->diry = 0;
 	game->ray->planeX = 0;
-	game->ray->planeY = 0.66;
-	game->ray->posX = game->player->x;
-	game->ray->posY = game->player->y;
+	game->ray->planey = 0.66;
+	game->ray->posx = game->player->x;
+	game->ray->posy = game->player->y;
 	return (game);
 }
 
@@ -159,7 +127,6 @@ bool	get_texture(t_game *game)
 	game->texture->path[4] = NULL;
 	return (true);
 }
-
 
 /**
  * @brief Allocate memory for the game and player structure and initialize the

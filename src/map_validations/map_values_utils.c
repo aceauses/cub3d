@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:22:47 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/07 11:19:17 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:51:08 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static int	check_inside_buffer(char *buffer, char *split, int *check)
 int	should_check_path(char **split, char *buffer, int *check)
 {
 	if ((!ft_strcmp(split[0], "NO")
-		&& !check_inside_buffer(buffer, split[0], check))
+			&& !check_inside_buffer(buffer, split[0], check))
 		|| (!ft_strcmp(split[0], "SO")
-		&& !check_inside_buffer(buffer, split[0], check))
+			&& !check_inside_buffer(buffer, split[0], check))
 		|| (!ft_strcmp(split[0], "WE")
-		&& !check_inside_buffer(buffer, split[0], check))
+			&& !check_inside_buffer(buffer, split[0], check))
 		|| (!ft_strcmp(split[0], "EA")
-		&& !check_inside_buffer(buffer, split[0], check)))
+			&& !check_inside_buffer(buffer, split[0], check)))
 	{
 		return (1);
 	}

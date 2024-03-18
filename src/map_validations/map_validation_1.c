@@ -6,14 +6,13 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/20 17:08:47 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:50:50 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/cub3d.h"
 
-char    *handle_tabs(char *line)
+char	*handle_tabs(char *line)
 {
 	char	*new;
 	int		i;

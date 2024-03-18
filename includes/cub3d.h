@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/14 21:48:37 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:46:28 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ t_game	*init_data(char *argv);
 void	free_game(t_game *game);
 void	get_colors(char *argv, t_game *game);
 bool	allocate_memory(t_player **player, t_ray **ray, t_texture **texture);
-size_t	calculate_height(char **map);
-size_t	calculate_width(char **map);
 int		array_length(char **pointer);
 char	*handle_tabs(char *line);
 int		check_map_values(char **map);
@@ -60,15 +58,24 @@ int		get_rgba(int r, int g, int b, int a);
 int		open_fd(char *argv);
 
 void	get_p_pos(char ***map, int *x, int *y, t_player *player);
+int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 void DrawWalls(t_game *game);
 // ray
-void	check_vertical(t_game *game, double ft_tan);
-void	check_horizontal(t_game *game, double ft_tan);
-void	esc_free(t_game *game);
-double	FixAng(double a);
+void	init_ray(t_ray *ray, int x);
+void	calc_sidedist(t_ray *ray, int *mapX, int *mapY);
+int		dda(t_game *game, int *mapX, int *mapY, int *side);
+void	calculate_wall_distances(t_game *game, int side);
+void	put_pixels(t_game *game, int x, int side, double wallX);
+int		calculate_side(t_game *game, int side);
+void	refresh_camera(t_game *game);
+void	calc_wallx(t_game *game, int side, double *wallx);
 
 // controls.c
-void	controls(void* param);
+void	move_forward(t_game *game);
+void	move_backward(t_game *game);
+void	move_left(t_game *game);
+void	move_right(t_game *game);
+void	controls(void *param);
 
 //mlx init
 int	init_mlx(t_game *game);

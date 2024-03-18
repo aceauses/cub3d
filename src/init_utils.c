@@ -6,13 +6,12 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:57:15 by rmitache          #+#    #+#             */
-/*   Updated: 2024/03/14 22:01:11 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:33:30 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include "../includes/struct.h"
-
 
 int	open_fd(char *argv)
 {
@@ -27,55 +26,11 @@ int	open_fd(char *argv)
 	return (fd);
 }
 
-/**
- * @brief This will read the whole file map, and return only the map with
- * spaces at the beginning
- *
- * @param argv File path
- * @return char** Map as a double pointer
- */
-size_t	calculate_height(char **map)
-{
-	size_t	i;
-	size_t	height;
-
-	height = 0;
-	i = 0;
-	while (map && map[i] != NULL)
-	{
-		i++;
-		height++;
-	}
-	return (height);
-}
-
-/**
- * @brief This will read the whole file and calculate only the width of the
- * map.
- *
- *
- * @param argv Path to the file
- * @return size_t The width of the map
- */
-size_t	calculate_width(char **map)
-{
-	size_t	i;
-	size_t	width;
-
-	width = 0;
-	i = 0;
-	while (map && map[i] != NULL)
-	{
-		if (ft_strlen(map[i]) > width)
-			width = ft_strlen(map[i]);
-		i++;
-	}
-	return (width);
-}
-
 void	get_floor(t_game *game, char *line)
 {
-	char **floor = ft_split(line + 2, ',');
+	char	**floor;
+
+	floor = ft_split(line + 2, ',');
 	game->texture->floor = malloc(sizeof(t_color));
 	if (!game->texture->floor)
 		return ;
@@ -87,7 +42,9 @@ void	get_floor(t_game *game, char *line)
 
 void	get_ceiling(t_game *game, char *line)
 {
-	char **ceiling = ft_split(line + 2, ',');
+	char	**ceiling;
+
+	ceiling = ft_split(line + 2, ',');
 	game->texture->ceiling = malloc(sizeof(t_color));
 	if (!game->texture->ceiling)
 		return ;
@@ -117,7 +74,6 @@ void	get_colors(char *argv, t_game *game)
 	close(fd);
 }
 
-
 void	free_game(t_game *game)
 {
 	if (game->map)
@@ -131,7 +87,11 @@ void	free_game(t_game *game)
 	if (game->texture->ceiling)
 		free(game->texture->ceiling);
 	if (game->texture->sprite)
+	{
+		for (int i = 0; i < 4; i++)
+			mlx_delete_texture(game->texture->sprite[i]);
 		free(game->texture->sprite);
+	}
 	if (game->texture)
 		free(game->texture);
 	if (game->player)
@@ -140,4 +100,3 @@ void	free_game(t_game *game)
 		free(game->ray);
 	free(game);
 }
-

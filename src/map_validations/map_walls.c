@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:00:02 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/26 19:17:25 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:52:02 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	find_first_character(char **map, int *x, int *y, int C)
 		if (!ft_strncmp(map[y_m], "SO", 2) || !ft_strncmp(map[y_m], "NO", 2)
 			|| !ft_strncmp(map[y_m], "WE", 2) || !ft_strncmp(map[y_m], "EA", 2)
 			|| !ft_strncmp(map[y_m], "F", 1) || !ft_strncmp(map[y_m], "C", 1))
-			{
-				y_m++;
-				continue;
-			}
+		{
+			y_m++;
+			continue ;
+		}
 		while (map[y_m][x_m] != '\0' && map[y_m][x_m] != ' ')
 		{
 			if (map[y_m][x_m++] == C)
@@ -86,7 +86,6 @@ void	fill(char **matrix, int y, int x, int *good)
 	fill(matrix, y - 1, x - 1, good);
 }
 
-
 int	skip_first_spaces(char *line)
 {
 	int	i;
@@ -101,7 +100,7 @@ int	check_horizontal_walls(char **map)
 {
 	int	x;
 	int	y;
-	int bad;
+	int	bad;
 
 	y = 0;
 	bad = 0;
@@ -130,7 +129,7 @@ int	check_inside_map(char **map)
 {
 	int	y;
 	int	x;
-	int bad;
+	int	bad;
 
 	y = 1;
 	bad = 0;
@@ -156,7 +155,7 @@ int	check_map_walls(char **map)
 {
 	int	y;
 	int	x;
-	int bad;
+	int	bad;
 
 	y = 1;
 	bad = 0;

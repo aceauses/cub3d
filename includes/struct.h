@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/14 21:43:42 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:29:55 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,13 @@
 # include "./cub3d.h"
 
 # define PI 3.1415926535
-# define HEIGHT 1080
-# define WIDTH 1920
-#define NUM_BUFFERS 2
+# define HEIGHT 1080 // 2k resolution 2160
+# define WIDTH 1920 // 4k resolution 3840
+# define NUM_BUFFERS 2
 
 typedef struct s_game
 {
 	void				*mlx;
-	size_t				height; // NOT in Pixels
-	size_t				width;  // NOT in Pixels
 	char				**cub_file;
 	char				**map;
 	struct s_player		*player;
@@ -45,22 +43,27 @@ typedef struct s_player
 
 typedef struct s_ray
 {
-	double				posX; // x and y start position Player
-	double				posY;
-	double				dirX; //initial direction vector
-	double				dirY;
-	double				planeX; //the 2d raycaster version of camera plane
-	double				planeY; 
-	double				rayDirX;
-	double				rayDirY;
-	double				sideDistX;
-	double				sideDistY;
-	double				deltaDistX;
-	double				deltaDistY;
-	double				perpWallDist;
-	double				cameraX;
-	int					stepX;
-	int					stepY;
+	double				posx;
+	double				posy;
+	double				dirX;
+	double				diry;
+	double				planeX;
+	double				planey;
+	double				raydirx;
+	double				raydiry;
+	double				sidedistx;
+	double				sidedisty;
+	double				deltadistx;
+	double				deltadisty;
+	double				perpwalldist;
+	double				camerax;
+	int					stepx;
+	int					stepy;
+	int					hitted;
+	int					which_side;
+	double				lineHeight;
+	int					drawStart;
+	int					drawEnd;
 }						t_ray;
 
 typedef struct s_texture
