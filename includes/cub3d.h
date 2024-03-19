@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/18 20:46:28 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/19 20:12:52 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int		clean_compare(char *s1, char *set, size_t n);\
 int		get_rgba(int r, int g, int b, int a);
 int		open_fd(char *argv);
 
-void	get_p_pos(char ***map, int *x, int *y, t_player *player);
+char	get_p_pos(char ***map, int *x, int *y);
+void	set_angle_from_char(char c, t_ray *ray);
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 void DrawWalls(t_game *game);
 // ray

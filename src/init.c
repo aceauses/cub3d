@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/03/17 17:55:29 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/19 20:12:32 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,14 @@ static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
 	find_first_character(game->cub_file, &x, &y, '1');
 	game->map = copy_map(game->cub_file, y);
 	game->player = player;
-	// find_first_character(game->map, &game->player->x, &game->player->y, 'N');
-	get_p_pos(&game->map, &game->player->x, &game->player->y, game->player);
-	game->player->delta_x = cos(game->player->angle) * 5;
-	game->player->delta_y = sin(game->player->angle) * 5;
 	game->texture = texture;
 	game->texture->path = malloc(sizeof(char *) * 5);
 	if (!game->texture->path)
 		return (free(game->player), free(game->ray), free(game->texture)
 			, free(game), NULL);
 	game->ray = ray;
-	game->ray->dirX = -1;
-	game->ray->diry = 0;
-	game->ray->planeX = 0;
-	game->ray->planey = 0.66;
+	set_angle_from_char(get_p_pos(&game->map, &game->player->x,
+			&game->player->y, game->player), game->ray);
 	game->ray->posx = game->player->x;
 	game->ray->posy = game->player->y;
 	return (game);

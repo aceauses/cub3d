@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/18 17:10:27 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/19 20:00:50 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 		if (!init_mlx(game))
 			return (1);
 		if (!init_textures(game))
-			return (1);
+			return (free_game(game), 1);
 		start_game(game);
 		free_game(game);
 	}

@@ -1,22 +1,39 @@
 #include "../includes/cub3d.h"
 #include "../includes/struct.h"
 
-void	set_angle_from_char(char c, t_player *player)
+void	set_angle_from_char(char c, t_ray *ray)
 {
-	
-	(void)c;
-	(void)player;
-	// if (c == 'N')
-	// 	player->angle = degToRad(270);
-	// if (c == 'E')
-	// 	player->angle = degToRad(0);
-	// if (c == 'S')
-	// 	player->angle = degToRad(90);
-	// if (c == 'W')
-	// 	player->angle = degToRad(180);
+	if (c == 'W')
+	{
+		ray->dirX = -1;
+		ray->diry = 0;
+		ray->planeX = 0;
+		ray->planey = -0.66;
+	}
+	if (c == 'N')
+	{
+		ray->dirX = 0;
+		ray->diry = -1;
+		ray->planeX = 0.66;
+		ray->planey = 0;
+	}
+	if (c == 'S')
+	{
+		ray->dirX = 0;
+		ray->diry = 1;
+		ray->planeX = -0.66;
+		ray->planey = 0;
+	}
+	if (c == 'E')
+	{
+		ray->dirX = 1;
+		ray->diry = 0;
+		ray->planeX = 0;
+		ray->planey = 0.66;
+	}
 }
 
-void	get_p_pos(char ***map, int *x, int *y, t_player *player)
+char	get_p_pos(char ***map, int *x, int *y)
 {
 	int		i;
 	int		j;
@@ -34,13 +51,13 @@ void	get_p_pos(char ***map, int *x, int *y, t_player *player)
 			{
 				*y = i;
 				*x = j;
-				set_angle_from_char((*map)[i][j], player);
-				return ;
+				return ((*map)[i][j]);
 			}
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }
 
 int	init_textures(t_game *game)

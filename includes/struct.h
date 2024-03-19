@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/18 16:29:55 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/19 19:40:13 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,6 @@ typedef struct s_texture
 	int					current_buffer;
 	mlx_image_t			*image;
 	mlx_texture_t		**sprite;
-	mlx_texture_t		*no;
-	mlx_texture_t		*so;
-	mlx_texture_t		*we;
-	mlx_texture_t		*ea;
-	mlx_texture_t		*ray;
 	struct s_color		*floor;
 	struct s_color		*ceiling;
 }						t_texture;

@@ -6,14 +6,14 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 17:52:54 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/18 17:09:54 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/19 20:27:02 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include "../includes/struct.h"
 
-void	rotate_left(t_game *game)
+void	rotate_right(t_game *game)
 {
 	double	olddirx;
 	double	oldplanex;
@@ -26,7 +26,7 @@ void	rotate_left(t_game *game)
 	game->ray->planey = oldplanex * sin(0.1) + game->ray->planey * cos(0.1);
 }
 
-void	rotate_right(t_game *game)
+void	rotate_left(t_game *game)
 {
 	double	olddirx;
 	double	oldplanex;

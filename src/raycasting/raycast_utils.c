@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:52:50 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/18 19:14:32 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/19 19:57:08 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,27 @@ int	calculate_tex_x(double wallX, int side)
 	return (result);
 }
 
-int	calculate_tex_index(int texX, int texY)
+int	clamp(int value, int min, int max)
 {
-	return ((texY * 64 + texX) * 4);
+	if (value < min)
+		return (min);
+	else if (value > max)
+		return (max);
+	else
+		return (value);
 }
 
-int	get_texture_color(t_game *game, int texIndex)
+int	calculate_tex_index(int texX, int texY)
+{
+	int	texindex;
+
+	texX = clamp(texX, 0, 64 - 1);
+	texY = clamp(texY, 0, 64 - 1);
+	texindex = texY * 64 + texX;
+	return (texindex * 4);
+}
+
+int	get_texture_color(t_game *game, int texindex)
 {
 	int	which_side;
 	int	r;
@@ -48,9 +63,9 @@ int	get_texture_color(t_game *game, int texIndex)
 	int	b;
 
 	which_side = game->ray->which_side;
-	r = game->texture->sprite[which_side]->pixels[texIndex + 0];
-	g = game->texture->sprite[which_side]->pixels[texIndex + 1];
-	b = game->texture->sprite[which_side]->pixels[texIndex + 2];
+	r = game->texture->sprite[which_side]->pixels[texindex + 0];
+	g = game->texture->sprite[which_side]->pixels[texindex + 1];
+	b = game->texture->sprite[which_side]->pixels[texindex + 2];
 	return (ft_pixel(r, g, b, 255));
 }
 
