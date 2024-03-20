@@ -27,7 +27,7 @@ jobs:
           echo "Virtual display started on :99"
 
       - name: Install xdotool
-         run: sudo apt-get install -y xdotool
+        run: sudo apt-get install -y xdotool
 
       - name: Build project
         run: make
