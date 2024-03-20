@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/03/19 20:12:32 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:20:12 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static t_game	*init_structure(char *argv, t_player *player, t_ray *ray,
 			, free(game), NULL);
 	game->ray = ray;
 	set_angle_from_char(get_p_pos(&game->map, &game->player->x,
-			&game->player->y, game->player), game->ray);
+			&game->player->y), game->ray);
 	game->ray->posx = game->player->x;
 	game->ray->posy = game->player->y;
 	return (game);

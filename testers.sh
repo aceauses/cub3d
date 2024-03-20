@@ -3,6 +3,7 @@
 # Time to wait for the program to run
 TIMEOUT=3
 BAD_MAPS_DIR="maps/bad_maps"
+GOOD_MAPS_DIR="maps/good_maps"
 
 # Function to run a test case
 bad_maps() {
@@ -19,6 +20,25 @@ bad_maps() {
         exit 1
     else
         echo "Test failed: $1"
+        exit 1
+    fi
+}
+
+good_map_test_with_esc() {
+    echo "Running test: $1"
+    (./cub3d $1 2> /dev/null) & pid=$!
+    sleep 2
+    xdotool key Escape
+    (sleep $TIMEOUT && kill -9 $pid > /dev/null 2>&1) & watcher=$!
+    wait $pid 2> /dev/null
+    exit_code=$?
+    kill -9 $watcher 2> /dev/null 2>&1 
+
+    # Assuming graceful exit on ESC has exit code 0
+    if [ $exit_code -eq 0 ]; then
+        echo "Test passed: $1"
+    else
+        echo "Test failed: $1 - ESC handling may be incorrect"
         exit 1
     fi
 }
@@ -42,6 +62,7 @@ bad_maps "$BAD_MAPS_DIR/map_errors.cub"
 bad_maps "$BAD_MAPS_DIR/doesnt_exit.cub"
 
 # Add more test cases here
+good_map_test_with_esc "$GOOD_MAPS_DIR/map1.cub"
 
 echo "All tests passed"
 exit 0
