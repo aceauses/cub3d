@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/17 17:50:50 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:08:29 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	map_validation(char *argv)
 {
 	char	**cube;
 
+	if (HEIGHT < 150 || WIDTH < 150)
+		return (map_errors("Invalid screen size"), 0);
 	if (!check_extension(argv))
 		return (0);
 	cube = read_map(argv);

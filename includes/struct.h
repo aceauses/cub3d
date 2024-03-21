@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/19 19:40:13 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:05:02 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,27 @@
 
 # include "./cub3d.h"
 
-# define PI 3.1415926535
-# define HEIGHT 1080 // 2k resolution 2160
-# define WIDTH 1920 // 4k resolution 3840
-# define NUM_BUFFERS 2
+# define HEIGHT			600
+# define WIDTH			800
+# define NUM_BUFFERS	2
 
 typedef struct s_game
 {
 	void				*mlx;
 	char				**cub_file;
 	char				**map;
-	struct s_player		*player;
 	struct s_image		*image;
 	struct s_ray		*ray;
 	struct s_texture	*texture;
-	mlx_image_t			*tmp_ray_image;
 }						t_game;
-
-typedef struct s_player
-{
-	int					x;
-	int					y;
-	double				delta_x;
-	double				delta_y;
-	double				angle;
-}						t_player;
 
 typedef struct s_ray
 {
 	double				posx;
 	double				posy;
-	double				dirX;
+	double				dirx;
 	double				diry;
-	double				planeX;
+	double				planex;
 	double				planey;
 	double				raydirx;
 	double				raydiry;
@@ -57,13 +45,14 @@ typedef struct s_ray
 	double				deltadisty;
 	double				perpwalldist;
 	double				camerax;
+	int					side;
 	int					stepx;
 	int					stepy;
 	int					hitted;
 	int					which_side;
-	double				lineHeight;
-	int					drawStart;
-	int					drawEnd;
+	double				lineheight;
+	int					drawstart;
+	int					drawend;
 }						t_ray;
 
 typedef struct s_texture
@@ -76,15 +65,17 @@ typedef struct s_texture
 	int					current_buffer;
 	mlx_image_t			*image;
 	mlx_texture_t		**sprite;
+	mlx_image_t			*map_wall;
+	mlx_image_t			*map_player;
 	struct s_color		*floor;
 	struct s_color		*ceiling;
 }						t_texture;
 
 typedef struct s_color
 {
-	int				red;
-	int				green;
-	int				blue;
+	int					red;
+	int					green;
+	int					blue;
 }						t_color;
 
 #endif

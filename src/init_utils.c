@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:57:15 by rmitache          #+#    #+#             */
-/*   Updated: 2024/03/19 15:20:14 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:18:11 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ void	get_colors(char *argv, t_game *game)
 
 void	free_game(t_game *game)
 {
+	int	i;
+
+	i = -1;
 	if (game->map)
 		free_double_pointer(game->map);
 	if (game->cub_file)
@@ -87,15 +90,11 @@ void	free_game(t_game *game)
 	if (game->texture->ceiling)
 		free(game->texture->ceiling);
 	if (game->texture->sprite)
-	{
-		for (int i = 0; i < 4; i++)
+		while (++i < 4)
 			mlx_delete_texture(game->texture->sprite[i]);
-		free(game->texture->sprite);
-	}
+	free(game->texture->sprite);
 	if (game->texture)
 		free(game->texture);
-	if (game->player)
-		free(game->player);
 	if (game->ray)
 		free(game->ray);
 	free(game);

@@ -3,25 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/20 15:40:23 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:14:40 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
 
-// void	leakcheck(void)
-// {
-// 	system("leaks --list cub3d");
-// }
-
 int	main(int argc, char **argv)
 {
 	t_game	*game;
 
-	// atexit(leakcheck);
 	game = NULL;
 	if (argc != 2)
 	{

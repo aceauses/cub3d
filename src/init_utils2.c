@@ -1,39 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_utils2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 18:30:01 by rmitache          #+#    #+#             */
+/*   Updated: 2024/03/21 14:33:09 by rmitache         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 #include "../includes/struct.h"
+
+static void	set_angle_from_char_rest(char c, t_ray *ray)
+{
+	if (c == 'S')
+	{
+		ray->dirx = 0;
+		ray->diry = 1;
+		ray->planex = -0.66;
+		ray->planey = 0;
+		return ;
+	}
+	if (c == 'E')
+	{
+		ray->dirx = 1;
+		ray->diry = 0;
+		ray->planex = 0;
+		ray->planey = 0.66;
+		return ;
+	}
+}
 
 void	set_angle_from_char(char c, t_ray *ray)
 {
 	if (c == 'W')
 	{
-		ray->dirX = -1;
+		ray->dirx = -1;
 		ray->diry = 0;
-		ray->planeX = 0;
+		ray->planex = 0;
 		ray->planey = -0.66;
+		return ;
 	}
 	if (c == 'N')
 	{
-		ray->dirX = 0;
+		ray->dirx = 0;
 		ray->diry = -1;
-		ray->planeX = 0.66;
+		ray->planex = 0.66;
 		ray->planey = 0;
+		return ;
 	}
-	if (c == 'S')
-	{
-		ray->dirX = 0;
-		ray->diry = 1;
-		ray->planeX = -0.66;
-		ray->planey = 0;
-	}
-	if (c == 'E')
-	{
-		ray->dirX = 1;
-		ray->diry = 0;
-		ray->planeX = 0;
-		ray->planey = 0.66;
-	}
+	set_angle_from_char_rest(c, ray);
 }
 
-char	get_p_pos(char ***map, int *x, int *y)
+char	get_p_pos(char ***map, double *x, double *y)
 {
 	int		i;
 	int		j;

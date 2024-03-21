@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/03/20 15:23:54 by aceauses         ###   ########.fr        #
+#    Updated: 2024/03/21 18:15:32 by rmitache         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 NAME = cub3d
 LIBFT = libft/libft.a
 MLX = MLX42/build/libmlx42.a
@@ -48,12 +48,13 @@ MLX_DIR = ./src/
 MAP_VALIDATIONS_DIR = src/map_validations/
 
 SRC = $(SRC_DIR)cub3d.c $(INIT_DIR)utils_1.c $(INIT_DIR)controls.c $(INIT_DIR)controls_utils.c
-RAYCASTING_SRC = $(RAYCASTING_DIR)raycast_utils.c $(RAYCASTING_DIR)raycast_utils_1.c
-INIT_SRC = $(INIT_DIR)init.c $(INIT_DIR)init_utils.c $(INIT_DIR)init_utils2.c $(INIT_DIR)colors.c
+RAYCASTING_SRC = $(RAYCASTING_DIR)raycast_utils.c $(RAYCASTING_DIR)raycast_utils_1.c $(RAYCASTING_DIR)raycast_utils_2.c
+INIT_SRC = $(INIT_DIR)init.c $(INIT_DIR)init_utils.c $(INIT_DIR)init_utils2.c $(INIT_DIR)colors.c $(INIT_DIR)fill_background.c
 MLX_SRC = $(MLX_DIR)mlx.c $(MLX_DIR)mlx_init.c
 MAP_VALIDATIONS_SRC = $(MAP_VALIDATIONS_DIR)map_validation_1.c \
 					  $(MAP_VALIDATIONS_DIR)map_values.c \
 					  $(MAP_VALIDATIONS_DIR)map_walls.c \
+					  $(MAP_VALIDATIONS_DIR)map_walls_utils.c \
 					  $(MAP_VALIDATIONS_DIR)map_values_utils.c \
 					  $(MAP_VALIDATIONS_DIR)map_errors.c
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/19 20:12:52 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:43:56 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define SIZE 64
-
 # define PATH_ERROR "Invalid path in the map file"
 # define RGB_ERROR "Please enter RGB values in the format: R, G, B"
 # define RGB_ERROR_2 "Invalid RGB values, must be between 0 and 255"
@@ -31,57 +29,106 @@
 # define CANNOT_FIND_C "Cannot find the Ceiling color"
 # define INVALID_MAP "Invalid map"
 
-int		map_validation(char *argv);
+# define W_RATIO 0.008333
+# define H_RATIO 0.014815
+
+/* Map Errors */
+void	map_errors(char *error);
+
+/* Map Validation 1 */
+char	*handle_tabs(char *line);
 char	**read_map(char *argv);
+int		map_validation(char *argv);
+
+/* Map Values Utils */
+int		should_check_path(char **split, char *buffer, int *check);
+int		clean_compare(char *s1, char *set, size_t n);
+
+/* Map Values */
+int		check_map_values(char **map);
+
+/* Map Walls Utils */
+int		check_inside_map(char **map);
+int		check_map_walls(char **map);
+int		check_walls(char **map);
+
+/* Map Walls */
 int		find_first_character(char **map, int *x, int *y, int C);
 char	**copy_map(char **matrix, int y);
+void	fill(char **matrix, int y, int x, int *good);
+int		skip_first_spaces(char *line);
+int		check_horizontal_walls(char **map);
 
-char	*join_double_free(char *buffer, char *buff);
-void	free_double_pointer(char **pointer);
-char	*handle_tabs(char *line);
-
-int		init_textures(t_game *game);
-
-t_game	*init_data(char *argv);
-void	free_game(t_game *game);
-void	get_colors(char *argv, t_game *game);
-bool	allocate_memory(t_player **player, t_ray **ray, t_texture **texture);
-int		array_length(char **pointer);
-char	*handle_tabs(char *line);
-int		check_map_values(char **map);
-int		check_walls(char **map);
-void	map_errors(char *error);
-int		should_check_path(char **split, char *buffer, int *check);
-int		clean_compare(char *s1, char *set, size_t n);\
-
-int		get_rgba(int r, int g, int b, int a);
-int		open_fd(char *argv);
-
-char	get_p_pos(char ***map, int *x, int *y);
-void	set_angle_from_char(char c, t_ray *ray);
-int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
-void DrawWalls(t_game *game);
-// ray
-void	init_ray(t_ray *ray, int x);
-void	calc_sidedist(t_ray *ray, int *mapX, int *mapY);
+/* Raycast Utils 1 */
+int		calculate_side(t_game *game, int side);
 int		dda(t_game *game, int *mapX, int *mapY, int *side);
 void	calculate_wall_distances(t_game *game, int side);
-void	put_pixels(t_game *game, int x, int side, double wallX);
-int		calculate_side(t_game *game, int side);
-void	refresh_camera(t_game *game);
 void	calc_wallx(t_game *game, int side, double *wallx);
 
-// controls.c
+/* Raycast Utils 2 */
+int		calculate_tex(double texpos, char c);
+int		clamp(int value, int min, int max);
+int		calculate_tex_index(int texX, int texY);
+
+/* Raycast Utils */
+int		get_texture_color(t_game *game, int texindex);
+void	init_ray(t_ray *ray, int x);
+void	put_pixels(t_game *game, int x, double wallX);
+void	calc_sidedist(t_ray *ray, int *mapX, int *mapY);
+void	refresh_camera(t_game *game);
+
+/* Colors */
+int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
+
+/* Fill Background */
+void	fill_ceiling(mlx_image_t *image, t_game *game, int i);
+void	fill_floor(mlx_image_t *image, t_game *game, int i);
+void	fill_background(void *param);
+
+/* Controls Utils */
 void	move_forward(t_game *game);
 void	move_backward(t_game *game);
 void	move_left(t_game *game);
 void	move_right(t_game *game);
+
+/* Controls */
+void	rotate_right(t_game *game);
+void	rotate_left(t_game *game);
 void	controls(void *param);
 
-//mlx init
-int	init_mlx(t_game *game);
+/* Init Utils */
+int		open_fd(char *argv);
+void	get_floor(t_game *game, char *line);
+void	get_ceiling(t_game *game, char *line);
+void	get_colors(char *argv, t_game *game);
+void	free_game(t_game *game);
 
-// mlx start
+/* Init Utils 2 */
+void	set_angle_from_char(char c, t_ray *ray);
+char	get_p_pos(char ***map, double *x, double *y);
+int		init_textures(t_game *game);
+
+/* Init */
+bool	allocate_memory(t_ray **ray, t_texture **texture);
+bool	get_texture(t_game *game);
+t_game	*init_data(char *argv);
+
+/* Mlx Init */ // Do we still need this?
+int		init_mlx(t_game *game);
+
+/* mlx */
+void	fill_ceiling(mlx_image_t *image, t_game *game, int i);
+void	fill_floor(mlx_image_t *image, t_game *game, int i);
+void	fill_background(void *param);
+void	camera(void *param);
 void	start_game(t_game *game);
+
+/* Utils 1 */
+char	*join_double_free(char *buffer, char *buff);
+void	free_double_pointer(char **pointer);
+void	free_double_texture(mlx_texture_t **texture_pointer);
+int		array_length(char **pointer);
+
+void	DrawWalls(t_game *game);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_walls.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:00:02 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/17 17:52:02 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:42:35 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,68 +122,5 @@ int	check_horizontal_walls(char **map)
 		else
 			return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
 	}
-	return (1);
-}
-
-int	check_inside_map(char **map)
-{
-	int	y;
-	int	x;
-	int	bad;
-
-	y = 1;
-	bad = 0;
-	while (map[y] != NULL)
-	{
-		x = skip_first_spaces(map[y]);
-		while (map[y][x] != '\0')
-		{
-			if (map[y][x] == ' ')
-				fill(map, y, x, &bad);
-			while (map[y][x] != '\0' && map[y][x] == '|')
-				x++;
-			x++;
-		}
-		y++;
-	}
-	if (bad > 0)
-		return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
-	return (1);
-}
-
-int	check_map_walls(char **map)
-{
-	int	y;
-	int	x;
-	int	bad;
-
-	y = 1;
-	bad = 0;
-	while (map[y] != NULL)
-	{
-		x = skip_first_spaces(map[y]);
-		if (map[y][x] != '1' || map[y][ft_strlen(map[y]) - 1] != '1')
-			return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
-		y++;
-	}
-	if (bad > 0)
-		return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
-	return (1);
-}
-
-int	check_walls(char **map)
-{
-	int		x;
-	int		y;
-
-	x = 0;
-	y = 0;
-	if (!find_first_character(map, &x, &y, '1'))
-		return (0);
-	char **map_copy = copy_map(map, y);
-	if (!check_horizontal_walls(map_copy) || !check_inside_map(map_copy)
-		|| !check_map_walls(map_copy))
-		return (0);
-	free_double_pointer(map_copy);
 	return (1);
 }

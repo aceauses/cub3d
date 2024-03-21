@@ -3,57 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:52:50 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/20 18:11:22 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:43:28 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-double	calculate_texpos(t_game *game)
-{
-	return ((game->ray->drawStart - HEIGHT / 2 + game->ray->lineHeight / 2)
-		/ game->ray->lineHeight);
-}
-
-int	calculate_tex_y(double texpos)
-{
-	int	result;
-
-	result = (int)(texpos * 64) % 64;
-	return (result);
-}
-
-int	calculate_tex_x(double wallX, int side)
-{
-	int	result;
-
-	result = (int)(wallX * 64) % 64;
-	(void)side;
-	return (result);
-}
-
-int	clamp(int value, int min, int max)
-{
-	if (value < min)
-		return (min);
-	else if (value > max)
-		return (max);
-	else
-		return (value);
-}
-
-int	calculate_tex_index(int texX, int texY)
-{
-	int	texindex;
-
-	texX = clamp(texX, 0, 64 - 1);
-	texY = clamp(texY, 0, 64 - 1);
-	texindex = texY * 64 + texX;
-	return (texindex * 4);
-}
 
 int	get_texture_color(t_game *game, int texindex)
 {
@@ -72,7 +29,7 @@ int	get_texture_color(t_game *game, int texindex)
 void	init_ray(t_ray *ray, int x)
 {
 	ray->camerax = 2 * x / (double)WIDTH - 1;
-	ray->raydirx = ray->dirX + ray->planeX * ray->camerax;
+	ray->raydirx = ray->dirx + ray->planex * ray->camerax;
 	ray->raydiry = ray->diry + ray->planey * ray->camerax;
 	ray->deltadistx = sqrt(1 + (ray->raydiry * ray->raydiry) / (ray->raydirx
 				* ray->raydirx));
@@ -81,23 +38,25 @@ void	init_ray(t_ray *ray, int x)
 	ray->hitted = 0;
 }
 
-void	put_pixels(t_game *game, int x, int side, double wallX)
+void	put_pixels(t_game *game, int x, double wallX)
 {
 	int		y;
 	double	texpos;
 	int		texture_color;
 
-	y = game->ray->drawStart;
-	texpos = calculate_texpos(game);
-	while (y < game->ray->drawEnd)
+	y = game->ray->drawstart;
+	mlx_set_instance_depth(game->texture->map_wall->instances, 1);
+	texpos = (game->ray->drawstart - HEIGHT / 2 + game->ray->lineheight / 2)
+		/ game->ray->lineheight;
+	while (y < game->ray->drawend)
 	{
 		texture_color = get_texture_color(game,
-				calculate_tex_index(calculate_tex_x(wallX, side),
-					calculate_tex_y(texpos)));
+				calculate_tex_index(calculate_tex(wallX, 'X'),
+					calculate_tex(texpos, 'Y')));
 		mlx_put_pixel(game->texture->camera[(game->texture->current_buffer + 1)
 			% NUM_BUFFERS], x, y, texture_color);
 		y++;
-		texpos += 1.0 / game->ray->lineHeight;
+		texpos += 1.0 / game->ray->lineheight;
 	}
 }
 
@@ -127,11 +86,14 @@ void	calc_sidedist(t_ray *ray, int *mapX, int *mapY)
 
 void	refresh_camera(t_game *game)
 {
+	mlx_image_t	**tmp;
+
+	tmp = game->texture->camera;
 	game->texture->current_buffer = (game->texture->current_buffer + 1)
 		% NUM_BUFFERS;
 	mlx_delete_image(game->mlx,
-		game->texture->camera[game->texture->current_buffer]);
-	game->texture->camera[game->texture->current_buffer] = mlx_new_image(game->mlx,
+		tmp[game->texture->current_buffer]);
+	tmp[game->texture->current_buffer] = mlx_new_image(game->mlx,
 			WIDTH, HEIGHT);
 	mlx_image_to_window(game->mlx,
 		game->texture->camera[game->texture->current_buffer], 0, 0);
