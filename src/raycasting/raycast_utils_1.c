@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_utils_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:54:18 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/21 17:30:38 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/03/22 17:34:06 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,20 @@ int	dda(t_game *game, int *mapX, int *mapY, int *side)
 	return (0);
 }
 
-void	calculate_wall_distances(t_game *game, int side)
+void	calculate_wall_distances(t_game *game, int side, int mapx, int mapy)
 {
 	if (side == 0)
 		game->ray->perpwalldist \
-			= (game->ray->sidedistx - game->ray->deltadistx);
+			= fabs((mapx - game->ray->posx + (1 - game->ray->stepx) / 2) \
+				/ game->ray->raydirx) + 0.01;
 	else
 		game->ray->perpwalldist \
-			= (game->ray->sidedisty - game->ray->deltadisty);
+			= fabs((mapy - game->ray->posy + (1 - game->ray->stepy) / 2) \
+				/ game->ray->raydiry) + 0.01;
 	game->ray->perpwalldist *= cos(atan2(game->ray->raydiry \
 		, game->ray->raydirx) - atan2(game->ray->diry, game->ray->dirx));
-	if (game->ray->perpwalldist < 0.1000)
-		game->ray->perpwalldist = 0.0900;
+	game->ray->perpwalldist /= cos(atan2(game->ray->raydiry \
+		, game->ray->raydirx) - atan2(game->ray->diry, game->ray->dirx));
 	game->ray->lineheight = (double)(HEIGHT / game->ray->perpwalldist);
 	game->ray->drawstart = -game->ray->lineheight / 2 + HEIGHT / 2;
 	if (game->ray->drawstart < 0)

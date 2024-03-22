@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:52:50 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/21 17:43:28 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/03/22 17:56:46 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ void	put_pixels(t_game *game, int x, double wallX)
 		/ game->ray->lineheight;
 	while (y < game->ray->drawend)
 	{
+		texpos += 1.0 / game->ray->lineheight;
 		texture_color = get_texture_color(game,
 				calculate_tex_index(calculate_tex(wallX, 'X'),
 					calculate_tex(texpos, 'Y')));
 		mlx_put_pixel(game->texture->camera[(game->texture->current_buffer + 1)
 			% NUM_BUFFERS], x, y, texture_color);
 		y++;
-		texpos += 1.0 / game->ray->lineheight;
 	}
 }
 

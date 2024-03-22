@@ -53,6 +53,7 @@ INIT_SRC = $(INIT_DIR)init.c $(INIT_DIR)init_utils.c $(INIT_DIR)init_utils2.c $(
 MLX_SRC = $(MLX_DIR)mlx.c $(MLX_DIR)mlx_init.c
 MAP_VALIDATIONS_SRC = $(MAP_VALIDATIONS_DIR)map_validation_1.c \
 					  $(MAP_VALIDATIONS_DIR)map_values.c \
+					  $(MAP_VALIDATIONS_DIR)map_player.c \
 					  $(MAP_VALIDATIONS_DIR)map_walls.c \
 					  $(MAP_VALIDATIONS_DIR)map_walls_utils.c \
 					  $(MAP_VALIDATIONS_DIR)map_values_utils.c \

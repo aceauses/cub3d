@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/21 18:08:29 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:33:23 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,12 @@ int	map_validation(char *argv)
 	if (!check_extension(argv))
 		return (0);
 	cube = read_map(argv);
-	if (!check_map_values(cube) || !check_walls(cube))
+	for (int i = 0; cube[i] != NULL; i++)
+	{
+		printf("%s", cube[i]);
+	}
+	if (!check_map_values(cube)
+		|| !check_walls(cube))
 		return (free_double_pointer(cube), 0);
 	free_double_pointer(cube);
 	return (1);

@@ -16,7 +16,7 @@ sudo apt install -y gcc g++ gdb make
 sudo apt install -y libc6-dev libncurses5-dev libssl-dev libxml2-dev
 
 # Install libraries and headers for graphics programming
-sudo apt install -y libgl1-mesa-dev libx11-dev libxrandr-dev libxi-dev libxcursor-dev libxinerama-dev libxxf86vm-dev libxss-dev libglfw3-dev libglew-dev
+sudo apt install -y libgl1-mesa-dev libx11-dev libxrandr-dev libxi-dev libxcursor-dev libxinerama-dev libxxf86vm-dev libxss-dev libglfw3-dev libglew-dev x11-utils
 
 
 # Install libraries and headers for game development

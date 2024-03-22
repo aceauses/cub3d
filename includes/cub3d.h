@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/21 17:43:56 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:37:28 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,17 @@
 # define RGB_ERROR_2 "Invalid RGB values, must be between 0 and 255"
 # define CANNOT_FIND_F "Cannot find the Floor color"
 # define CANNOT_FIND_C "Cannot find the Ceiling color"
+# define INVALID_PLAYER "More than one player in the map or invalid map"
 # define INVALID_MAP "Invalid map"
 
 # define W_RATIO 0.008333
 # define H_RATIO 0.014815
+
+int		map_validation(char *argv);
+int		check_player(char **map);
+char	**read_map(char *argv);
+int		find_first_character(char **map, int *x, int *y, int C);
+char	**copy_map(char **matrix, int y);
 
 /* Map Errors */
 void	map_errors(char *error);
@@ -62,7 +69,7 @@ int		check_horizontal_walls(char **map);
 /* Raycast Utils 1 */
 int		calculate_side(t_game *game, int side);
 int		dda(t_game *game, int *mapX, int *mapY, int *side);
-void	calculate_wall_distances(t_game *game, int side);
+void	calculate_wall_distances(t_game *game, int side, int mapx, int mapy);
 void	calc_wallx(t_game *game, int side, double *wallx);
 
 /* Raycast Utils 2 */

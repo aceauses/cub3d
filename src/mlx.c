@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:18:12 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/21 18:06:53 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/03/22 17:51:15 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	camera(void *param)
 		mapy = (int)game->ray->posy;
 		calc_sidedist(game->ray, &mapx, &mapy);
 		game->ray->which_side = dda(game, &mapx, &mapy, &game->ray->side);
-		calculate_wall_distances(game, game->ray->side);
+		calculate_wall_distances(game, game->ray->side, mapx, mapy);
 		calc_wallx(game, game->ray->side, &wallx);
 		put_pixels(game, x, wallx);
 		mlx_set_instance_depth(game->texture->camera
