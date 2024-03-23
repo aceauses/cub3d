@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+         #
+#    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/03/21 18:15:32 by rmitache         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-#    Updated: 2024/02/22 13:53:01 by aceauses         ###   ########.fr        #
+#    Updated: 2024/03/23 17:31:03 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +46,7 @@ MAP_VALIDATIONS_DIR = src/map_validations/
 SRC = $(SRC_DIR)cub3d.c $(INIT_DIR)utils_1.c $(INIT_DIR)controls.c $(INIT_DIR)controls_utils.c
 RAYCASTING_SRC = $(RAYCASTING_DIR)raycast_utils.c $(RAYCASTING_DIR)raycast_utils_1.c $(RAYCASTING_DIR)raycast_utils_2.c
 INIT_SRC = $(INIT_DIR)init.c $(INIT_DIR)init_utils.c $(INIT_DIR)init_utils2.c $(INIT_DIR)colors.c $(INIT_DIR)fill_background.c
-MLX_SRC = $(MLX_DIR)mlx.c $(MLX_DIR)mlx_init.c
+MLX_SRC = $(MLX_DIR)mlx.c
 MAP_VALIDATIONS_SRC = $(MAP_VALIDATIONS_DIR)map_validation_1.c \
 					  $(MAP_VALIDATIONS_DIR)map_values.c \
 					  $(MAP_VALIDATIONS_DIR)map_player.c \

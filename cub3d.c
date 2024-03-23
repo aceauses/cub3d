@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/21 18:14:40 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:57:39 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	main(int argc, char **argv)
 	{
 		game = init_data(argv[1]);
 		if (!game)
-			return (1);
-		if (!init_mlx(game))
 			return (1);
 		if (!init_textures(game))
 			return (free_game(game), 1);

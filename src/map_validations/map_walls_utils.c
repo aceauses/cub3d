@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:40:59 by rmitache          #+#    #+#             */
-/*   Updated: 2024/03/22 19:33:14 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:35:18 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,10 @@ int	check_inside_map(char **map)
 
 int	check_map_walls(char **map)
 {
-	int	y;
-	int	x;
-	int	bad;
+	int		y;
+	int		x;
 
 	y = 1;
-	bad = 0;
 	while (map[y] != NULL)
 	{
 		x = skip_first_spaces(map[y]);
@@ -53,8 +51,6 @@ int	check_map_walls(char **map)
 			return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
 		y++;
 	}
-	if (bad > 0)
-		return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
 	return (1);
 }
 
@@ -89,7 +85,7 @@ int	flood_player(char **map)
 		&& !find_first_character(map, &x, &y, 'S')
 		&& !find_first_character(map, &x, &y, 'E')
 		&& !find_first_character(map, &x, &y, 'W'))
-		return (0);
+		return (map_errors("Couldn't Find Player For Food Fill"), 0);
 	normal_flood_fill(map, y, x, &good);
 	if (good != 0)
 		return (map_errors(INVALID_MAP), free_double_pointer(map), 0);

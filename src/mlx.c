@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:18:12 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/22 17:51:15 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/23 11:06:01 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,22 @@ void	camera(void *param)
 		mapx = (int)game->ray->posx;
 		mapy = (int)game->ray->posy;
 		calc_sidedist(game->ray, &mapx, &mapy);
+		// printfs to check every value of ray
+		// printf("ray->posx: %f\n", game->ray->posx);
+		// printf("ray->posy: %f\n", game->ray->posy);
+		// printf("ray->dirx: %f\n", game->ray->dirx);
+		// printf("ray->diry: %f\n", game->ray->diry);
+		// printf("ray->planex: %f\n", game->ray->planex);
+		// printf("ray->planey: %f\n", game->ray->planey);
+		// printf("ray->stepx: %d\n", game->ray->stepx);
+		// printf("ray->stepy: %d\n", game->ray->stepy);
+		// printf("ray->sidedistx: %f\n", game->ray->sidedistx);
+		// printf("ray->sidedisty: %f\n", game->ray->sidedisty);
+		// printf("ray->deltadistx: %f\n", game->ray->deltadistx);
+		// printf("ray->deltadisty: %f\n", game->ray->deltadisty);
+		// printf("mapx: %d\n", mapx);
+		// printf("mapy: %d\n", mapy);
+		// printf("ray->hitted: %d\n", game->ray->hitted);
 		game->ray->which_side = dda(game, &mapx, &mapy, &game->ray->side);
 		calculate_wall_distances(game, game->ray->side, mapx, mapy);
 		calc_wallx(game, game->ray->side, &wallx);

@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/22 14:37:28 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:54:17 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+# define EMPTY_MAP "Empty map"
 # define PATH_ERROR "Invalid path in the map file"
 # define RGB_ERROR "Please enter RGB values in the format: R, G, B"
 # define RGB_ERROR_2 "Invalid RGB values, must be between 0 and 255"
@@ -29,6 +30,7 @@
 # define CANNOT_FIND_C "Cannot find the Ceiling color"
 # define INVALID_PLAYER "More than one player in the map or invalid map"
 # define INVALID_MAP "Invalid map"
+# define NL "Found a new line"
 
 # define W_RATIO 0.008333
 # define H_RATIO 0.014815
@@ -41,6 +43,7 @@ char	**copy_map(char **matrix, int y);
 
 /* Map Errors */
 void	map_errors(char *error);
+void	map_error_exit(char *error);
 
 /* Map Validation 1 */
 char	*handle_tabs(char *line);

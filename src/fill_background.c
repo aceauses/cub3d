@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_background.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 21:05:57 by rmitache          #+#    #+#             */
-/*   Updated: 2024/03/20 21:11:08 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:58:41 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ void	fill_background(void *param)
 		fill_floor(image, game, i);
 		i++;
 	}
+	mlx_set_instance_depth(image->instances, -1);
 }

@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 18:09:41 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/07 11:26:30 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:54:31 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ static int	check_rgb_c(char **map)
 int	check_map_values(char **map)
 {
 	if (!map || !map[0])
-		return (0);
+		return (map_errors(EMPTY_MAP), 0);
 	if (!check_textures(map))
 		return (0);
 	if (!check_rgb_f(map) || !check_rgb_c(map))

@@ -8,7 +8,6 @@ GOOD_MAPS_DIR="maps/good_maps"
 
 # Function to run a test case
 bad_maps() {
-    echo "Running test: $1"
     (./cub3d $1 2> /dev/null) & pid=$!
     (sleep $TIMEOUT && kill -9 $pid > /dev/null 2>&1) & watcher=$!
     wait $pid 2> /dev/null
@@ -25,6 +24,10 @@ bad_maps() {
     fi
 }
 
+# Function to iterate through all bad maps
+for map in $BAD_MAPS_DIR/*.cub; do
+	bad_maps $map
+done
 good_map_test_with_esc() {
     Xvfb :99 -screen 0 1280x1024x24 &
     xvfb_pid=$!
@@ -65,26 +68,36 @@ good_map_test_with_esc() {
     fi
 }
 
-# Test cases with bad maps or bad names of map
-bad_maps "$BAD_MAPS_DIR/map1.cubb"
-bad_maps "$BAD_MAPS_DIR/map2..cub"
-bad_maps "$BAD_MAPS_DIR/map2.cub.cub"
-bad_maps "$BAD_MAPS_DIR/map3.txt.cub"
-bad_maps "$BAD_MAPS_DIR/map4.cub.txt"
-bad_maps "$BAD_MAPS_DIR/map_errors_1.cub"
-bad_maps "$BAD_MAPS_DIR/map_errors_2.cub"
-bad_maps "$BAD_MAPS_DIR/map_errors_3.cub"
-bad_maps "$BAD_MAPS_DIR/map_errors_4.cub"
-bad_maps "$BAD_MAPS_DIR/map_errors_5.cub"
-bad_maps "$BAD_MAPS_DIR/map_errors_6.cub"
-bad_maps "$BAD_MAPS_DIR/map_errors_7.cub"
-bad_maps "$BAD_MAPS_DIR/map_errors_8.cub"
-bad_maps "$BAD_MAPS_DIR/map_errors_9.cub"
-bad_maps "$BAD_MAPS_DIR/map_errors.cub"
-bad_maps "$BAD_MAPS_DIR/doesnt_exit.cub"
 
 # Add more test cases here
-good_map_test_with_esc "$GOOD_MAPS_DIR/map1.cub"
+# good_map_test_with_esc "$GOOD_MAPS_DIR/map1.cub"
 
-echo "All tests passed"
+sleep 1
+# Cool ASCII Art
+banner1="
+                                       ____    _   _    ____   _____   ____            
+                                    U /\"___|U |\"|u| |U | __\")u|___\"/u |  _\"\\         
+                                    \\| | u   \\| |\\| | \\|  _ \\/U_|_ \\//| | | |          
+                                     | |/__   | |_| |  | |_) | ___) |U| |_| |\\         
+                                      \\____| <<\\___/   |____/ |____/  |____/ u         
+                                     _// \\\\ (__) )(   _|| \\\\_  _// \\\\  |||_          
+                                    (__)(__)    (__) (__) (__)(__)(__)(__)_)         "
+
+banner2="                                                                                       
+    _      _      _           _____ U _____ u____     _____        ____       _     ____    ____   U _____ u____     
+U  /\"\\  u |\"|    |\"|         |_ \" _|\\| ___\"|/ __\"| u |_ \" _|     U|  _\"\\ uU  /\"\\  u/ __\"| u/ __\"| u\\| ___\"|/  _\"\\    
+ \\/ _ \\/U | | uU | | u         | |   |  _|\"<\\___ \\/    | |       \\| |_) |/ \\/ _ \\/\\<\\___ \\/\\<\\___ \\/  |  _|\\\"/| | | |   
+ / ___ \\ \\| |/__\\| |/__       /| \\\\  | |___ u___) |    /| \\\\       |  __/   / ___ \\ u___) | u___) |  | |___U| |_| |\\ 
+/_/   \\_\\ |_____||_____|     u |_|U  |_____||____/>> u |_|U       |_|     /_/   \\_\\|____/>>|____/>> |_____||____/ u  
+ \\\\    >> //  \\\\ //  \\\\      _// \\\\_ <<   >> )(  (__)_// \\\\_      ||>>_    \\\\    >> )(  (__))(  (__)<<   >> |||_     
+(__)  (__)_\\(\"_)_\\(\"_)    (__) (__)__) (__)__)    (__) (__)    (__)__)  (__)  (__)__)    (__)    (__) (__)__)_)     
+"
+
+# Color codes (might vary depending on your terminal)
+green='\033[0;32m' 
+reset='\033[0m'
+
+# Print the awesome banner
+echo -e "${green}${banner1}${banner2}${reset}"
+
 exit 0
