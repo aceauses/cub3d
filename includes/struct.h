@@ -6,7 +6,7 @@
 /*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/24 19:15:00 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:05:09 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_game
 	void				*mlx;
 	char				**cub_file;
 	char				**map;
-	struct s_image		*image;
 	struct s_ray		*ray;
 	struct s_texture	*texture;
 }						t_game;
@@ -57,7 +56,6 @@ typedef struct s_ray
 
 typedef struct s_texture
 {
-	mlx_image_t			**images;
 	mlx_image_t			*ray_image;
 	char				**path;
 	mlx_image_t			*background;

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:18:12 by aceauses          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/07/09 18:23:25 by aceauses         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/24 21:28:32 by rmitache         ###   ########.fr       */
+>>>>>>> 03d06cb (Imi bag puciorlu)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +114,11 @@ void	start_game(t_game *game)
 	mlx_loop_hook(game->mlx, &camera, game);
 	mlx_loop_hook(game->mlx, &controls, game);
 	mlx_loop(game->mlx);
+	mlx_delete_image(game->mlx, game->texture->ray_image);
+	mlx_delete_image(game->mlx, game->texture->background);
+	mlx_delete_image(game->mlx, game->texture->map_wall);
+	mlx_delete_image(game->mlx, game->texture->map_player);
+	mlx_delete_image(game->mlx, game->texture->camera[0]);
+	mlx_delete_image(game->mlx, game->texture->camera[1]);
 	mlx_terminate(game->mlx);
 }

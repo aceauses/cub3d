@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_utils_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:54:18 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/23 10:50:40 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:33:26 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,6 @@ void	calculate_wall_distances(t_game *game, int side, int mapx, int mapy)
 		game->ray->perpwalldist \
 			= fabs((mapy - game->ray->posy + (1 - game->ray->stepy) / 2) \
 				/ game->ray->raydiry) + 0.01;
-	game->ray->perpwalldist *= cos(atan2(game->ray->raydiry \
-		, game->ray->raydirx) - atan2(game->ray->diry, game->ray->dirx));
-	game->ray->perpwalldist /= cos(atan2(game->ray->raydiry \
-		, game->ray->raydirx) - atan2(game->ray->diry, game->ray->dirx));
 	game->ray->lineheight = (double)(HEIGHT / game->ray->perpwalldist);
 	game->ray->drawstart = -game->ray->lineheight / 2 + HEIGHT / 2;
 	if (game->ray->drawstart < 0)
