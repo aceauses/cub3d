@@ -88,12 +88,12 @@ static int	check_extension(char *argv)
 		return (0);
 	tmp = ft_strchr(argv, '.');
 	if (tmp == NULL)
-		return (0);
+		return (map_errors("Please add file extension"), 0);
 	while (clean_compare(tmp, "./", 2) || clean_compare(tmp, "../", 3))
 	{
 		tmp = ft_strchr(tmp + 2, '.');
 		if (tmp == NULL)
-			return (0);
+			return (map_errors("Please add file extension"), 0);
 	}
 	if (ft_strncmp(tmp, ".cub", 5) != 0 && ft_strlen(tmp) != 4)
 		return (map_errors("Invalid file extension"), 0);
