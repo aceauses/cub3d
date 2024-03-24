@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 17:50:02 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/23 17:29:15 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:24:08 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int	check_player(char **map)
 			if (map[y][x] != '1' && map[y][x] != '0' && map[y][x] != 'N'
 				&& map[y][x] != 'S' && map[y][x] != 'E'
 				&& map[y][x] != 'W' && map[y][x] != ' ')
-				return (map_errors(INVALID_PLAYER), 0);
+				return (map_errors(INV_PLAYER), free_double_pointer(map), 0);
 			x++;
 		}
 	}
 	if (i != 1)
-		return (map_errors(INVALID_PLAYER), 0);
-	return (1);
+		return (map_errors(INV_PLAYER), free_double_pointer(map), 0);
+	return (free_double_pointer(map), 1);
 }

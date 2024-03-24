@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:01:11 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/22 17:49:42 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:24:32 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	move_backward(t_game *game)
 void	move_left(t_game *game)
 {
 	if (game->map[(int)game->ray->posy]
-		[(int)(game->ray->posx - game->ray->planex * 0.1 )] != '1')
+		[(int)(game->ray->posx - game->ray->planex * 0.1)] != '1')
 		game->ray->posx -= game->ray->planex * 0.1;
 	if (game->map[(int)(game->ray->posy - game->ray->planey * 0.1)]
 		[(int)game->ray->posx] != '1')

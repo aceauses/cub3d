@@ -1,8 +1,8 @@
-SO ./maps/bad_maps/map1.cubb
-NO ./maps/bad_maps/map1.cubb
+SO ./sprites/no.png
+NO ./sprites/no.png
 
-WE ./maps/bad_maps/map1.cubb
-EA ./maps/bad_maps/map1.cubb
+WE ./sprites/no.png
+EA ./sprites/no.png
 
 F 2340,1,1
 C 252,30,10

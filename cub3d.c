@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/23 17:57:39 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:20:25 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv)
 	t_game	*game;
 
 	game = NULL;
+	atexit(check_leaks);
 	if (argc != 2)
 	{
 		printf("Error\nWrong number of arguments\n");

@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/23 17:53:29 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:23:37 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static void	check_if_map(char *line, bool *start)
 	while (line[i] != '\0')
 	{
 		if (line[i] != ' ' && line[i] == '1'
-			&& !clean_compare(line, "SONOWEEA", 2)
+			&& !clean_compare(line, "SO", 2) && !clean_compare(line, "NO", 2)
+			&& !clean_compare(line, "WE", 2) && !clean_compare(line, "EA", 2)
 			&& !clean_compare(line, "F", 1) && !clean_compare(line, "C", 1))
 		{
 			*start = true;

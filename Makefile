@@ -6,14 +6,14 @@
 #    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/03/24 14:35:30 by aceauses         ###   ########.fr        #
+#    Updated: 2024/07/09 18:20:35 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3
-NAME = cub3d
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+NAME = cub3D
 LIBFT = libft/libft.a
 MLX = MLX42/build/libmlx42.a
 MLXDIR = $(dir $(MLX))

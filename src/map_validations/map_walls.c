@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 22:00:02 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/23 18:21:54 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:24:17 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ int	check_horizontal_walls(char **map)
 		while (map[y][x] != '\0' && map[y][x] == '1')
 			x++;
 		if (map[y][x] == '\0')
-			return (1);
+			return (free_double_pointer(map), 1);
 		else
 			return (map_errors(INVALID_MAP), free_double_pointer(map), 0);
 	}
-	return (1);
+	return (free_double_pointer(map), 1);
 }

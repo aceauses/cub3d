@@ -3,24 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:19:11 by rmitache          #+#    #+#             */
-/*   Updated: 2024/03/21 17:31:23 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:23:11 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-/**
- * @brief This will allocate memory for the game and player structure
- *
- * @param game The game structure
- * @param player The player structure
- * @param texture The texture structure
- * @return true If the memory was allocated successfully
- * @return false If the memory was not allocated successfully
- */
 bool	allocate_memory(t_ray **ray, t_texture **texture)
 {
 	*ray = malloc(sizeof(t_ray));

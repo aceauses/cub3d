@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/23 17:54:17 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:24:39 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define RGB_ERROR_2 "Invalid RGB values, must be between 0 and 255"
 # define CANNOT_FIND_F "Cannot find the Floor color"
 # define CANNOT_FIND_C "Cannot find the Ceiling color"
-# define INVALID_PLAYER "More than one player in the map or invalid map"
+# define INV_PLAYER "More than one player in the map or invalid map"
 # define INVALID_MAP "Invalid map"
 # define NL "Found a new line"
 
