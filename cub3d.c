@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
 /*   Updated: 2024/07/09 18:20:25 by aceauses         ###   ########.fr       */
@@ -17,7 +17,6 @@ int	main(int argc, char **argv)
 	t_game	*game;
 
 	game = NULL;
-	atexit(check_leaks);
 	if (argc != 2)
 	{
 		printf("Error\nWrong number of arguments\n");

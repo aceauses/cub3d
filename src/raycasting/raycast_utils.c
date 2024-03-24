@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:52:50 by aceauses          #+#    #+#             */
 /*   Updated: 2024/07/09 18:24:24 by aceauses         ###   ########.fr       */
@@ -29,8 +29,8 @@ int	get_texture_color(t_game *game, int texindex)
 void	init_ray(t_ray *ray, int x)
 {
 	ray->camerax = 2 * x / (double)WIDTH - 1;
-	ray->raydirx = ray->dirx + ray->planex * ray->camerax + 0.1;
-	ray->raydiry = ray->diry + ray->planey * ray->camerax + 0.1;
+	ray->raydirx = ray->dirx + ray->planex * ray->camerax + 0.001;
+	ray->raydiry = ray->diry + ray->planey * ray->camerax + 0.001;
 	ray->deltadistx = sqrt(1 + (ray->raydiry * ray->raydiry) / (ray->raydirx
 				* ray->raydirx));
 	ray->deltadisty = sqrt(1 + (ray->raydirx * ray->raydirx) / (ray->raydiry

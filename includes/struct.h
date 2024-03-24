@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/22 14:38:02 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/24 19:15:00 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "./cub3d.h"
 
-# define HEIGHT			720
-# define WIDTH			1280
+# define HEIGHT			1080
+# define WIDTH			1920
 # define NUM_BUFFERS	2
 
 typedef struct s_game
