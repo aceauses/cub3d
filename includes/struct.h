@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:38:25 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/24 21:05:09 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/03/25 13:37:45 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "./cub3d.h"
 
-# define HEIGHT			1080
-# define WIDTH			1920
+# define HEIGHT			600
+# define WIDTH			800
 # define NUM_BUFFERS	2
 
 typedef struct s_game
@@ -61,7 +61,6 @@ typedef struct s_texture
 	mlx_image_t			*background;
 	mlx_image_t			*camera[NUM_BUFFERS];
 	int					current_buffer;
-	mlx_image_t			*image;
 	mlx_texture_t		**sprite;
 	mlx_image_t			*map_wall;
 	mlx_image_t			*map_player;

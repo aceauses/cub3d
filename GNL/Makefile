@@ -6,12 +6,12 @@
 #    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 15:35:32 by aceauses          #+#    #+#              #
-#    Updated: 2024/01/31 14:09:11 by aceauses         ###   ########.fr        #
+#    Updated: 2024/03/25 13:39:22 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = gnl
-CC = gcc
+CC = cc
 AR = ar rcs
 RM = rm -f
 CFLAGS = -Wall -Werror -Wextra

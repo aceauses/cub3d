@@ -6,7 +6,11 @@
 #    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2024/07/09 18:20:35 by aceauses         ###   ########.fr        #
+=======
+#    Updated: 2024/03/25 13:40:25 by aceauses         ###   ########.fr        #
+>>>>>>> 64f0d65 (Update Makefile and struct.h)
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +20,6 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = cub3D
 LIBFT = libft/libft.a
 MLX = MLX42/build/libmlx42.a
-MLXDIR = $(dir $(MLX))
-MLXLIB = $(basename $(notdir $(MLX)))
 GNL = GNL/gnl
 #if ubuntu
 ifeq ($(shell uname), Linux)
