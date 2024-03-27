@@ -1,38 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/23 17:57:39 by aceauses         ###   ########.fr       */
+/*   Created: 2024/03/18 20:46:14 by aceauses          #+#    #+#             */
+/*   Updated: 2024/03/18 20:46:22 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
+#include "../includes/cub3d.h"
 
-int	main(int argc, char **argv)
+int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
-	t_game	*game;
-
-	game = NULL;
-	if (argc != 2)
-	{
-		printf("Error\nWrong number of arguments\n");
-		return (0);
-	}
-	if (map_validation(argv[1]))
-	{
-		game = init_data(argv[1]);
-		if (!game)
-			return (1);
-		if (!init_textures(game))
-			return (free_game(game), 1);
-		start_game(game);
-		free_game(game);
-	}
-	else
-		return (1);
-	return (0);
+	return (r << 24 | g << 16 | b << 8 | a);
 }

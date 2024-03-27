@@ -1,0 +1,44 @@
+name: C Workflow
+
+on:
+  push:
+    branches:
+      - '*'
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Enviroment
+        run: ./configure.sh
+
+      - name: Install xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      # - name: Start xvfb
+      #   run: |
+      #     Xvfb :99 -ac &
+      #     disown
+      #     echo "Virtual display started on :99"
+
+      - name: Install xdotool
+        run: sudo apt-get install -y xdotool
+
+      - name: Install metacity
+        run: sudo apt-get install -y metacity
+
+      - name: Install wmctrl
+        run: sudo apt-get install -y wmctrl
+
+      - name: Build project
+        run: make
+
+      - name: Tester
+        run: |
+          export DISPLAY=:99
+          ./testers.sh

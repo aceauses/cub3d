@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:39:30 by aceauses          #+#    #+#             */
-/*   Updated: 2024/02/08 09:23:44 by rmitache         ###   ########.fr       */
+/*   Updated: 2024/03/23 17:53:29 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-char    *handle_tabs(char *line)
+char	*handle_tabs(char *line)
 {
 	char	*new;
 	int		i;
@@ -32,30 +32,48 @@ char    *handle_tabs(char *line)
 	return (free(line), new);
 }
 
-static char	**read_map(char *argv)
+static void	check_if_map(char *line, bool *start)
 {
-	char **map;
-	char *array;
-	char *line;
-	int fd;
+	int	i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] != ' ' && line[i] == '1'
+			&& !clean_compare(line, "SONOWEEA", 2)
+			&& !clean_compare(line, "F", 1) && !clean_compare(line, "C", 1))
+		{
+			*start = true;
+			return ;
+		}
+		i++;
+	}
+}
+
+char	**read_map(char *argv)
+{
+	char	**map;
+	char	*array;
+	char	*line;
+	int		fd;
+	bool	start;
 
 	fd = open(argv, O_RDONLY);
 	if (fd < 0)
-	{
-		perror(argv);
-		exit (1);
-	}
+		map_error_exit("Incorect file or path");
 	array = ft_calloc(1, 1);
 	line = get_next_line(fd);
+	start = false;
 	while (line != NULL)
 	{
 		if (*line == '\t')
 			line = handle_tabs(line);
+		check_if_map(line, &start);
+		if (start && clean_compare(line, "\n", 1))
+			return (free(line), close(fd), free(array), map_errors(NL), NULL);
 		array = free_join(array, line);
 		free(line);
 		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
 	}
 	map = ft_split(array, '\n');
 	return (free(array), close(fd), map);
@@ -63,28 +81,36 @@ static char	**read_map(char *argv)
 
 static int	check_extension(char *argv)
 {
-	int i;
+	char	*tmp;
 
-	i = 0;
-	while (argv[i] != '\0')
-		i++;
-	if (argv[i - 1] != 'b' || argv[i - 2] != 'u' || argv[i - 3] != 'c' || argv[i - 4] != '.')
-	{
-		printf("Error\nInvalid file extension\n");
+	if (argv == NULL)
 		return (0);
+	tmp = ft_strchr(argv, '.');
+	if (tmp == NULL)
+		return (0);
+	while (clean_compare(tmp, "./", 2) || clean_compare(tmp, "../", 3))
+	{
+		tmp = ft_strchr(tmp + 2, '.');
+		if (tmp == NULL)
+			return (0);
 	}
+	if (ft_strncmp(tmp, ".cub", 5) != 0 && ft_strlen(tmp) != 4)
+		return (map_errors("Invalid file extension"), 0);
 	return (1);
 }
 
 int	map_validation(char *argv)
 {
-	char **map;
+	char	**cube;
 
+	if (HEIGHT < 150 || WIDTH < 150)
+		return (map_errors("Invalid screen size"), 0);
 	if (!check_extension(argv))
 		return (0);
-	map = read_map(argv);
-	for (int i = 0; map[i] != NULL; i++)
-		printf("%s\n", map[i]);
-	free_double_pointer(map);
-	return 0;
+	cube = read_map(argv);
+	if (!check_map_values(cube)
+		|| !check_walls(cube))
+		return (free_double_pointer(cube), 0);
+	free_double_pointer(cube);
+	return (1);
 }

@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   map_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 21:34:37 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/23 17:57:39 by aceauses         ###   ########.fr       */
+/*   Created: 2024/02/05 16:54:54 by aceauses          #+#    #+#             */
+/*   Updated: 2024/03/23 17:02:11 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-int	main(int argc, char **argv)
+void	map_errors(char *error)
 {
-	t_game	*game;
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(error, 2);
+	ft_putstr_fd("\n", 2);
+}
 
-	game = NULL;
-	if (argc != 2)
-	{
-		printf("Error\nWrong number of arguments\n");
-		return (0);
-	}
-	if (map_validation(argv[1]))
-	{
-		game = init_data(argv[1]);
-		if (!game)
-			return (1);
-		if (!init_textures(game))
-			return (free_game(game), 1);
-		start_game(game);
-		free_game(game);
-	}
-	else
-		return (1);
-	return (0);
+void	map_error_exit(char *error)
+{
+	map_errors(error);
+	exit(1);
 }
