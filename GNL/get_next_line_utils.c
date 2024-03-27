@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 17:00:27 by aceauses          #+#    #+#             */
-/*   Updated: 2024/01/31 15:49:17 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:15:23 by rmitache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/get_next_line.h"
 
-void *ft_calloc_gnl(size_t count, size_t size)
+void	*ft_calloc_gnl(size_t count, size_t size)
 {
-	char *memory;
-	size_t i;
+	char	*memory;
+	size_t	i;
 
 	memory = malloc(count * size);
 	if (!memory)
@@ -29,11 +29,11 @@ void *ft_calloc_gnl(size_t count, size_t size)
 	return (memory);
 }
 
-char *ft_strjoin_gnl(char const *line, char const *new_line)
+char	*ft_strjoin_gnl(char const *line, char const *new_line)
 {
-	char *mem;
-	int x;
-	int i;
+	char	*mem;
+	int		x;
+	int		i;
 
 	if (!line || !new_line)
 		return (NULL);
@@ -55,24 +55,19 @@ char *ft_strjoin_gnl(char const *line, char const *new_line)
 	return (mem);
 }
 
-size_t ft_strlen_mod(const char *str)
+size_t	ft_strlen_mod(const char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0')
-	{
-		// if (str[i] == '\t')
-		// 	i += 4;
-		// else
-			i++;
-	}
+		i++;
 	return (i);
 }
 
-char *ft_strchr_gnl(const char *str, int c)
+char	*ft_strchr_gnl(const char *str, int c)
 {
-	char cr;
+	char	cr;
 
 	cr = (char)c;
 	while (*str != '\0')
@@ -86,9 +81,9 @@ char *ft_strchr_gnl(const char *str, int c)
 	return (NULL);
 }
 
-char *free_join(char *buffer, char *buff)
+char	*free_join(char *buffer, char *buff)
 {
-	char *temp;
+	char	*temp;
 
 	temp = ft_strjoin_gnl(buffer, buff);
 	free(buffer);

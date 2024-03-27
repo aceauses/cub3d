@@ -1,0 +1,11 @@
+SO ./sprites/so.png
+NO ./sprites/no.png
+WE ./sprites/we.png
+EA ./sprites/ea.png
+
+F 20,1,1
+C 252,30,10
+
+11111111
+10N00000
+11111111
