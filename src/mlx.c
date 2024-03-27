@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:18:12 by aceauses          #+#    #+#             */
-/*   Updated: 2024/03/23 11:06:01 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/27 12:25:20 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,11 @@ void	start_game(t_game *game)
 	mlx_loop_hook(game->mlx, &camera, game);
 	mlx_loop_hook(game->mlx, &controls, game);
 	mlx_loop(game->mlx);
+	mlx_delete_image(game->mlx, game->texture->ray_image);
+	mlx_delete_image(game->mlx, game->texture->background);
+	mlx_delete_image(game->mlx, game->texture->map_wall);
+	mlx_delete_image(game->mlx, game->texture->map_player);
+	mlx_delete_image(game->mlx, game->texture->camera[0]);
+	mlx_delete_image(game->mlx, game->texture->camera[1]);
 	mlx_terminate(game->mlx);
 }

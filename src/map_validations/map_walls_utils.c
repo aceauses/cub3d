@@ -6,7 +6,7 @@
 /*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:40:59 by rmitache          #+#    #+#             */
-/*   Updated: 2024/03/23 18:35:18 by aceauses         ###   ########.fr       */
+/*   Updated: 2024/03/27 12:23:48 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,17 +96,16 @@ int	check_walls(char **map)
 {
 	int		x;
 	int		y;
-	char	**map_copy;
 
 	x = 0;
 	y = 0;
 	if (!find_first_character(map, &x, &y, '1'))
 		return (0);
-	map_copy = copy_map(map, y);
-	if (!check_horizontal_walls(map_copy) || !check_player(map_copy)
-		|| !flood_player(map_copy) || !check_inside_map(map_copy)
-		|| !check_map_walls(map_copy))
+	if (!check_horizontal_walls(copy_map(map, y))
+		|| !check_player(copy_map(map, y))
+		|| !flood_player(copy_map(map, y))
+		|| !check_inside_map(copy_map(map, y))
+		|| !check_map_walls(copy_map(map, y)))
 		return (0);
-	free_double_pointer(map_copy);
 	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-#    Updated: 2024/03/23 17:31:03 by aceauses         ###   ########.fr        #
+#    Updated: 2024/03/24 14:35:30 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ $(MLX):
 	@cd MLX42 && cmake --build build -j4
 
 $(LIBFT):
+	@git submodule update --init --recursive
 	@make -C libft all
 
 $(GNL):
