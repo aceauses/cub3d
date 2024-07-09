@@ -6,11 +6,7 @@
 #    By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 21:34:07 by aceauses          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/07/09 18:20:35 by aceauses         ###   ########.fr        #
-=======
-#    Updated: 2024/03/25 13:40:25 by aceauses         ###   ########.fr        #
->>>>>>> 64f0d65 (Update Makefile and struct.h)
+#    Updated: 2024/07/09 18:28:03 by aceauses         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
