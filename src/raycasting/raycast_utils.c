@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 16:52:50 by aceauses          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/07/09 18:24:24 by aceauses         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/24 21:42:20 by rmitache         ###   ########.fr       */
->>>>>>> 03d06cb (Imi bag puciorlu)
+/*   Updated: 2024/07/09 18:28:57 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmitache <rmitache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aceauses <aceauses@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:18:12 by aceauses          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/07/09 18:23:25 by aceauses         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/24 21:28:32 by rmitache         ###   ########.fr       */
->>>>>>> 03d06cb (Imi bag puciorlu)
+/*   Updated: 2024/07/09 18:28:40 by aceauses         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
